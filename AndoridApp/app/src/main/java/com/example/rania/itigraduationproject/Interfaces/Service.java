@@ -1,7 +1,11 @@
 package com.example.rania.itigraduationproject.Interfaces;
 
 import com.example.rania.itigraduationproject.model.DriverCarInfo;
+import com.example.rania.itigraduationproject.model.Trip;
 import com.example.rania.itigraduationproject.model.User;
+
+import java.lang.reflect.Array;
+import java.util.List;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -26,15 +30,24 @@ public interface Service {
 //    Call<User>sendUser(@Multipart Multipart image,@Multipart String user );
 
     @POST("user")
-    @Multipart
-
-    Call<User>sendUser(@Part("file") RequestBody file,@Part("user") String user);//  RequestBody user );
+    Call<User>sendUser(@Body User user );
+    //@Multipart
+    //Call<User>sendUser(@Part("file") RequestBody file,@Part("user") String user);//  RequestBody user );
 
     @POST("getUserByEmailAndPassword.json")
     Call<User>getUserByEmailAndPassword(@Body User user);
 
     @POST("driverSignUpWs")
     Call<DriverCarInfo>saveDriverObject(@Body DriverCarInfo driverCarInfo);
+
+
+    @GET("getTrip/4.json")
+    Call<Trip> getHello();
+
+
+
+    @POST("getSearchTrips.json")
+    Call<List<Trip>> getTripsFromSearch(@Body String from ,@Body String to);
 
 
 

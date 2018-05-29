@@ -3,7 +3,6 @@
     package="com.example.rania.itigraduationproject">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
@@ -39,7 +38,9 @@
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".PendingUser"></activity>
+        <activity android:name=".Profile" />
+        <activity android:name=".TripShowActivity" />
+        <activity android:name=".TripSearch"></activity>
     </application>
 
 </manifest>

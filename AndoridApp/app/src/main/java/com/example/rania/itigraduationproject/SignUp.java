@@ -26,6 +26,7 @@ import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -174,7 +175,7 @@ public class SignUp extends AppCompatActivity {
            signBtn.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View view) {
-                   Gson g=new Gson();
+                 //  Gson g=new Gson();
                    User user = new User();
                    user.setUserName(name.getText().toString());
                    user.setPassword(password.getText().toString());
@@ -182,14 +183,14 @@ public class SignUp extends AppCompatActivity {
                    user.setGender(radioGenderButton.getText().toString());
                    user.setMobile(mobile.getText().toString());
                    user.setNationalid(national_id.getText().toString());
-                   RequestBody requestbody_image = RequestBody.create(MediaType.parse("multipart/form-data"),image);
-//                   MultipartBody.Part body = MultipartBody.Part.createFormData("file",image.getName());
-
-
-//                   MultipartBody.Part bodyUser = MultipartBody.Part.createFormData("user", String.valueOf(user));
-
-                   String userGson=g.toJson(user);
-                   RequestBody requestbody_User = RequestBody.create(MediaType.parse("text/plain"),userGson);
+//                   RequestBody requestbody_image = RequestBody.create(MediaType.parse("multipart/form-data"),image);
+////                   MultipartBody.Part body = MultipartBody.Part.createFormData("file",image.getName());
+//
+//
+////                   MultipartBody.Part bodyUser = MultipartBody.Part.createFormData("user", String.valueOf(user));
+//
+//                   String userGson=g.toJson(user);
+//                   RequestBody requestbody_User = RequestBody.create(MediaType.parse("text/plain"),userGson);
 
                    //user.setBirthDate(date.getText().toString());
                    if(validate()==true) {
@@ -197,7 +198,7 @@ public class SignUp extends AppCompatActivity {
                        if (radio_user_DriverGroupButton.getText().toString().equals("User")) {
 
 
-                           service.sendUser(requestbody_image,userGson).enqueue(new Callback<User>() {
+                           service.sendUser(user).enqueue(new Callback<User>() {
                                @Override
                                public void onResponse(Call<User> call, Response<User> response) {
                                    Toast.makeText(SignUp.this, "SignUp Sucessfully", Toast.LENGTH_SHORT).show();
@@ -218,7 +219,7 @@ public class SignUp extends AppCompatActivity {
                            Toast.makeText(SignUp.this, "SignUp Sucessfully", Toast.LENGTH_SHORT).show();
                            Intent intent = new Intent(getApplicationContext(), DriverRegister.class);
 
-                           intent.putExtra("userObj", user);
+                           intent.putExtra("userObj", (Serializable) user);
                            startActivity(intent);
 
 
@@ -233,14 +234,14 @@ public class SignUp extends AppCompatActivity {
 
 
 
-        personalImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(galleryIntent,0);
-            }
-
-        });
+//        personalImage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                startActivityForResult(galleryIntent,0);
+//            }
+//
+//        });
 
 
         login_link.setOnClickListener(new View.OnClickListener() {

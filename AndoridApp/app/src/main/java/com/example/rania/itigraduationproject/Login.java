@@ -1,6 +1,7 @@
 package com.example.rania.itigraduationproject;
 
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,7 @@ import com.example.rania.itigraduationproject.Interfaces.Service;
 import com.example.rania.itigraduationproject.model.User;
 import com.example.rania.itigraduationproject.remote.CheckInternetConnection;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 import retrofit2.Call;
@@ -102,6 +104,7 @@ public class Login extends AppCompatActivity {
                     User user =new User();
                     user.setEmail(email_text.getText().toString());
                     user.setPassword(password_text.getText().toString());
+                    user.setDriverCarInfo(null);
                     requestUser(user);
                 }
                 else
@@ -144,54 +147,43 @@ public class Login extends AppCompatActivity {
 
         return valid;
     }
-    public void requestUser(User user)
+    public void requestUser(final User user)
     {
-
         service.getUserByEmailAndPassword(user).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
 
                 if(response.body()==null )
                 {
-                    Toast.makeText(Login.this,"Login Failed Due to response"+response.body(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Login.this,"Login Failed Due to response "+response.body(),Toast.LENGTH_SHORT).show();
 
                 }
 
                 if (response.body()!=null)
                 {
 
-                    if (response.body().getPending().equals("0"))
 
-                    {
-                        session_mangement.createLoginSession(response.body().getEmail(),response.body().getPassword());
-                        Intent intent = new Intent(getApplicationContext(), PendingUser.class);
-                        intent.putExtra("user", response.body());
-                        startActivity(intent);
-                        finish();
-                    } else if (response.body().getPending().equals("1"))
-
-                    {
                         session_mangement.createLoginSession(response.body().getEmail(),response.body().getPassword());
                         Intent intent_home = new Intent(getApplicationContext(), HomeActivity.class);
-                        intent_home.putExtra("user", response.body());
-                        startActivity(intent_home);
+                    System.out.println(response.body().getMobile());
+                    System.out.println(response.body().getBirthDate());
+                    System.out.println(response.body().getEmail());
+                    System.out.println(response.body().getUserName());
+
+
+                    intent_home.putExtra("user", (Serializable) response.body());
+
+                    startActivity(intent_home);
                         finish();
 
 
-                    }
                 }
 
             }
 
-
-
-
-
-
-
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                Toast.makeText(Login.this,"on Failere",Toast.LENGTH_SHORT).show();
+                Toast.makeText(Login.this,"on Failere"+t,Toast.LENGTH_SHORT).show();
 
             }
         });

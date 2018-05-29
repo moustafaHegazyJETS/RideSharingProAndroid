@@ -10,9 +10,10 @@ import java.io.Serializable;
 
 public class User implements Serializable {
 
+
     @SerializedName("idUser")
     @Expose
-    private int idUser;
+    private Integer idUser;
     @SerializedName("userName")
     @Expose
     private String userName;
@@ -25,38 +26,31 @@ public class User implements Serializable {
     @SerializedName("mobile")
     @Expose
     private String mobile;
-    @SerializedName("birthDate")
-    @Expose
-    private String birthDate;
     @SerializedName("userphoto")
     @Expose
     private String userphoto;
     @SerializedName("nationalid")
     @Expose
     private String nationalid;
+    @SerializedName("pending")
+    @Expose
+
+    private String pending;
+    @SerializedName("birthDate")
+    @Expose
+    private String birthDate;
     @SerializedName("driverCarInfo")
     @Expose
-    private Object driverCarInfo;
+    private DriverCarInfo driverCarInfo;
     @SerializedName("email")
     @Expose
     private String email;
-    @SerializedName("pending")
-    @Expose
-    private String pending;
 
-    public String getPending() {
-        return pending;
-    }
-
-    public void setPending(String pending) {
-        this.pending = pending;
-    }
-
-    public int getIdUser() {
+    public Integer getIdUser() {
         return idUser;
     }
 
-    public void setIdUser(int idUser) {
+    public void setIdUser(Integer idUser) {
         this.idUser = idUser;
     }
 
@@ -92,14 +86,6 @@ public class User implements Serializable {
         this.mobile = mobile;
     }
 
-    public String getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(String birthDate) {
-        this.birthDate = birthDate;
-    }
-
     public String getUserphoto() {
         return userphoto;
     }
@@ -116,11 +102,27 @@ public class User implements Serializable {
         this.nationalid = nationalid;
     }
 
-    public Object getDriverCarInfo() {
+    public String getPending() {
+        return pending;
+    }
+
+    public void setPending(String pending) {
+        this.pending = pending;
+    }
+
+    public String getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(String birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public DriverCarInfo getDriverCarInfo() {
         return driverCarInfo;
     }
 
-    public void setDriverCarInfo(Object driverCarInfo) {
+    public void setDriverCarInfo(DriverCarInfo driverCarInfo) {
         this.driverCarInfo = driverCarInfo;
     }
 
@@ -131,4 +133,5 @@ public class User implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
+
 }

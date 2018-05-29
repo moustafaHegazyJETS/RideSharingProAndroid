@@ -3,11 +3,13 @@ package com.example.rania.itigraduationproject.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by Rania on 5/1/2018.
  */
 
-public class DriverCarInfo {
+public class DriverCarInfo implements Serializable {
 
     @SerializedName("driveCarID")
     @Expose

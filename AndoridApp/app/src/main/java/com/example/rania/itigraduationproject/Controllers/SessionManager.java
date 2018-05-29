@@ -44,6 +44,8 @@ public class SessionManager {
 
         public void createLoginSession( String email,String password){
 
+            System.out.println(email);
+
             editor.putBoolean(IS_LOGIN, true);
             editor.putString(KEY_EMAIL, email);
             editor.putString(KEY_password,password);

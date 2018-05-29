@@ -24,7 +24,9 @@
     <string name="radio_Passenger">User</string>
     <string name="radio_Driver">Driver</string>
     <string name="male">Male</string>
+    <string name="gender">Gender</string>
     <string name="famle">Female</string>
+    <string name="registerType">Female</string>
     <string name="goLogin">Already a member?Login</string>
     <string name="CarInfo">Please Enter Car Information</string>
     <string name="car_owner_name">Please Enter Car Owner Name</string>
@@ -39,6 +41,7 @@
     <string name="driveRegister">Complete Register</string>
     <string name="Register">Register</string>
     <string name="login">Login</string>
+    <string name="date">BirthDate</string>
 
     <string name="hint_data">No account yet? Create one</string>
     <string name="title_activity_home">HomeActivity</string>

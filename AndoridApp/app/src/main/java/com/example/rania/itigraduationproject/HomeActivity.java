@@ -2,10 +2,15 @@ package com.example.rania.itigraduationproject;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,14 +24,30 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.rania.itigraduationproject.Controllers.SessionManager;
+import com.example.rania.itigraduationproject.Interfaces.Service;
+import com.example.rania.itigraduationproject.model.Trip;
 import com.example.rania.itigraduationproject.model.User;
 import com.example.rania.itigraduationproject.remote.CheckInternetConnection;
+
+import java.io.Serializable;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     TextView username;
     TextView useremail_header;
     SessionManager session;
+    User user;
+
+    private static Retrofit retrofit = null;
+    SessionManager session_mangement;
+    Service service;
+
 
     @Override
     protected void onStart() {
@@ -44,48 +65,138 @@ public class HomeActivity extends AppCompatActivity
 
 
             setContentView(R.layout.activity_home);
+
             session=new SessionManager(getApplicationContext());
+
+
+        //---------------SharedPrefrences ----------
+        session_mangement = new SessionManager(getApplicationContext());
+
+
+        //Retrofit -----------------------------------------------
+        retrofit = new Retrofit.Builder()
+                .baseUrl(Service.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        service = retrofit.create(Service.class);
+        //------------------------------------------------
 
 
 
         Intent intent=getIntent();
-        User user=(User) intent.getSerializableExtra("user");
+        user=(User) intent.getSerializableExtra("user");
         Toast.makeText(this, "Username:"+user.getUserName(), Toast.LENGTH_SHORT).show();
         Toast.makeText(this, "Email:"+user.getEmail(), Toast.LENGTH_SHORT).show();
 
 //        User user = intent
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
         username=(TextView)findViewById(R.id.username_home);
-        username.setText(user.getUserName());
-
-
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        if(user.getPending().equals("0")) {
+            username.setText("Hello, "+user.getUserName()+" wait until Admin Accept");
+            username.setTextColor(Color.parseColor("#00ff00"));
+            fab.setImageBitmap(textAsBitmap("Logout", 40, Color.WHITE));
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    System.out.print("fab hhhhh");
+                    logoutUser();
+                }
+            });
 
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        useremail_header=(TextView)findViewById(R.id.usermail_header);
-       // useremail_header.setText("kkkkkkkkkkkkkk");
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+        }
+        else if(user.getPending().equals("-1"))
+        {
+            System.out.println("----------------------");
+            System.out.println(user.getDriverCarInfo());
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
 
+            service.getHello().enqueue(new Callback<Trip>() {
+                @Override
+                public void onResponse(Call<Trip> call, Response<Trip> response) {
+                    Toast.makeText(HomeActivity.this, ""+response.body().getTripName(), Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onFailure(Call<Trip> call, Throwable t) {
+
+                }
+            });
+
+            username.setText("Sorry you are Reject  you can Register  Again");
+            username.setTextColor(Color.parseColor("#ff0000"));
+            fab.setImageBitmap(textAsBitmap("Logout", 40, Color.WHITE));
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                  System.out.print("fab hhhhh");
+
+                    logoutUser();
+                }
+            });
+        }
+        else {
+            username.setText("hello "+user.getUserName());
+
+            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                    this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            //useremail_header = (TextView) findViewById(R.id.usermail_header);
+            // useremail_header.setText("kkkkkkkkkkkkkk");
+            drawer.addDrawerListener(toggle);
+            toggle.syncState();
+
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            navigationView.setNavigationItemSelectedListener(this);
+
+
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //here the code of joining trip
+                    Intent intent_home = new Intent(getApplicationContext(), TripShowActivity.class);
+                    intent_home.putExtra("user", (Serializable) user );
+                    startActivity(intent_home);
+
+                }
+            });
+
+        }
     }
+
+
+
+    public void requestUser(final User user)
+    {
+        service.getUserByEmailAndPassword(user).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+
+                if(response.body()==null )
+                {
+                    Toast.makeText(HomeActivity.this,"respone is  "+response.body(),Toast.LENGTH_SHORT).show();
+                }
+
+                if (response.body()!=null)
+                {//Here To Write Operation Code
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Toast.makeText(HomeActivity.this,"on Failere"+t,Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+
 
     @Override
     public void onBackPressed() {
@@ -135,29 +246,19 @@ public class HomeActivity extends AppCompatActivity
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
+
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_camera) {
 
         } else if (id == R.id.user_profile) {
+            Intent intent=new Intent(getApplicationContext(),Profile.class);
+            intent.putExtra("user", (Serializable) user);
+            startActivity(intent);
 
         } else if (id == R.id.logout) {
+            logoutUser();
 
-            new AlertDialog.Builder(this)
-                    .setTitle("Confirmation")
-                    .setMessage("Do you really want to Close?")
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-
-                        public void onClick(DialogInterface dialog, int whichButton) {
-
-
-                            session.logoutUser();
-                            finish();
-
-
-                        }})
-                    .setNegativeButton(android.R.string.no, null).show();
         } else if (id == R.id.nav_send) {
 
         }
@@ -171,5 +272,38 @@ public class HomeActivity extends AppCompatActivity
 
 
         return true;
+    }
+    //method to convert your text to image
+    public static Bitmap textAsBitmap(String text, float textSize, int textColor) {
+        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paint.setTextSize(textSize);
+        paint.setColor(textColor);
+        paint.setTextAlign(Paint.Align.LEFT);
+        float baseline = -paint.ascent(); // ascent() is negative
+        int width = (int) (paint.measureText(text) + 0.0f); // round
+        int height = (int) (baseline + paint.descent() + 0.0f);
+        Bitmap image = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(image);
+        canvas.drawText(text, 0, baseline, paint);
+        return image;
+    }
+    public void logoutUser()
+    {
+        new AlertDialog.Builder(this)
+                .setTitle("Confirmation")
+                .setMessage("Do you really want to Close?")
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+
+
+                        session.logoutUser();
+                        finish();
+
+
+                    }})
+                .setNegativeButton(android.R.string.no, null).show();
     }
 }
