@@ -95,29 +95,6 @@
         android:paddingLeft="20dp"
         />
     <TextView
-        android:id="@+id/passwordProf"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_weight="1"
-        android:text="@string/prompt_password"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="20dp"
-
-        />
-
-    <EditText
-        android:id="@+id/passwordProfEdt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:editable="false"
-        android:clickable="false"
-        android:enabled="false"
-        android:focusableInTouchMode="false"
-        android:ems="10"
-        android:inputType="none"
-        android:paddingLeft="20dp" />
-    <TextView
         android:id="@+id/gender"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -136,25 +113,6 @@
         android:clickable="false"
         android:focusableInTouchMode="false"
         android:paddingLeft="20dp"/>
-        <!--<TextView
-            android:id="@+id/registerType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="20dp"
-            android:text="@string/name"/>
-
-        <EditText
-            android:id="@+id/registerTypeEdt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:editable="false"
-            android:enabled="false"
-            android:clickable="false"
-            android:focusableInTouchMode="false"
-            android:paddingLeft="20dp"/>-->
         <TextView
             android:id="@+id/date"
             android:layout_width="wrap_content"

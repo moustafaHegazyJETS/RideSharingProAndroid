@@ -10,7 +10,7 @@ import com.example.rania.itigraduationproject.model.User;
 
 public class Profile extends AppCompatActivity {
     EditText userName;
-    EditText password;
+
     EditText phone;
     EditText email;
     EditText nationalId;
@@ -30,22 +30,15 @@ public class Profile extends AppCompatActivity {
         User user=(User) intent.getSerializableExtra("user");
         userName=(EditText)findViewById(R.id.userNameProfEdt);
         email=(EditText)findViewById(R.id.userEmailProfEdt);
-        password=(EditText)findViewById(R.id.passwordProfEdt);
         phone=(EditText)findViewById(R.id.phoneEdt);
         nationalId=(EditText)findViewById(R.id.nationalIdProfEdt);
         birthdate=(EditText)findViewById(R.id.dateEdt);
         gender=(EditText)findViewById(R.id.genderEdt);
 
-//        loading = new ProgressDialog(this);
-//        loading.setIndeterminate(true);
-//        loading.setCancelable(false);
-//        loading.setCanceledOnTouchOutside(false);
-        //registerType=(EditText)findViewById(R.id.registerTypeEdt);
-        //Set value to  Edit Text  Field-------------
+
         if (user!=null) {
             userName.setText(user.getUserName());
             email.setText(user.getEmail());
-            password.setText(user.getPassword());
             phone.setText(user.getMobile());
             nationalId.setText(user.getNationalid());
             birthdate.setText(user.getBirthDate());
@@ -62,7 +55,6 @@ public class Profile extends AppCompatActivity {
         if (user!=null) {
             userName.setText(user.getUserName());
             email.setText(user.getEmail());
-            password.setText(user.getPassword());
             phone.setText(user.getMobile());
             nationalId.setText(user.getNationalid());
             birthdate.setText(user.getBirthDate());

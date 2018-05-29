@@ -4,62 +4,137 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.rania.itigraduationproject.Controllers.SessionManager;
+import com.example.rania.itigraduationproject.Interfaces.Service;
 import com.example.rania.itigraduationproject.model.User;
+import com.example.rania.itigraduationproject.remote.CheckInternetConnection;
 
 import java.util.HashMap;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class SplashScreen extends AppCompatActivity {
 
-
+    private static Retrofit retrofit = null;
+    SessionManager session_mangement;
+    Service service;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-         final SessionManager session;
-         session = new SessionManager(getApplicationContext());
-        int SPLASH_TIME_OUT = 3000;
-        Thread th=new Thread(){
+
+                //---------------SharedPrefrences ----------
+                session_mangement = new SessionManager(getApplicationContext());
 
 
+        //Retrofit -----------------------------------------------
+        retrofit = new Retrofit.Builder()
+                .baseUrl(Service.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
-            /*
-             * Showing splash screen with a timer. This will be useful when you
-             * want to show case your app logo / company
-             */
+        service = retrofit.create(Service.class);
+        //------------------------------------------------
 
-            @Override
-            public void run() {
-                try {
-                    sleep(3000);
+        if (session_mangement.isLoggedIn()) {
+            HashMap<String, String> user_data = session_mangement.getUserDetails();
+            User user = new User();
+            user.setEmail(user_data.get(SessionManager.KEY_EMAIL));
+            user.setPassword(user_data.get(SessionManager.KEY_password));
+            Log.i("username", user_data.get(SessionManager.KEY_EMAIL));
+            Log.i("password", user_data.get(SessionManager.KEY_password));
+//            requestUser(user);
+            service.getUserByEmailAndPassword(user).enqueue(new Callback<User>() {
+                @Override
+                public void onResponse(Call<User> call, final Response<User> response) {
 
-                    if(session.isLoggedIn())
-                    {
-                       Intent i = new Intent( SplashScreen.this, Login.class);
-                       startActivity(i);
-                       finish();
+                    if (response.body() == null) {
+                        Toast.makeText(SplashScreen.this, "Login Failed Due to response" + response.body(), Toast.LENGTH_SHORT).show();
+                        Thread th = new Thread() {
+                            @Override
+                            public void run() {
+                                try {
+                                    sleep(3000);
+                                    Intent i = new Intent(SplashScreen.this, Login.class);
+                                    startActivity(i);
+                                    finish();
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        };
+                        th.start();
+                    }
+
+                    if (response.body() != null) {
+
+
+                        session_mangement.createLoginSession(response.body().getEmail(), response.body().getPassword());
+                        Thread th = new Thread() {
+                            @Override
+                            public void run() {
+                                try {
+                                    sleep(3000);
+                                    Intent i = new Intent(SplashScreen.this, HomeActivity.class);
+                                    i.putExtra("user", response.body());
+                                    startActivity(i);
+                                    finish();
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        };
+                        th.start();
 
 
                     }
-                    else {
-                        session.checkLogin();
-                        finish();
-                    }
 
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
                 }
 
+                @Override
+                public void onFailure(Call<User> call, Throwable t) {
+                    Toast.makeText(SplashScreen.this, "on Failere", Toast.LENGTH_SHORT).show();
+                    Thread th = new Thread() {
+                        @Override
+                        public void run() {
+                            try {
+                                sleep(3000);
+                                Intent i = new Intent(SplashScreen.this, Login.class);
+                                startActivity(i);
+                                finish();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    };
+                    th.start();
 
+                }
+            });
 
-
-            }};
-        th.start();
-
-
+        } else {
+            Thread th = new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        sleep(3000);
+                        Intent i = new Intent(SplashScreen.this, Login.class);
+                        startActivity(i);
+                        finish();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+            th.start();
+        }
 
 
     }

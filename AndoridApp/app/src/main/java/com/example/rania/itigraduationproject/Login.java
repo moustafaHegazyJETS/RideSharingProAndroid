@@ -43,24 +43,10 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if(!CheckInternetConnection.isNetworkAvailable(this))
-        {
+
+        if (!CheckInternetConnection.isNetworkAvailable(this)) {
             CheckInternetConnection.bulidDuligo(this);
         }
-
-        if(session_mangement.isLoggedIn()) {
-            HashMap<String, String> user_data= session_mangement.getUserDetails();
-            User user =new User();
-            user.setEmail(user_data.get(SessionManager.KEY_EMAIL));
-            user.setPassword(user_data.get(SessionManager.KEY_password));
-            Log.i("username",user_data.get(SessionManager.KEY_EMAIL));
-            Log.i("password",user_data.get(SessionManager.KEY_password));
-            requestUser(user);
-
-
-        }
-
-
     }
 
     @Override
@@ -169,7 +155,6 @@ public class Login extends AppCompatActivity {
                     System.out.println(response.body().getBirthDate());
                     System.out.println(response.body().getEmail());
                     System.out.println(response.body().getUserName());
-
 
                     intent_home.putExtra("user", (Serializable) response.body());
 

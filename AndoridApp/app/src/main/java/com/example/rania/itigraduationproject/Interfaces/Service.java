@@ -4,16 +4,12 @@ import com.example.rania.itigraduationproject.model.DriverCarInfo;
 import com.example.rania.itigraduationproject.model.Trip;
 import com.example.rania.itigraduationproject.model.User;
 
-import java.lang.reflect.Array;
 import java.util.List;
 
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
-import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.Part;
 
 /**
  * Created by Rania on 4/25/2018.
@@ -29,16 +25,16 @@ public interface Service {
     //Call<User>sendUser(@Body User user );
 //    Call<User>sendUser(@Multipart Multipart image,@Multipart String user );
 
-    @POST("user")
+    @POST("user.json")
     Call<User>sendUser(@Body User user );
     //@Multipart
     //Call<User>sendUser(@Part("file") RequestBody file,@Part("user") String user);//  RequestBody user );
-
     @POST("getUserByEmailAndPassword.json")
     Call<User>getUserByEmailAndPassword(@Body User user);
 
     @POST("driverSignUpWs")
     Call<DriverCarInfo>saveDriverObject(@Body DriverCarInfo driverCarInfo);
+
 
 
     @GET("getTrip/4.json")
@@ -47,10 +43,9 @@ public interface Service {
 
 
     @POST("getSearchTrips.json")
-    Call<List<Trip>> getTripsFromSearch(@Body String from ,@Body String to);
+    Call<List<Trip>> getTripsFromSearch(@Body Trip obj );
 
-
-
-
+    @GET("h")
+    Call<String> getHello2();
 
 }

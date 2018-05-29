@@ -10,7 +10,6 @@ import android.widget.Toast;
 import com.example.rania.itigraduationproject.Controllers.SessionManager;
 import com.example.rania.itigraduationproject.Interfaces.Service;
 import com.example.rania.itigraduationproject.model.Trip;
-import com.example.rania.itigraduationproject.model.User;
 
 import java.util.List;
 
@@ -66,6 +65,15 @@ public class TripSearch extends AppCompatActivity {
                 else
                 {
 
+                    Trip t = new Trip();
+
+                    t.setFrom(fromTxt.getText().toString());
+                    t.setTo(toTxt.getText().toString());
+
+
+                    Toast.makeText(TripSearch.this, ""+fromTxt.getText().toString()+" "+toTxt.getText().toString(), Toast.LENGTH_SHORT).show();
+
+                    requestTrip(t);
 
 
                 }
@@ -74,9 +82,9 @@ public class TripSearch extends AppCompatActivity {
 
     }
 
-    public void requestUser(String from , String to)
+    public void requestTrip(Trip t)
     {
-        service.getTripsFromSearch(from,to).enqueue(new Callback<List<Trip>>() {
+        service.getTripsFromSearch(t).enqueue(new Callback<List<Trip>>() {
             @Override
             public void onResponse(Call<List<Trip>> call, Response<List<Trip>> response) {
 

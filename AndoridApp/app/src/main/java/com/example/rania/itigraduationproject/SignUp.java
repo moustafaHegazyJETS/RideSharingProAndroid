@@ -89,7 +89,7 @@ public class SignUp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 
-            setContentView(R.layout.activity_sign_up);
+        setContentView(R.layout.activity_sign_up);
 
 
         login_link = (TextView) findViewById(R.id.link_login);
@@ -119,8 +119,7 @@ public class SignUp extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 // checkedId is the RadioButton selected
                 radio_user_DriverGroupButton = (RadioButton) findViewById(checkedId);
-
-              //  Toast.makeText(getApplicationContext(), radio_user_DriverGroupButton.getText(), Toast.LENGTH_SHORT).show();
+                //  Toast.makeText(getApplicationContext(), radio_user_DriverGroupButton.getText(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -139,7 +138,7 @@ public class SignUp extends AppCompatActivity {
                 radioGenderButton =(RadioButton)findViewById(checkedId);
 
 
-              //  Toast.makeText(getApplicationContext(), radioGenderButton.getText(), Toast.LENGTH_SHORT).show();
+                //  Toast.makeText(getApplicationContext(), radioGenderButton.getText(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -172,17 +171,21 @@ public class SignUp extends AppCompatActivity {
 
         //Check If it is User Or Driver
 //--------------------------------------------------------------------------------------
-           signBtn.setOnClickListener(new View.OnClickListener() {
-               @Override
-               public void onClick(View view) {
-                 //  Gson g=new Gson();
-                   User user = new User();
-                   user.setUserName(name.getText().toString());
-                   user.setPassword(password.getText().toString());
-                   user.setEmail(email.getText().toString());
-                   user.setGender(radioGenderButton.getText().toString());
-                   user.setMobile(mobile.getText().toString());
-                   user.setNationalid(national_id.getText().toString());
+        signBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //  Gson g=new Gson();
+                User user = new User();
+                user.setUserName(name.getText().toString());
+                user.setPassword(password.getText().toString());
+                user.setEmail(email.getText().toString());
+                user.setGender(radioGenderButton.getText().toString());
+                user.setMobile(mobile.getText().toString());
+                user.setNationalid(national_id.getText().toString());
+                user.setBirthDate(date.getText().toString());
+
+
+
 //                   RequestBody requestbody_image = RequestBody.create(MediaType.parse("multipart/form-data"),image);
 ////                   MultipartBody.Part body = MultipartBody.Part.createFormData("file",image.getName());
 //
@@ -192,48 +195,55 @@ public class SignUp extends AppCompatActivity {
 //                   String userGson=g.toJson(user);
 //                   RequestBody requestbody_User = RequestBody.create(MediaType.parse("text/plain"),userGson);
 
-                   //user.setBirthDate(date.getText().toString());
-                   if(validate()==true) {
+                //user.setBirthDate(date.getText().toString());
+                if(validate()==true) {
 
-                       if (radio_user_DriverGroupButton.getText().toString().equals("User")) {
+                    if (radio_user_DriverGroupButton.getText().toString().equals("User")) {
+                        service.sendUser(user).enqueue(new Callback<User>() {
+                            @Override
+                            public void onResponse(Call<User> call, Response<User> response) {
 
-
-                           service.sendUser(user).enqueue(new Callback<User>() {
-                               @Override
-                               public void onResponse(Call<User> call, Response<User> response) {
-                                   Toast.makeText(SignUp.this, "SignUp Sucessfully", Toast.LENGTH_SHORT).show();
-                                   Intent intent = new Intent(getApplicationContext(), Login.class);
-                                   startActivity(intent);
-
-                               }
-
-                               @Override
-                               public void onFailure(Call<User> call, Throwable t) {
-                                   Toast.makeText(SignUp.this, "SignUp Faild", Toast.LENGTH_SHORT).show();
-//                                   Log.i("status",t.getMessage());
-                               }
-                           });
-
-                       } else if (radio_user_DriverGroupButton.getText().toString().equals("Driver")) {
-
-                           Toast.makeText(SignUp.this, "SignUp Sucessfully", Toast.LENGTH_SHORT).show();
-                           Intent intent = new Intent(getApplicationContext(), DriverRegister.class);
-
-                           intent.putExtra("userObj", (Serializable) user);
-                           startActivity(intent);
+                                if(response.body()!=null) {
+                                    Toast.makeText(SignUp.this, "SignUp Sucessfully", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(getApplicationContext(), Login.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                                else
+                                {
+                                    Toast.makeText(SignUp.this, "Response Body  is null", Toast.LENGTH_SHORT).show();
+                                }
 
 
-                       }
-                   }
-               }});
+
+                            }
+
+
+                            @Override
+                            public void onFailure(Call<User> call, Throwable t) {
+                                Toast.makeText(SignUp.this, "SignUp Faild", Toast.LENGTH_SHORT).show();
+//
+                            }
+                        });
+
+                    } else if (radio_user_DriverGroupButton.getText().toString().equals("Driver")) {
+
+
+                        Toast.makeText(SignUp.this, "SignUp Sucessfully", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), DriverRegister.class);
+
+                        intent.putExtra("userObj", (Serializable) user);
+                        startActivity(intent);
+                        finish();
+
+                    }
+                }
+            }});
 
 
 //--------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------
-
-
-
 //        personalImage.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -242,7 +252,6 @@ public class SignUp extends AppCompatActivity {
 //            }
 //
 //        });
-
 
         login_link.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -28,9 +28,7 @@ import com.example.rania.itigraduationproject.Interfaces.Service;
 import com.example.rania.itigraduationproject.model.Trip;
 import com.example.rania.itigraduationproject.model.User;
 import com.example.rania.itigraduationproject.remote.CheckInternetConnection;
-
 import java.io.Serializable;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -43,6 +41,7 @@ public class HomeActivity extends AppCompatActivity
     TextView useremail_header;
     SessionManager session;
     User user;
+
 
     private static Retrofit retrofit = null;
     SessionManager session_mangement;
@@ -62,28 +61,17 @@ public class HomeActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-            setContentView(R.layout.activity_home);
-
-            session=new SessionManager(getApplicationContext());
-
-
+        setContentView(R.layout.activity_home);
+        session=new SessionManager(getApplicationContext());
         //---------------SharedPrefrences ----------
         session_mangement = new SessionManager(getApplicationContext());
-
-
         //Retrofit -----------------------------------------------
         retrofit = new Retrofit.Builder()
                 .baseUrl(Service.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
         service = retrofit.create(Service.class);
         //------------------------------------------------
-
-
-
         Intent intent=getIntent();
         user=(User) intent.getSerializableExtra("user");
         Toast.makeText(this, "Username:"+user.getUserName(), Toast.LENGTH_SHORT).show();
@@ -93,7 +81,6 @@ public class HomeActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         username=(TextView)findViewById(R.id.username_home);
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
@@ -165,6 +152,7 @@ public class HomeActivity extends AppCompatActivity
 
                 }
             });
+
 
         }
     }
@@ -306,4 +294,5 @@ public class HomeActivity extends AppCompatActivity
                     }})
                 .setNegativeButton(android.R.string.no, null).show();
     }
+
 }

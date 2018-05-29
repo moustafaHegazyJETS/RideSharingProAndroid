@@ -45,10 +45,9 @@ public class DriverRegister extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_driver_register);
 
-            setContentView(R.layout.activity_driver_register);
-
-        //TextView
+        //resources
         ownerCarName = (TextView) findViewById(R.id.car_ownername);
         ownerCarAddress = (TextView) findViewById(R.id.ownerCaraddress);
         CarBrand = (TextView) findViewById(R.id.carBrand);
@@ -59,6 +58,8 @@ public class DriverRegister extends AppCompatActivity {
         carYearModel = (TextView) findViewById(R.id.car_year_model);
         carCc = (TextView) findViewById(R.id.car_cc);
         signUpBtn = (Button) findViewById(R.id.btn_signup);
+
+        //objects
         retrofit = new Retrofit.Builder()
                 .baseUrl(Service.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -66,6 +67,10 @@ public class DriverRegister extends AppCompatActivity {
         final Service service = retrofit.create(Service.class);
         Intent intent = getIntent();
         final User user = (User) intent.getSerializableExtra("userObj");
+
+        System.out.println(user.getUserName());
+
+        //actions
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,9 +93,19 @@ public class DriverRegister extends AppCompatActivity {
                 service.saveDriverObject(driverObject).enqueue(new Callback<DriverCarInfo>() {
                     @Override
                     public void onResponse(Call<DriverCarInfo> call, Response<DriverCarInfo> response) {
-                        Toast.makeText(DriverRegister.this,"Register suceesfully"+driverObject.getOwnername(), Toast.LENGTH_SHORT).show();
-                        Intent intent=new Intent(getApplicationContext(),Login.class);
-                        startActivity(intent);
+
+                        if(response.body()!=null) {
+                            Toast.makeText(DriverRegister.this, "Register suceesfully" + driverObject.getOwnername(), Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getApplicationContext(), Login.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                        else
+                        {
+                            Toast.makeText(DriverRegister.this, "response body  is null", Toast.LENGTH_SHORT).show();
+
+                        }
+
                     }
 
                     @Override

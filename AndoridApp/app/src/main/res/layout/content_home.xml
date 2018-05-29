@@ -17,5 +17,4 @@
         android:layout_marginRight="80dp"
         android:gravity="center"/>
 
-
 </android.support.constraint.ConstraintLayout>
