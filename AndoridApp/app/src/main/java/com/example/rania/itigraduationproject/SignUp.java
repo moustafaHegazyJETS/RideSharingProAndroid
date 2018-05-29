@@ -32,6 +32,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -123,7 +124,6 @@ public class SignUp extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 // checkedId is the RadioButton selected
                 radio_user_DriverGroupButton = (RadioButton) findViewById(checkedId);
-
                 //  Toast.makeText(getApplicationContext(), radio_user_DriverGroupButton.getText(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -250,9 +250,6 @@ public class SignUp extends AppCompatActivity {
 //--------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------
-
-
-
 //        personalImage.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -261,7 +258,6 @@ public class SignUp extends AppCompatActivity {
 //            }
 //
 //        });
-
 
         login_link.setOnClickListener(new View.OnClickListener() {
             @Override

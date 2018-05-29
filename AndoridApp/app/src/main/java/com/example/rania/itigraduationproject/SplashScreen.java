@@ -25,15 +25,11 @@ public class SplashScreen extends AppCompatActivity {
     SessionManager session_mangement;
     Service service;
 
-
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+<<<<<<< HEAD
 
 
         //---------------SharedPrefrences ----------
@@ -140,23 +136,6 @@ public class SplashScreen extends AppCompatActivity {
                     }};
                 th.start();
         }
-
-
-
-
-
-
-
-
-
-
-
-    }
-
-
-
-
-
 
 
 }

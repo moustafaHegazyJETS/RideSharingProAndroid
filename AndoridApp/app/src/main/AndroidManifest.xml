@@ -30,6 +30,7 @@
             android:name=".Login"
             android:label="@string/login" />
         <activity
+
             android:name=".Profile"
             android:label="@string/user_profile" />
         <activity

@@ -41,12 +41,11 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
         if (!CheckInternetConnection.isNetworkAvailable(this)) {
             CheckInternetConnection.bulidDuligo(this);
         }
     }
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,16 +145,11 @@ public class Login extends AppCompatActivity {
 
                 if (response.body()!=null)
                 {
-
-
                         session_mangement.createLoginSession(response.body().getEmail(),response.body().getPassword());
                         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                         intent.putExtra("user", response.body());
                         startActivity(intent);
                         finish();
-
-
-
 
                 }
 

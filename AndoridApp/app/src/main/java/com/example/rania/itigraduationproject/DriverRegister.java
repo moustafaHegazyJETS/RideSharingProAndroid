@@ -46,7 +46,9 @@ public class DriverRegister extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 
+
         setContentView(R.layout.activity_driver_register);
+
 
         //TextView
         ownerCarName = (TextView) findViewById(R.id.car_ownername);
@@ -88,6 +90,7 @@ public class DriverRegister extends AppCompatActivity {
                 service.saveDriverObject(driverObject).enqueue(new Callback<DriverCarInfo>() {
                     @Override
                     public void onResponse(Call<DriverCarInfo> call, Response<DriverCarInfo> response) {
+
                         if(response.body()!=null) {
                             Toast.makeText(DriverRegister.this, "Register suceesfully" + driverObject.getOwnername(), Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getApplicationContext(), Login.class);
@@ -99,6 +102,7 @@ public class DriverRegister extends AppCompatActivity {
                             Toast.makeText(DriverRegister.this, "response body  is null", Toast.LENGTH_SHORT).show();
 
                         }
+
                     }
 
                     @Override

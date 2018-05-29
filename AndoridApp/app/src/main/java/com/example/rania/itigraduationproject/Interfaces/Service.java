@@ -30,6 +30,7 @@ public interface Service {
     //@Multipart
     //Call<User>sendUser(@Part("file") RequestBody file,@Part("user") String user);//  RequestBody user );
 
+
     @POST("getUserByEmailAndPassword.json")
     Call<User>getUserByEmailAndPassword(@Body User user);
 
@@ -39,9 +40,5 @@ public interface Service {
 
     @GET("h")
     Call<String> getHello();
-
-
-
-
 
 }

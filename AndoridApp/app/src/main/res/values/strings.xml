@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">ITIGraduationProject</string>
     <string name="title_activity_login">Sign in</string>
+<<<<<<< HEAD
+=======
+
+>>>>>>> cbf189064aba85d3cc14f3419cfbc63edf03f532
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password"> Password </string>
@@ -23,9 +27,13 @@
     <string name="radio_Passenger">User</string>
     <string name="radio_Driver">Driver</string>
     <string name="male">Male</string>
+<<<<<<< HEAD
     <string name="gender">Gender</string>
     <string name="famle">Female</string>
     <string name="registerType">Female</string>
+=======
+    <string name="famle">Female</string>
+>>>>>>> cbf189064aba85d3cc14f3419cfbc63edf03f532
     <string name="goLogin">Already a member?Login</string>
     <string name="CarInfo">Please Enter Car Information</string>
     <string name="car_owner_name">Please Enter Car Owner Name</string>
@@ -40,6 +48,7 @@
     <string name="driveRegister">Complete Register</string>
     <string name="Register">Register</string>
     <string name="login">Login</string>
+<<<<<<< HEAD
     <string name="date">BirthDate</string>
     <string name="hint_data">No account yet? Create one</string>
     <string name="title_activity_home">HomeActivity</string>
@@ -48,4 +57,18 @@
     <string name="action_settings">Settings</string>
     <string name="user_profile">Profile</string>
     <string name="logout">Logout</string>
+=======
+
+    <string name="hint_data">No account yet? Create one</string>
+    <string name="title_activity_home">HomeActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="user_profile">Profile</string>
+    <string name="logout">Logout</string>
+
+
+>>>>>>> cbf189064aba85d3cc14f3419cfbc63edf03f532
 </resources>

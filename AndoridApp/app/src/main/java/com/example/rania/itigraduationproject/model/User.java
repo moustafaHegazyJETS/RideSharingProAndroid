@@ -11,6 +11,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
 public class User implements Serializable {
 
     @SerializedName("idUser")
@@ -30,7 +31,9 @@ public class User implements Serializable {
     private String mobile;
     @SerializedName("birthDate")
     @Expose
-    private String  birthDate;
+
+    private String birthDate;
+
     @SerializedName("userphoto")
     @Expose
     private String userphoto;
@@ -96,6 +99,7 @@ public class User implements Serializable {
     }
 
     public String getBirthDate() {
+
        return birthDate;
    }
 
@@ -135,6 +139,7 @@ public class User implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
+<<<<<<< HEAD
     //------------------------birthdate-------
 //    public String getBirthDate() {
 //        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
@@ -142,4 +147,6 @@ public class User implements Serializable {
 //        System.out.println("The date is: " + text);
 //        return text;
 //    }
+=======
+>>>>>>> cbf189064aba85d3cc14f3419cfbc63edf03f532
 }

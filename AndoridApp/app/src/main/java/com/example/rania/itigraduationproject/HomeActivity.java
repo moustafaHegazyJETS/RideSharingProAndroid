@@ -27,8 +27,8 @@ import com.example.rania.itigraduationproject.Controllers.SessionManager;
 import com.example.rania.itigraduationproject.model.User;
 import com.example.rania.itigraduationproject.remote.CheckInternetConnection;
 
-import java.io.Serializable;
 
+import java.io.Serializable;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     TextView username;
@@ -51,6 +51,7 @@ public class HomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
 
+
         setContentView(R.layout.activity_home);
         session=new SessionManager(getApplicationContext());
 
@@ -64,6 +65,7 @@ public class HomeActivity extends AppCompatActivity
 //        User user = intent
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         username=(TextView)findViewById(R.id.username_home);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -169,7 +171,6 @@ public class HomeActivity extends AppCompatActivity
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
-
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_camera) {
@@ -181,7 +182,6 @@ public class HomeActivity extends AppCompatActivity
 
         } else if (id == R.id.logout) {
             logoutUser();
-
         } else if (id == R.id.nav_send) {
 
         }
@@ -229,4 +229,5 @@ public class HomeActivity extends AppCompatActivity
                     }})
                 .setNegativeButton(android.R.string.no, null).show();
     }
+
 }

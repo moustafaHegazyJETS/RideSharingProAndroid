@@ -10,6 +10,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+<<<<<<< HEAD
         android:id="@+id/username_home"
         android:layout_marginLeft="80dp"
         android:layout_marginTop="100dp"
@@ -17,5 +18,12 @@
         android:layout_marginRight="80dp"
         android:gravity="center"/>
 
+=======
+        android:id="@+id/username_home"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/useremail_home"/>
+>>>>>>> cbf189064aba85d3cc14f3419cfbc63edf03f532
 
 </android.support.constraint.ConstraintLayout>
