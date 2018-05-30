@@ -2,15 +2,19 @@ package com.example.rania.itigraduationproject;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.rania.itigraduationproject.Controllers.RecycleViewAdapter;
 import com.example.rania.itigraduationproject.Controllers.SessionManager;
 import com.example.rania.itigraduationproject.Interfaces.Service;
 import com.example.rania.itigraduationproject.model.Trip;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -28,6 +32,10 @@ public class TripSearch extends AppCompatActivity {
     private static Retrofit retrofit = null;
     SessionManager session_mangement;
     Service service;
+    RecyclerView recycleView;
+    RecycleViewAdapter adapter;
+    List<Trip>tripList;
+
 
 
 
@@ -43,6 +51,7 @@ public class TripSearch extends AppCompatActivity {
                 .build();
 
         service = retrofit.create(Service.class);
+        tripList=new ArrayList<>();
 
 
         //resources
@@ -50,6 +59,12 @@ public class TripSearch extends AppCompatActivity {
         fromTxt = findViewById(R.id.fromTxt);
         toTxt = findViewById(R.id.toTxt);
         searchBtn = findViewById(R.id.search_button);
+        recycleView=(RecyclerView)findViewById(R.id.recyleView);
+        recycleView.setHasFixedSize(true);
+        recycleView.setLayoutManager(new LinearLayoutManager(this));
+        adapter=new RecycleViewAdapter(this,tripList);
+        recycleView.setAdapter(adapter);
+
 
 
 

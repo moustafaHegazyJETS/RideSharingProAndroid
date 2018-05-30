@@ -85,5 +85,11 @@
         app:layout_constraintEnd_toStartOf="@+id/toTxt"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText2" />
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recyleView"
+        />
+
 
 </android.support.constraint.ConstraintLayout>
