@@ -48,4 +48,8 @@ public interface Service {
     @GET("h")
     Call<String> getHello2();
 
+
+    @POST("getDriverInfo.json")
+    Call<User> getDriverInfo(@Body Trip t);
+
 }
