@@ -29,7 +29,6 @@
             android:name=".Login"
             android:label="@string/login" />
         <activity
-
             android:name=".Profile"
             android:label="@string/user_profile" />
         <activity
@@ -43,7 +42,8 @@
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".TripShowActivity" />
-        <activity android:name=".TripSearch"></activity>
+        <activity android:name=".TripSearch" />
+        <activity android:name=".TripDetailsActivity"></activity>
     </application>
 
 </manifest>

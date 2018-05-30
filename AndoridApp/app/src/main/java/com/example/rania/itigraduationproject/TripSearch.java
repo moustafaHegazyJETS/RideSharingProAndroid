@@ -1,5 +1,6 @@
 package com.example.rania.itigraduationproject;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,10 +14,9 @@ import com.example.rania.itigraduationproject.Controllers.RecycleViewAdapter;
 import com.example.rania.itigraduationproject.Controllers.SessionManager;
 import com.example.rania.itigraduationproject.Interfaces.Service;
 import com.example.rania.itigraduationproject.model.Trip;
-
 import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -79,18 +79,12 @@ public class TripSearch extends AppCompatActivity {
                 }
                 else
                 {
-
                     Trip t = new Trip();
 
                     t.setFrom(fromTxt.getText().toString());
                     t.setTo(toTxt.getText().toString());
-
-
-                    Toast.makeText(TripSearch.this, ""+fromTxt.getText().toString()+" "+toTxt.getText().toString(), Toast.LENGTH_SHORT).show();
-
+//                    Toast.makeText(TripSearch.this, ""+fromTxt.getText().toString()+" "+toTxt.getText().toString(), Toast.LENGTH_SHORT).show();
                     requestTrip(t);
-
-
                 }
             }
         });
@@ -110,14 +104,11 @@ public class TripSearch extends AppCompatActivity {
 
                 if (response.body()!=null)
                 {//Here To Write Operation Code
-
-//                    for (int i = 0 ; i < response.body().size();i++)
-//                    {
-//
-//
-//                    }
-
                     Toast.makeText(TripSearch.this, ""+response.body().get(0).getTripName(), Toast.LENGTH_SHORT).show();
+                    Intent intent_home = new Intent(getApplicationContext(), TripShowActivity.class);
+                    intent_home.putExtra("tripList", (Serializable) response.body() );
+                    startActivity(intent_home);
+                    finish();
                 }
             }
 
