@@ -43,7 +43,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".TripShowActivity" />
         <activity android:name=".TripSearch" />
-        <activity android:name=".TripDetailsActivity"></activity>
+        <activity android:name=".TripDetailsActivity" />
+        <activity android:name=".DriverInfoShow"></activity>
     </application>
 
 </manifest>

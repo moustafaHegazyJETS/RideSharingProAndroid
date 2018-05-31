@@ -80,11 +80,12 @@ public class TripSearch extends AppCompatActivity {
                 else
                 {
                     Trip t = new Trip();
+                        t.setFrom(fromTxt.getText().toString());
+                        t.setTo(toTxt.getText().toString());
+                        requestTrip(t);
+//                         Toast.makeText(TripSearch.this, "Please Fill all", Toast.LENGTH_SHORT).show();
 
-                    t.setFrom(fromTxt.getText().toString());
-                    t.setTo(toTxt.getText().toString());
-//                    Toast.makeText(TripSearch.this, ""+fromTxt.getText().toString()+" "+toTxt.getText().toString(), Toast.LENGTH_SHORT).show();
-                    requestTrip(t);
+
                 }
             }
         });
@@ -104,7 +105,7 @@ public class TripSearch extends AppCompatActivity {
 
                 if (response.body()!=null)
                 {//Here To Write Operation Code
-                    Toast.makeText(TripSearch.this, ""+response.body().get(0).getTripName(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(TripSearch.this, ""+response.body().get(0).getTripName(), Toast.LENGTH_SHORT).show();
                     Intent intent_home = new Intent(getApplicationContext(), TripShowActivity.class);
                     intent_home.putExtra("tripList", (Serializable) response.body() );
                     startActivity(intent_home);

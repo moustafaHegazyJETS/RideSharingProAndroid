@@ -31,6 +31,9 @@ public class Trip implements Serializable {
     @SerializedName("driverId")
     @Expose
     private DriverCarInfo driverId;
+    @SerializedName("cost")
+    @Expose
+    private float cost;
 
 
 
@@ -100,6 +103,13 @@ public class Trip implements Serializable {
 
     public void setDriverId(DriverCarInfo driverId) {
         this.driverId = driverId;
+    }
+    public float getCost() {
+        return cost;
+    }
+
+    public void setCost(float cost) {
+        this.cost = cost;
     }
 
 }
