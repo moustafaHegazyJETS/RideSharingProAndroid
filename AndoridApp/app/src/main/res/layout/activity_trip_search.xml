@@ -1,95 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:columnCount="2"
+    android:rowCount="2"
     tools:context=".TripSearch">
 
-    <Button
-        android:id="@+id/search_button"
-        android:layout_width="wrap_content"
+    <GridLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="68dp"
-        android:layout_marginEnd="148dp"
-        android:layout_marginLeft="148dp"
-        android:layout_marginRight="148dp"
-        android:layout_marginStart="148dp"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
+        android:layout_alignParentTop="true"
+        android:columnCount="2"
+        android:rowCount="2"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
     <TextView
         android:id="@+id/editText2"
-        android:layout_width="58dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="14dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="From"
-        app:layout_constraintBottom_toTopOf="@+id/editText3"
-        app:layout_constraintEnd_toStartOf="@+id/fromTxt"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="@string/from"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="20dp" />
 
     <EditText
         android:id="@+id/fromTxt"
-        android:layout_width="225dp"
-        android:layout_height="34dp"
-        android:layout_marginBottom="15dp"
-        android:layout_marginEnd="70dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="70dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="19dp"
-        app:layout_constraintBottom_toTopOf="@+id/toTxt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/editText2"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:focusableInTouchMode="true"
+        android:paddingLeft="20dp"/>
+    <TextView
+        android:id="@+id/editText3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/to"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="20dp" />
 
     <EditText
         android:id="@+id/toTxt"
-        android:layout_width="225dp"
-        android:layout_height="34dp"
-        android:layout_marginBottom="274dp"
-        android:layout_marginEnd="70dp"
-        android:layout_marginLeft="23dp"
-        android:layout_marginRight="70dp"
-        android:layout_marginStart="23dp"
-        android:layout_marginTop="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/search_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/editText3"
-        app:layout_constraintTop_toBottomOf="@+id/fromTxt" />
-
-    <TextView
-        android:id="@+id/editText3"
-        android:layout_width="50dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="390dp"
-        android:layout_marginEnd="23dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="23dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="13dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="To"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/toTxt"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/recyleView"
-        />
+        android:focusableInTouchMode="true"
+        android:paddingLeft="20dp" />
+        <Button
+            android:id="@+id/search_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="50dp"
+            android:background="@drawable/buttondesign"
+            android:text="@string/Search"
+            android:textSize="50dp"
+            android:textColor="@android:color/black"/>
+    </GridLayout>
 
 
-</android.support.constraint.ConstraintLayout>
+
+
+</ScrollView>

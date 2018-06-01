@@ -32,9 +32,7 @@ public class TripSearch extends AppCompatActivity {
     private static Retrofit retrofit = null;
     SessionManager session_mangement;
     Service service;
-    RecyclerView recycleView;
-    RecycleViewAdapter adapter;
-    List<Trip>tripList;
+
 
 
 
@@ -51,7 +49,7 @@ public class TripSearch extends AppCompatActivity {
                 .build();
 
         service = retrofit.create(Service.class);
-        tripList=new ArrayList<>();
+
 
 
         //resources
@@ -59,11 +57,7 @@ public class TripSearch extends AppCompatActivity {
         fromTxt = findViewById(R.id.fromTxt);
         toTxt = findViewById(R.id.toTxt);
         searchBtn = findViewById(R.id.search_button);
-        recycleView=(RecyclerView)findViewById(R.id.recyleView);
-        recycleView.setHasFixedSize(true);
-        recycleView.setLayoutManager(new LinearLayoutManager(this));
-        adapter=new RecycleViewAdapter(this,tripList);
-        recycleView.setAdapter(adapter);
+
 
 
 
@@ -104,6 +98,7 @@ public class TripSearch extends AppCompatActivity {
 
                 if (response.body()!=null)
                 {//Here To Write Operation Code
+
                     Toast.makeText(TripSearch.this, ""+response.body().get(0).getTripName(), Toast.LENGTH_SHORT).show();
                     Intent intent_home = new Intent(getApplicationContext(), TripShowActivity.class);
                     intent_home.putExtra("tripList", (Serializable) response.body() );
