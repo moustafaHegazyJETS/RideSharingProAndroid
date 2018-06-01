@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -18,7 +19,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashScreen">
+        <activity android:name=".SplashScreen" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,24 +28,42 @@
         </activity>
         <activity
             android:name=".Login"
-            android:label="@string/login" />
+            android:label="@string/login"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".Profile"
-            android:label="@string/user_profile" />
+            android:label="@string/user_profile"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".SignUp"
-            android:label="@string/Register" />
+            android:label="@string/Register"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".DriverRegister"
-            android:label="@string/driveRegister" />
+            android:label="@string/driveRegister"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".TripShowActivity" />
-        <activity android:name=".TripSearch" />
-        <activity android:name=".TripDetailsActivity" />
-        <activity android:name=".DriverInfoShow"></activity>
+        <activity android:name=".TripShowActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".TripSearch" android:screenOrientation="portrait" />
+        <activity android:name=".TripDetailsActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".DriverInfoShow" android:screenOrientation="portrait"/>
+
+        <service
+            android:name=".alarmPk.RingtonePlayingService"
+            android:enabled="true" />
+
+        <receiver android:name=".alarmPk.Alarm_receiver" />
+
+        <activity
+            android:name=".DetailsOfEvent"
+            android:label="@string/title_activity_details_of_event"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

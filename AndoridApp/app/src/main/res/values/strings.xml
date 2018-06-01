@@ -56,6 +56,7 @@
     <string name="TripName">TripName</string>
     <string name="driverdetails">Driver Details</string>
     <string name="cost">trip coast</string>
+    <string name="title_activity_details_of_event">DetailsOfEvent</string>
 
 
 </resources>

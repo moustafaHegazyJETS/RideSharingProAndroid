@@ -34,6 +34,9 @@ public class Trip implements Serializable {
     @SerializedName("cost")
     @Expose
     private float cost;
+    @SerializedName("dayTrip")
+    @Expose
+    private String day;
 
 
 
@@ -104,12 +107,21 @@ public class Trip implements Serializable {
     public void setDriverId(DriverCarInfo driverId) {
         this.driverId = driverId;
     }
+
     public float getCost() {
         return cost;
     }
 
     public void setCost(float cost) {
         this.cost = cost;
+    }
+
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
     }
 
 }

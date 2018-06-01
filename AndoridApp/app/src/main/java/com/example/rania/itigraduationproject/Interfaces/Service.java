@@ -55,5 +55,12 @@ public interface Service {
     @POST("getDriverCarInfo.json")
     Call<DriverCarInfo> getDriverCarInfo(@Body User u);
 
+    @POST("CehckForSeats.json")
+    Call<String> checkForSeats(@Body int tripID);
+
+    @POST("registerWithTrip.json")
+    Call<User> registerWithTrip(@Body List<Integer> values );
+
+
 
 }

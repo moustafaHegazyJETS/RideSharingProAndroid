@@ -25,7 +25,7 @@ public class DBconnection  extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table IF NOT EXISTS trip (id INTEGER primary key," +
                 " trip_name TEXT NOT NULL, trip_start_place TEXT, trip_end_place TEXT,trip_time TEXT," +
-                " date  DATETIME DEFAULT CURRENT_TIMESTAMP,start_lat TEXT,start_alt TEXT,end_lat TEXT" +
+                " day  DATETIME DEFAULT CURRENT_TIMESTAMP,start_lat TEXT,start_alt TEXT,end_lat TEXT" +
                 ",end_alt TEXT,Past TEXT,details TEXT,userID INTEGER,driverID INTEGER,driverName TEXT , tripCost FLOAT ," +
                 " carID TEXT,carColor TEXT ,carBrand TEXT,carModel TEXT,tripId INTEGER)");
 
@@ -55,7 +55,7 @@ public class DBconnection  extends SQLiteOpenHelper{
         values.put("trip_time",time);
         values.put("trip_start_place",start);
         values.put("trip_end_place",end);
-        values.put("date",tripdate);
+        values.put("day",tripdate);
         values.put("past",past);
         values.put("start_lat",start_lat);
         values.put("start_alt",start_alt);
@@ -131,6 +131,7 @@ public class DBconnection  extends SQLiteOpenHelper{
         t.setTime(result.getString(result.getColumnIndex("trip_time")));
         t.setTripName(result.getString(result.getColumnIndex("trip_name")));
         t.setTo(result.getString(result.getColumnIndex("trip_end_place")));
+        t.setDay(result.getString(result.getColumnIndex("day")));
         return t;
     }
 
