@@ -6,18 +6,13 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.example.rania.itigraduationproject.Controllers.RecycleViewAdapter;
 import com.example.rania.itigraduationproject.model.Trip;
 import com.example.rania.itigraduationproject.model.User;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class TripShowActivity extends AppCompatActivity {
@@ -74,6 +69,21 @@ public class TripShowActivity extends AppCompatActivity {
            recycleView.setLayoutManager(new LinearLayoutManager(this));
            adapter=new RecycleViewAdapter(this,tripArray);
            recycleView.setAdapter(adapter);
+           adapter.setClickListener(new RecycleViewAdapter.ClickListener() {
+               @Override
+               public void onItemClick(View view, int position) {
+                   Intent in =new Intent(TripShowActivity.this,TripDetailsActivity.class);
+                   in.putExtra("trip",(Serializable) tripArray.get(position) );
+                   startActivity(in);
+
+               }
+           });
+
+
+
+
+
+
 
 
        }

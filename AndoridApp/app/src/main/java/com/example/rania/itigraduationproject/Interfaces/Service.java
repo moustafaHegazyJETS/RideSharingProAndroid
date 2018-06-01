@@ -52,4 +52,8 @@ public interface Service {
     @POST("getDriverInfo.json")
     Call<User> getDriverInfo(@Body Trip t);
 
+    @POST("getDriverCarInfo.json")
+    Call<DriverCarInfo> getDriverCarInfo(@Body User u);
+
+
 }
