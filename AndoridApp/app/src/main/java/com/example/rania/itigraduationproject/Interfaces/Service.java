@@ -61,6 +61,9 @@ public interface Service {
     @POST("registerWithTrip.json")
     Call<User> registerWithTrip(@Body List<Integer> values );
 
+    @POST("addTrip.json")
+    Call<User> addTrip(@Body Trip t);
+
 
 
 }

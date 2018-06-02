@@ -74,23 +74,29 @@ public class SplashScreen extends AppCompatActivity {
                     }
 
                     if (response.body() != null) {
-
-                        if(!response.body().getDriverCarInfo().equals(null)){
-                            System.out.println("_____________________________________");
-                            System.out.println(response.body().getDriverCarInfo().getCarModel());
-                        }
-
-
                         session_mangement.createLoginSession(response.body().getEmail(), response.body().getPassword());
                         Thread th = new Thread() {
                             @Override
                             public void run() {
                                 try {
                                     sleep(3000);
-                                    Intent i = new Intent(SplashScreen.this, HomeActivity.class);
-                                    i.putExtra("user", response.body());
-                                    startActivity(i);
-                                    finish();
+                                    if(response.body().getDriverCarInfo()!=null){
+                                        System.out.println("_____________________________________");
+                                        System.out.println(response.body().getDriverCarInfo().getCarModel());
+                                        Intent driver_i = new Intent(SplashScreen.this, HomeDriver.class);
+                                        driver_i.putExtra("user", response.body());
+                                        startActivity(driver_i);
+                                        finish();
+
+                                    }else
+                                    {
+                                        Intent i = new Intent(SplashScreen.this, HomeActivity.class);
+//                                        System.out.println(response.body().getDriverCarInfo().getCarModel());
+                                        i.putExtra("user", response.body());
+                                        startActivity(i);
+                                        finish();
+                                    }
+
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }

@@ -19,7 +19,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashScreen" android:screenOrientation="portrait">
+        <activity
+            android:name=".SplashScreen"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,29 +31,36 @@
         <activity
             android:name=".Login"
             android:label="@string/login"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Profile"
             android:label="@string/user_profile"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".SignUp"
             android:label="@string/Register"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".DriverRegister"
             android:label="@string/driveRegister"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".TripShowActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".TripSearch" android:screenOrientation="portrait" />
-        <activity android:name=".TripDetailsActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".DriverInfoShow" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".TripShowActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TripSearch"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TripDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DriverInfoShow"
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".alarmPk.RingtonePlayingService"
@@ -62,8 +71,20 @@
         <activity
             android:name=".DetailsOfEvent"
             android:label="@string/title_activity_details_of_event"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".DriverHomeActivity"
+            android:label="@string/title_activity_driver_home"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".HomeDriver"
+            android:label="@string/title_activity_home_driver"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CreateTrip"
+            android:label="@string/title_activity_create_trip"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
