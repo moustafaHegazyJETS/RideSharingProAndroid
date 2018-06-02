@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".TripShowActivity">
 
-    <ListView
+    <!--<ListView
         android:id="@+id/ListOfTrips"
         android:layout_width="377dp"
         android:layout_height="408dp"
@@ -19,7 +19,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Search" />
+        app:layout_constraintTop_toBottomOf="@+id/Search" />-->
 
     <Button
         android:id="@+id/Search"
@@ -32,9 +32,25 @@
         android:layout_marginStart="148dp"
         android:layout_marginTop="32dp"
         android:text="Search"
-        app:layout_constraintBottom_toTopOf="@+id/ListOfTrips"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</android.support.constraint.ConstraintLayout>
+        app:layout_constraintTop_toTopOf="parent"
+      />
+
+    <ListView
+        android:id="@+id/tripList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="119dp" />
+
+    <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:id="@+id/recyleView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--tools:layout_editor_absoluteX="8dp"-->
+        <!--tools:layout_editor_absoluteY="8dp"-->
+        <!--android:layout_marginRight="50dp"-->
+        <!--android:layout_marginTop="100dp"/>-->
+</RelativeLayout>

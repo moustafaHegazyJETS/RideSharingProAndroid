@@ -55,6 +55,9 @@
     <string name="SourceTrip">From</string>
     <string name="TripName">TripName</string>
     <string name="driverdetails">Driver Details</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="Search">Search</string>
     <string name="cost">trip coast</string>
     <string name="title_activity_details_of_event">DetailsOfEvent</string>
 

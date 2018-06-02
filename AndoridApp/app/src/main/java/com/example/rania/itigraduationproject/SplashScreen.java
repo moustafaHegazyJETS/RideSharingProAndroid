@@ -75,6 +75,11 @@ public class SplashScreen extends AppCompatActivity {
 
                     if (response.body() != null) {
 
+                        if(!response.body().getDriverCarInfo().equals(null)){
+                            System.out.println("_____________________________________");
+                            System.out.println(response.body().getDriverCarInfo().getCarModel());
+                        }
+
 
                         session_mangement.createLoginSession(response.body().getEmail(), response.body().getPassword());
                         Thread th = new Thread() {
