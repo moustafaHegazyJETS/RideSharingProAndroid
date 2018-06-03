@@ -16,13 +16,13 @@ public class Trip implements Serializable {
     @SerializedName("details")
     @Expose
     private String details;
-    @SerializedName("time")
+    @SerializedName("tripTime")
     @Expose
     private String time;
-    @SerializedName("from")
+    @SerializedName("tripFrom")
     @Expose
     private String from;
-    @SerializedName("to")
+    @SerializedName("tripTo")
     @Expose
     private String to;
     @SerializedName("numberOfSeats")
