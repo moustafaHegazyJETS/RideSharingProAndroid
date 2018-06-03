@@ -201,6 +201,7 @@ public class TripDetailsActivity extends AppCompatActivity {
 
                                         alarm_intent.putExtra("Ex", "on");
                                         alarm_intent.putExtra("id", String.valueOf(id));
+                                        alarm_intent.putExtra("who","user");
 
                                         pending_intent = pending_intent.getBroadcast(TripDetailsActivity.this, id
                                                 , alarm_intent, PendingIntent.FLAG_UPDATE_CURRENT);

@@ -15,12 +15,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.rania.itigraduationproject.Controllers.SessionManager;
+import com.example.rania.itigraduationproject.SqliteDBTrip.DBDriverConnection;
+import com.example.rania.itigraduationproject.model.Trip;
 import com.example.rania.itigraduationproject.model.User;
 
+import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomeDriver extends AppCompatActivity
@@ -32,6 +40,7 @@ public class HomeDriver extends AppCompatActivity
     SessionManager session;
 
     User user;
+    DBDriverConnection dbDriverConnection;
 
 
 
@@ -44,6 +53,8 @@ public class HomeDriver extends AppCompatActivity
         session=new SessionManager(getApplicationContext());
         Intent i = getIntent();
         user = (User) i.getExtras().get("user");
+        dbDriverConnection = new DBDriverConnection(this);
+
 
 
         //resources
@@ -55,8 +66,28 @@ public class HomeDriver extends AppCompatActivity
         helloTxt = findViewById(R.id.HelloTxt);
         helloTxt.setText("Hello Driver : "+user.getUserName());
         listViewDriver = findViewById(R.id.ListViewDriver);
+        final ArrayList<Trip> tripArray = dbDriverConnection.readFromTripDriverRecent();
 
+        List<String> tripNames = new ArrayList<>();
+        for (int ii =0 ; ii<tripArray.size() ; ii++)
+        {
+            tripNames.add(ii,tripArray.get(ii).getTripName().toString());
+            Toast.makeText(this, ""+tripArray.get(ii).getTripName().toString(), Toast.LENGTH_SHORT).show();
 
+        }
+
+        listViewDriver.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, tripNames));
+
+        listViewDriver.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                Intent in =new Intent(HomeDriver.this,TripDetailsForDriver.class);
+                in.putExtra("tripID",(Serializable) tripArray.get(i).getIdTrip() );
+                startActivity(in);
+
+            }
+        });
 
         //actions
 

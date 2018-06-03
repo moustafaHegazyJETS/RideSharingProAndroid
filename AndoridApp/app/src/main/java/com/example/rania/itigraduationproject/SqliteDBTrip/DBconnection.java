@@ -90,7 +90,7 @@ public class DBconnection  extends SQLiteOpenHelper{
         String tripName ;
         while (result.isAfterLast()==false){
             tripName =result.getString(result.getColumnIndex("trip_name"));
-            tripsNames.add(tripName);
+            tripsNames.add(i,tripName);
             result.moveToNext();
             i++;
         };
@@ -109,7 +109,7 @@ public class DBconnection  extends SQLiteOpenHelper{
         String tripName ;
         while (result.isAfterLast()==false){
             tripName =result.getString(result.getColumnIndex("trip_name"));
-            tripsNames.add(tripName);
+            tripsNames.add(i,tripName);
             result.moveToNext();
             i++;
         };

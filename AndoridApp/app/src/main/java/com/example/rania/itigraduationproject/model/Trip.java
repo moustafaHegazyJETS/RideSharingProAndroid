@@ -37,12 +37,22 @@ public class Trip implements Serializable {
     @SerializedName("dayTrip")
     @Expose
     private String day;
+    @SerializedName("tpast")
+    @Expose
+    private String past;
 
 
 
 
 
 
+    public String getPast() {
+        return past;
+    }
+
+    public void setPast(String past) {
+        this.past = past;
+    }
 
     public Integer getIdTrip() {
         return idTrip;

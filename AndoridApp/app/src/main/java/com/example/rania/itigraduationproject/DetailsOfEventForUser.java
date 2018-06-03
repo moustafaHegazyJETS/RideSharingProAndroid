@@ -1,30 +1,15 @@
 package com.example.rania.itigraduationproject;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.TextView;
-
-import android.app.AlarmManager;
-import android.app.Dialog;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
-import android.view.Window;
-import android.widget.Button;
-import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,10 +25,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class DetailsOfEvent extends AppCompatActivity {
+public class DetailsOfEventForUser extends AppCompatActivity {
 
-    //Event Screen
-    TextView idFromIntent;
+    int pending_id;
 
     Context context;
 
@@ -53,16 +37,11 @@ public class DetailsOfEvent extends AppCompatActivity {
     DBDriverConnection dbDriverConnection;
     private static Retrofit retrofit = null;
     Service service;
-    int pending_id;
     Intent alarm_intent;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_details_of_event);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setContentView(R.layout.activity_details_of_event_for_user);
 
         //objects
         this.context=this;
@@ -77,7 +56,7 @@ public class DetailsOfEvent extends AppCompatActivity {
 
         pending_id = Integer.parseInt((String) my_intent.getExtras().get("id"));
 
-        pending_intent=pending_intent.getBroadcast(DetailsOfEvent.this,pending_id
+        pending_intent=pending_intent.getBroadcast(DetailsOfEventForUser.this,pending_id
                 ,alarm_intent,PendingIntent.FLAG_UPDATE_CURRENT);
 
         retrofit = new Retrofit.Builder()
@@ -88,40 +67,29 @@ public class DetailsOfEvent extends AppCompatActivity {
         dbDriverConnection = new DBDriverConnection(this);
 
 
-
-
         //resources
-        idFromIntent = findViewById(R.id.idFromIntent);
-        idFromIntent.setText(""+pending_id);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        TextView userID = findViewById(R.id.userID);
+//        userID.setText(pending_id);
+        Toast.makeText(context, ""+pending_id, Toast.LENGTH_SHORT).show();
 
 
 
         //actions
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                doTask(pending_id,alarm_intent);
-
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        // hna han3ml alsho8l bta3 al cancel bardo
-        Toast.makeText(context, "Please Press Button", Toast.LENGTH_SHORT).show();
-    }
 
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        doTask(pending_id,alarm_intent);
-    }
+    //tb3n kol dh lazem yt8ayer ll dbconnection haaaaaaaaaaa
 
     public void doTask(int pending_id , Intent alarm_intent)
     {
@@ -159,5 +127,6 @@ public class DetailsOfEvent extends AppCompatActivity {
 
 
     }
+
 
 }

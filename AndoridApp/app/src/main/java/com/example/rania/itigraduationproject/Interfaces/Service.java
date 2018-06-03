@@ -64,6 +64,9 @@ public interface Service {
     @POST("addTrip.json")
     Call<Trip> addTrip(@Body List<Trip> vals);
 
+    @POST("setTripToBePast.json")
+    Call<Void> setTripToBePast(@Body Integer id);
+
 
 
 }

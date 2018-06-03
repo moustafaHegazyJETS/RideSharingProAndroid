@@ -1,8 +1,14 @@
 package com.example.rania.itigraduationproject;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +20,8 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.rania.itigraduationproject.Interfaces.Service;
+import com.example.rania.itigraduationproject.SqliteDBTrip.DBDriverConnection;
+import com.example.rania.itigraduationproject.alarmPk.Alarm_receiver;
 import com.example.rania.itigraduationproject.model.DriverCarInfo;
 import com.example.rania.itigraduationproject.model.Trip;
 import com.example.rania.itigraduationproject.model.User;
@@ -47,6 +55,10 @@ public class CreateTrip extends AppCompatActivity {
     Service service;
     private static Retrofit retrofit = null;
     User user;
+    DBDriverConnection dbDriverConnection;
+    AlarmManager alarmManage;
+    PendingIntent pending_intent;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,16 +69,19 @@ public class CreateTrip extends AppCompatActivity {
 
         //objects
         user = (User) getIntent().getExtras().get("user");
+        DriverCarInfo d = user.getDriverCarInfo();
+        System.out.println(""+d.getCarModel());
         retrofit = new Retrofit.Builder()
                 .baseUrl(Service.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         service = retrofit.create(Service.class);
+        dbDriverConnection = new DBDriverConnection(this);
+        alarmManage = (AlarmManager) getSystemService(ALARM_SERVICE);
+        final Intent alarm_intent = new Intent(this,Alarm_receiver.class);
+        this.context=this;
 
-        DriverCarInfo d = user.getDriverCarInfo();
-        System.out.println(""+d.getCarModel());
-//        System.out.println(""+d.user());
-//        System.out.println(""+d.user().getDriverCarInfo().getCarModel());
+
 
 
 
@@ -139,16 +154,16 @@ public class CreateTrip extends AppCompatActivity {
             public void onClick(View view) {
                 //ws Work For Adding Trip
                 //*******************Here The Check Conditions For Null Objects *********************
-                Trip trip = new Trip();
-                trip.setTripName("aa");//tripNameTxt.getText().toString()
-                trip.setDetails("aa");//tripDetailsTxt.getText().toString()
-                trip.setTime("20:00");//tripTimeTxt.getText().toString()
-                trip.setDay("01/01/2019");//tripDayTxt.getText().toString()
+                final Trip trip = new Trip();
+                trip.setTripName(tripNameTxt.getText().toString());//tripNameTxt.getText().toString()
+                trip.setDetails(tripDetailsTxt.getText().toString());//tripDetailsTxt.getText().toString()
+                trip.setTime(tripTimeTxt.getText().toString());//tripTimeTxt.getText().toString()
+                trip.setDay(tripDayTxt.getText().toString());//tripDayTxt.getText().toString()
                 System.out.println("******************************"+tripCostTxt.toString()+"   "+tripNumberOfSeatsTxt.toString());
-                trip.setCost(Float.valueOf(20));
-                trip.setNumberOfSeats(Integer.valueOf(2));
-                trip.setTo("a");//tripToTxt.getText().toString()
-                trip.setFrom("a");//tripFromTxt.getText().toString()
+                trip.setCost(Float.valueOf(tripCostTxt.getText().toString()));
+                trip.setNumberOfSeats(Integer.valueOf(tripNumberOfSeatsTxt.getText().toString()));
+                trip.setTo(tripToTxt.getText().toString());//tripToTxt.getText().toString()
+                trip.setFrom(tripFromTxt.getText().toString());//tripFromTxt.getText().toString()
                 System.out.println("s,slslslsls,cfsalfmkmfeokwr"+user.getDriverCarInfo().getDriveCarID());
                 DriverCarInfo d = user.getDriverCarInfo();
 
@@ -166,23 +181,62 @@ public class CreateTrip extends AppCompatActivity {
                 trip.setDriverId(d);
 
 
+
+
                 List<Trip> vals = new ArrayList<>(2);
                 Trip t2 = new Trip();
                 t2.setIdTrip(user.getIdUser());
 
                 vals.add(0,t2);
                 vals.add(1,trip);
-                
-                
-                service.addTrip(vals).enqueue(new Callback<Trip>() {
-                    @Override
-                    public void onResponse(Call<Trip> call, Response<Trip> response) {
-                        if(response.body()!=null)
-                        {
-                            if(response.body().getTo().equals("Done"))
+
+                if(myCalendar.compareTo(onTimeCalender)<=0) {
+                    Toast.makeText(CreateTrip.this, "Check For Upcomming Time", Toast.LENGTH_SHORT).show();
+
+                } else
+                {
+
+                    service.addTrip(vals).enqueue(new Callback<Trip>() {
+                        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                        @Override
+                        public void onResponse(Call<Trip> call, Response<Trip> response) {
+                            if(response.body()!=null)
                             {
-                                Toast.makeText(CreateTrip.this, "Done Adding Trip", Toast.LENGTH_SHORT).show();
-                                //Here to add local work
+                                if(response.body().getTo().equals("Done"))
+                                {
+                                    Toast.makeText(CreateTrip.this, "Done Adding Trip", Toast.LENGTH_SHORT).show();
+                                    //Here to add local work.
+
+                                    final int id = response.body().getIdTrip();
+
+                                    //add to local Sqlite
+                                    dbDriverConnection.insertIntoTrip(id,trip.getTripName());
+
+                                    Intent intent = new Intent(CreateTrip.this, SplashScreen.class);
+                                    //this id is uniqe for each trip so it uses for define pending alarm
+                                    //Value Rag3a mn alweb Service
+
+
+                                    alarm_intent.putExtra("Ex", "on");
+                                    alarm_intent.putExtra("id", String.valueOf(id));
+                                    alarm_intent.putExtra("who","driver");
+
+                                    pending_intent = pending_intent.getBroadcast(CreateTrip.this, id
+                                            , alarm_intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+                                    alarmManage.setExact(AlarmManager.RTC_WAKEUP, myCalendar.getTimeInMillis(), pending_intent);
+
+                                    Toast toastk = Toast.makeText(CreateTrip.this, "done"+myCalendar.getTimeInMillis(),Toast.LENGTH_LONG);
+                                    toastk.show();
+
+                                    startActivity(intent);
+                                    finish();
+
+
+
+
+
 
 
                             }else{
@@ -205,6 +259,9 @@ public class CreateTrip extends AppCompatActivity {
 
                     }
                 });
+                
+                }
+
 
 
 

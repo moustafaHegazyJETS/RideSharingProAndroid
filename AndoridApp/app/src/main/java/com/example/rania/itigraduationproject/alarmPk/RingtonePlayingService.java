@@ -13,6 +13,7 @@ import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.example.rania.itigraduationproject.DetailsOfEvent;
+import com.example.rania.itigraduationproject.DetailsOfEventForUser;
 import com.example.rania.itigraduationproject.HomeActivity;
 import com.example.rania.itigraduationproject.R;
 
@@ -46,6 +47,7 @@ public  class RingtonePlayingService extends Service {
 
         String state = intent.getExtras().getString("Ex");
         String id =intent.getExtras().getString("id");
+        String who = intent.getExtras().getString("who");
 
         assert state !=null;
         switch (state) {
@@ -75,7 +77,18 @@ public  class RingtonePlayingService extends Service {
             this.isRunning=true;
             this.start_id=0;
 
-            Intent intent_notify = new Intent(this.getApplicationContext(),DetailsOfEvent.class);
+            Intent intent_notify = new Intent() ;
+
+
+            if(who.equals("driver")){
+
+                intent_notify = new Intent(this.getApplicationContext(),DetailsOfEvent.class);
+
+            }else if(who.equals("user"))
+            {
+                 intent_notify = new Intent(this.getApplicationContext(),DetailsOfEventForUser.class);
+
+            }
             intent_notify.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent_notify.putExtra("id",id);
 

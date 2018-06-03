@@ -66,6 +66,8 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="title_activity_create_trip">CreateTrip</string>
+    <string name="title_activity_trip_details_for_driver">TripDetailsForDriver</string>
+    <string name="title_activity_details_of_event_for_user">DetailsOfEventForUser</string>
 
 
 </resources>

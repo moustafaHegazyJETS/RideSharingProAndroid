@@ -84,6 +84,14 @@
         <activity
             android:name=".CreateTrip"
             android:label="@string/title_activity_create_trip"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".TripDetailsForDriver"
+            android:label="@string/title_activity_trip_details_for_driver"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".DetailsOfEventForUser"
+            android:label="@string/title_activity_details_of_event_for_user"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
