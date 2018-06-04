@@ -38,12 +38,19 @@
         app:layout_constraintTop_toTopOf="parent"
       />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyleView"
+    <ListView
+        android:id="@+id/tripList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginTop="100dp"/>
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="119dp" />
+
+    <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:id="@+id/recyleView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--tools:layout_editor_absoluteX="8dp"-->
+        <!--tools:layout_editor_absoluteY="8dp"-->
+        <!--android:layout_marginRight="50dp"-->
+        <!--android:layout_marginTop="100dp"/>-->
 </RelativeLayout>

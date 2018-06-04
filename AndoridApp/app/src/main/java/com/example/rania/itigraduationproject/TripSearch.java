@@ -168,7 +168,7 @@ public class TripSearch extends AppCompatActivity {
                 if (response.body()!=null)
                 {//Here To Write Operation Code
 
-                    Toast.makeText(TripSearch.this, ""+response.body().get(0).getTripName(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(TripSearch.this, ""+response.body().get(0).getTripName(), Toast.LENGTH_SHORT).show();
 
 //                    Toast.makeText(TripSearch.this, ""+response.body().get(0).getTripName(), Toast.LENGTH_SHORT).show();
                     Intent intent_home = new Intent(getApplicationContext(), TripShowActivity.class);

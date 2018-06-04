@@ -16,13 +16,13 @@ public class Trip implements Serializable {
     @SerializedName("details")
     @Expose
     private String details;
-    @SerializedName("time")
+    @SerializedName("tripTime")
     @Expose
     private String time;
-    @SerializedName("from")
+    @SerializedName("tripFrom")
     @Expose
     private String from;
-    @SerializedName("to")
+    @SerializedName("tripTo")
     @Expose
     private String to;
     @SerializedName("numberOfSeats")
@@ -34,12 +34,25 @@ public class Trip implements Serializable {
     @SerializedName("cost")
     @Expose
     private float cost;
+    @SerializedName("dayTrip")
+    @Expose
+    private String day;
+    @SerializedName("tpast")
+    @Expose
+    private String past;
 
 
 
 
 
 
+    public String getPast() {
+        return past;
+    }
+
+    public void setPast(String past) {
+        this.past = past;
+    }
 
     public Integer getIdTrip() {
         return idTrip;
@@ -104,12 +117,21 @@ public class Trip implements Serializable {
     public void setDriverId(DriverCarInfo driverId) {
         this.driverId = driverId;
     }
+
     public float getCost() {
         return cost;
     }
 
     public void setCost(float cost) {
         this.cost = cost;
+    }
+
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
     }
 
 }

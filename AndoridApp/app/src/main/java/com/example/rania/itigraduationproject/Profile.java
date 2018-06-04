@@ -10,19 +10,17 @@ import com.example.rania.itigraduationproject.model.User;
 
 public class Profile extends AppCompatActivity {
     EditText userName;
-
     EditText phone;
     EditText email;
     EditText nationalId;
     EditText birthdate ;
     EditText gender;
     private ProgressDialog loading;
-   // EditText registerType;
-
-
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         Intent intent=getIntent();
@@ -35,21 +33,10 @@ public class Profile extends AppCompatActivity {
         birthdate=(EditText)findViewById(R.id.dateEdt);
         gender=(EditText)findViewById(R.id.genderEdt);
 
-
-        if (user!=null) {
-            userName.setText(user.getUserName());
-            email.setText(user.getEmail());
-            phone.setText(user.getMobile());
-            nationalId.setText(user.getNationalid());
-            birthdate.setText(user.getBirthDate());
-            gender.setText(user.getGender());
-        }
-//        registerType.setText(user.get);
-
-
-
-
+        UpdateView(user);
     }
+
+
     public void UpdateView(User user)
     {
         if (user!=null) {

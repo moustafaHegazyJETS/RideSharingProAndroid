@@ -149,17 +149,29 @@ public class Login extends AppCompatActivity {
                 {
 
 
-                        session_mangement.createLoginSession(response.body().getEmail(),response.body().getPassword());
-                        Intent intent_home = new Intent(getApplicationContext(), HomeActivity.class);
-                    System.out.println(response.body().getMobile());
-                    System.out.println(response.body().getBirthDate());
-                    System.out.println(response.body().getEmail());
-                    System.out.println(response.body().getUserName());
-
-                    intent_home.putExtra("user", (Serializable) response.body());
-
-                    startActivity(intent_home);
+                    session_mangement.createLoginSession(response.body().getEmail(),response.body().getPassword());
+                    if(response.body().getDriverCarInfo()!=null){
+                        System.out.println("_____________________________________");
+                        System.out.println(response.body().getDriverCarInfo().getCarModel());
+                        Intent driver_i = new Intent(Login.this, HomeDriver.class);
+                        driver_i.putExtra("user", response.body());
+                        startActivity(driver_i);
                         finish();
+
+                    }else
+                    {
+                        Intent intent_home = new Intent(getApplicationContext(), HomeActivity.class);
+                        System.out.println(response.body().getMobile());
+                        System.out.println(response.body().getBirthDate());
+                        System.out.println(response.body().getEmail());
+                        System.out.println(response.body().getUserName());
+
+                        intent_home.putExtra("user", (Serializable) response.body());
+
+                        startActivity(intent_home);
+                        finish();
+                    }
+
 
 
                 }

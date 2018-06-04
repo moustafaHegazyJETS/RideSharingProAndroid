@@ -49,7 +49,7 @@ public class DriverCarInfo implements Serializable {
     private String licenseIdPhoto;
     @SerializedName("status")
     @Expose
-    private String status;
+    private String status; // this is car number
     @SerializedName("userId")
     @Expose
     private User user;

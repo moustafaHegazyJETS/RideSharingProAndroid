@@ -21,7 +21,6 @@ public interface Service {
     @GET("getUser.json")
     Call<User> getUser();
 
-
     //Call<User>sendUser(@Body User user );
 //    Call<User>sendUser(@Multipart Multipart image,@Multipart String user );
 
@@ -35,12 +34,8 @@ public interface Service {
     @POST("driverSignUpWs")
     Call<DriverCarInfo>saveDriverObject(@Body DriverCarInfo driverCarInfo);
 
-
-
     @GET("getTrip/4.json")
     Call<Trip> getHello();
-
-
 
     @POST("getSearchTrips.json")
     Call<List<Trip>> getTripsFromSearch(@Body Trip obj );
@@ -48,14 +43,22 @@ public interface Service {
     @GET("h")
     Call<String> getHello2();
 
-
     @POST("getDriverInfo.json")
     Call<User> getDriverInfo(@Body Trip t);
 
     @POST("getDriverCarInfo.json")
     Call<DriverCarInfo> getDriverCarInfo(@Body User u);
 
+    @POST("CehckForSeats.json")
+    Call<String> checkForSeats(@Body int tripID);
 
-    interface OnItemClickListener {
-    }
+    @POST("registerWithTrip.json")
+    Call<User> registerWithTrip(@Body List<Integer> values );
+
+    @POST("addTrip.json")
+    Call<Trip> addTrip(@Body List<Trip> vals);
+
+    @POST("setTripToBePast.json")
+    Call<Void> setTripToBePast(@Body Integer id);
+
 }
