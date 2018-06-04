@@ -16,23 +16,23 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
 
    private Context context;
    private List<Trip>tripList;
-    private static ClickListener clickListener;
+//    private static ClickListener clickListener;
+//
+//    public static void setClickListener(ClickListener clickListener) {
+//        RecycleViewAdapter.clickListener = clickListener;
+//    }
 
-    public static void setClickListener(ClickListener clickListener) {
-        RecycleViewAdapter.clickListener = clickListener;
-    }
-
-    public interface ClickListener {
-
-        public void onItemClick(View view,int position);
-    }
+//    public interface ClickListener {
+//
+//        public void onItemClick(View view,int position);
+//    }
 
     public RecycleViewAdapter(Context context, List<Trip> tripList) {
         this.context = context;
         this.tripList = tripList;
     }
 
-    public static class TripViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public static class TripViewHolder extends RecyclerView.ViewHolder{
 
         CardView cv;
         TextView tripName;
@@ -45,16 +45,16 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
 
         }
 
-        @Override
-        public void onClick(View view) {
-            if (clickListener!=null)
-            {
-                int itemPosition = getLayoutPosition();
-                clickListener.onItemClick(view,itemPosition);
+//        @Override
+//        public void onClick(View view) {
+//            if (clickListener!=null)
+//            {
+//                int itemPosition = getLayoutPosition();
+//                clickListener.onItemClick(view,itemPosition);
+//
+//            }
 
-            }
-
-        }
+       // }
 
 
 

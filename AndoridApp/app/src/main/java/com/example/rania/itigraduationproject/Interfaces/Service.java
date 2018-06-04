@@ -56,4 +56,6 @@ public interface Service {
     Call<DriverCarInfo> getDriverCarInfo(@Body User u);
 
 
+    interface OnItemClickListener {
+    }
 }

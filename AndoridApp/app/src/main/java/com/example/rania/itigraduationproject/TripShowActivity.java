@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.rania.itigraduationproject.Controllers.RecycleViewAdapter;
+import com.example.rania.itigraduationproject.Controllers.RecyclerItemClickListener;
 import com.example.rania.itigraduationproject.model.Trip;
 import com.example.rania.itigraduationproject.model.User;
 
@@ -69,15 +70,30 @@ public class TripShowActivity extends AppCompatActivity {
            recycleView.setLayoutManager(new LinearLayoutManager(this));
            adapter=new RecycleViewAdapter(this,tripArray);
            recycleView.setAdapter(adapter);
-           adapter.setClickListener(new RecycleViewAdapter.ClickListener() {
-               @Override
-               public void onItemClick(View view, int position) {
-                   Intent in =new Intent(TripShowActivity.this,TripDetailsActivity.class);
-                   in.putExtra("trip",(Serializable) tripArray.get(position) );
-                   startActivity(in);
+           recycleView.addOnItemTouchListener(new RecyclerItemClickListener(this, recycleView ,new RecyclerItemClickListener.OnItemClickListener() {
+                       @Override public void onItemClick(View view, int position) {
+                           // do whatever
+                             Intent in =new Intent(TripShowActivity.this,TripDetailsActivity.class);
+                             in.putExtra("trip",(Serializable) tripArray.get(position));
+                             startActivity(in);
+                       }
 
-               }
-           });
+                       @Override public void onLongItemClick(View view, int position) {
+                           Intent in =new Intent(TripShowActivity.this,TripDetailsActivity.class);
+                           in.putExtra("trip",(Serializable) tripArray.get(position) );
+                           startActivity(in);
+                       }
+                   })
+           );
+//           adapter.setClickListener(new RecycleViewAdapter.ClickListener() {
+//               @Override
+//               public void onItemClick(View view, int position) {
+//                   Intent in =new Intent(TripShowActivity.this,TripDetailsActivity.class);
+//                   in.putExtra("trip",(Serializable) tripArray.get(position) );
+//                   startActivity(in);
+//
+//               }
+//           });
 
 
 
@@ -88,28 +104,7 @@ public class TripShowActivity extends AppCompatActivity {
 
        }
 
-//
-//            List<String> tripNames = new ArrayList<>();
-//            for (int i =0 ; i<tripArray.size() ; i++)
-//            {
-//                tripNames.add(i,tripArray.get(i).getTripName().toString());
-//
-//            }
-//
-//            tripList.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, tripNames));
-//
-//            tripList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                @Override
-//                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//
-//                    Intent in =new Intent(TripShowActivity.this,TripDetailsActivity.class);
-//                    in.putExtra("trip",(Serializable) tripArray.get(i) );
-//                    startActivity(in);
-//
-//                }
-//            });
-//        }
-//
+
    }
 
 
