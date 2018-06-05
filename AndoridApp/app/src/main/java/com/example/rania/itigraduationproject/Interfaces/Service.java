@@ -32,7 +32,7 @@ public interface Service {
     Call<User>getUserByEmailAndPassword(@Body User user);
 
     @POST("driverSignUpWs")
-    Call<DriverCarInfo>saveDriverObject(@Body DriverCarInfo driverCarInfo);
+    Call<DriverCarInfo>saveDriverObject(@Body User driverCarInfo);
 
     @GET("getTrip/4.json")
     Call<Trip> getHello();

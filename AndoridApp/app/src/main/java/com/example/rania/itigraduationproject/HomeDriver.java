@@ -71,13 +71,20 @@ public class HomeDriver extends AppCompatActivity
         List<String> tripNames = new ArrayList<>();
         for (int ii =0 ; ii<tripArray.size() ; ii++)
         {
-            tripNames.add(ii,tripArray.get(ii).getTripName().toString());
+            tripNames.add(tripArray.get(ii).getTripName().toString());
             Toast.makeText(this, ""+tripArray.get(ii).getTripName().toString(), Toast.LENGTH_SHORT).show();
 
         }
 
         listViewDriver.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, tripNames));
 
+        listViewDriver.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(HomeDriver.this, "Hi", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
         listViewDriver.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

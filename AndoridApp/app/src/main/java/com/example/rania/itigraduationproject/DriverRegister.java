@@ -68,7 +68,7 @@ public class DriverRegister extends AppCompatActivity {
         Intent intent = getIntent();
         final User user = (User) intent.getSerializableExtra("userObj");
 
-        System.out.println(user.getUserName());
+        System.out.println("***********"+user.getDriverCarInfo());
 
         //actions
         signUpBtn.setOnClickListener(new View.OnClickListener() {
@@ -89,8 +89,9 @@ public class DriverRegister extends AppCompatActivity {
                 driverObject.setNationalidPhoto("fjfj");
                 driverObject.setStatus("1");
                 driverObject.setLicenseIdPhoto("ffff");
-                driverObject.setUser(user);
-                service.saveDriverObject(driverObject).enqueue(new Callback<DriverCarInfo>() {
+//                driverObject.setUser(user);
+                user.setDriverCarInfo(driverObject);
+                service.saveDriverObject(user).enqueue(new Callback<DriverCarInfo>() {
                     @Override
                     public void onResponse(Call<DriverCarInfo> call, Response<DriverCarInfo> response) {
 

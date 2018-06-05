@@ -49,7 +49,7 @@ public class DBDriverConnection extends SQLiteOpenHelper {
 
     public ArrayList<Trip> readFromTripDriverRecent(){
         //trips=new TripInfo();
-        ArrayList<Trip> trips=new ArrayList();
+        ArrayList<Trip> tripS=new ArrayList();
         SQLiteDatabase db=this.getReadableDatabase();
         String query ="select * from driverTrip where tripPast=?";
         String past="f";
@@ -57,15 +57,31 @@ public class DBDriverConnection extends SQLiteOpenHelper {
 
         result.moveToFirst();
         int i =0;
-        Trip tripName = new Trip();
+
         while (result.isAfterLast()==false){
-            tripName.setTripName(result.getString(result.getColumnIndex("tripName")));
-            tripName.setIdTrip(result.getInt(result.getColumnIndex("idTrip")));
-            trips.add(i,tripName);
+            Trip trip = new Trip();
+            trip.setTripName(result.getString(result.getColumnIndex("tripName")));
+            trip.setIdTrip(result.getInt(result.getColumnIndex("idTrip")));
+            tripS.add(i,trip);
             result.moveToNext();
+            System.out.println("***"+i+"****IN****"+tripS.get(i).getTripName());
             i++;
-        };
-        return  trips;
+        }
+
+
+
+
+        System.out.println("*******IN****"+tripS.get(0).getTripName());
+        System.out.println("*******IN****"+tripS.get(1).getTripName());
+
+
+
+
+        for (int is = 0 ; is<tripS.size();is++)
+        {
+            System.out.println("*******OUT**********"+tripS.get(is).getTripName());
+        }
+        return  tripS;
     }
     public ArrayList<Trip> readFromTripPast(){
         //trips=new TripInfo();
