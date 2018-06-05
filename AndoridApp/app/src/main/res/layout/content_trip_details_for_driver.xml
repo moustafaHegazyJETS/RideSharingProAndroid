@@ -9,13 +9,57 @@
     tools:showIn="@layout/activity_trip_details_for_driver">
 
     <TextView
-        android:id="@+id/tripId"
+        android:id="@+id/tripNamet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="146dp"
+        android:layout_marginTop="58dp"
         android:text="TextView"
         tools:layout_editor_absoluteX="163dp"
         tools:layout_editor_absoluteY="139dp" />
+
+    <TextView
+        android:id="@+id/tripFromt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="115dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/tripTot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="179dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/tripdatet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/tripTimet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="164dp"
+        android:text="TextView" />
+
+    <Button
+        android:id="@+id/viewAllReserved"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="55dp"
+        android:text="view Reserved Users" />
+
 </RelativeLayout>

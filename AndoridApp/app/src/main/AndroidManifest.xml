@@ -92,6 +92,14 @@
         <activity
             android:name=".DetailsOfEventForUser"
             android:label="@string/title_activity_details_of_event_for_user"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ViewReservedUsers"
+            android:label="@string/title_activity_view_reserved_users"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ViewReservedUserDetails"
+            android:label="@string/title_activity_view_reserved_user_details"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

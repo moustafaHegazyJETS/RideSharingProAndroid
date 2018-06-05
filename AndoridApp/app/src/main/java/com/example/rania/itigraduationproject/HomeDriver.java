@@ -40,6 +40,7 @@ public class HomeDriver extends AppCompatActivity
     SessionManager session;
 
     User user;
+    User driverUser;
     DBDriverConnection dbDriverConnection;
 
 
@@ -53,6 +54,8 @@ public class HomeDriver extends AppCompatActivity
         session=new SessionManager(getApplicationContext());
         Intent i = getIntent();
         user = (User) i.getExtras().get("user");
+        driverUser = user;
+        System.out.println(user.getUserName());
         dbDriverConnection = new DBDriverConnection(this);
 
 
@@ -90,7 +93,8 @@ public class HomeDriver extends AppCompatActivity
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                 Intent in =new Intent(HomeDriver.this,TripDetailsForDriver.class);
-                in.putExtra("tripID",(Serializable) tripArray.get(i).getIdTrip() );
+                in.putExtra("tripVal",(Serializable) tripArray.get(i) );
+                in.putExtra("driverUser",(Serializable) driverUser );
                 startActivity(in);
 
             }

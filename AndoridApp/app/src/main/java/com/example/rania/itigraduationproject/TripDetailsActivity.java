@@ -196,6 +196,7 @@ public class TripDetailsActivity extends AppCompatActivity {
                                                 driverUser.getDriverCarInfo().getCarModel(),driverUser.getIdUser(),t.getIdTrip());
 
                                         Intent intent = new Intent(TripDetailsActivity.this, SplashScreen.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         //this id is uniqe for each trip so it uses for define pending alarm
                                         int id = t.getIdTrip();
 

@@ -67,6 +67,15 @@ public interface Service {
     @POST("setTripToBePast.json")
     Call<Void> setTripToBePast(@Body Integer id);
 
+    @POST("getTrip.json")
+    Call<Trip> getTrip(@Body Trip trip);
+
+    @POST("getReservedUsers.json")
+    Call<List<User>> getReservedUsers(@Body Trip trip);
+
+    @POST("deleteReservation.json")
+    Call<Trip> deleteReservation(@Body List<Integer> tripAndUserID);
+
 
 
 }

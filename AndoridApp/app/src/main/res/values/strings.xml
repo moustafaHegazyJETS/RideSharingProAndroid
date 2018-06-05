@@ -68,6 +68,8 @@
     <string name="title_activity_create_trip">CreateTrip</string>
     <string name="title_activity_trip_details_for_driver">TripDetailsForDriver</string>
     <string name="title_activity_details_of_event_for_user">DetailsOfEventForUser</string>
+    <string name="title_activity_view_reserved_users">ViewReservedUsers</string>
+    <string name="title_activity_view_reserved_user_details">ViewReservedUserDetails</string>
 
 
 </resources>

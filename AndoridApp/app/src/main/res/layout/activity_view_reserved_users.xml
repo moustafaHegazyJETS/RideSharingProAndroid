@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TripDetailsForDriver">
+    tools:context=".ViewReservedUsers">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -20,6 +20,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_trip_details_for_driver" />
+    <include layout="@layout/content_view_reserved_users" />
 
 </android.support.design.widget.CoordinatorLayout>
