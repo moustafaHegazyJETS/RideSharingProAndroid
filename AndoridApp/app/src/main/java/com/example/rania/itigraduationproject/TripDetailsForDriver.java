@@ -31,10 +31,6 @@ public class TripDetailsForDriver extends AppCompatActivity {
         idTextView = findViewById(R.id.tripId);
         idTextView.setText("Id is : "+tripId);
 
-
-
-
-
         //actions
 
         fab.setOnClickListener(new View.OnClickListener() {

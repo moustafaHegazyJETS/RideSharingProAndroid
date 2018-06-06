@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/car_owner_name"
-            android:inputType="textCapWords"
+            android:inputType="text"
             android:drawableLeft="@drawable/name"/>
     </android.support.design.widget.TextInputLayout>
 
@@ -44,7 +44,7 @@
         <EditText android:id="@+id/car_plate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
+            android:inputType=""
             android:hint="@string/car_plate"
             android:drawableLeft="@drawable/name"
             />
@@ -124,7 +124,7 @@
             <EditText android:id="@+id/car_cc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
+                android:inputType="number"
                 android:hint="@string/carcc"
                 android:drawableLeft="@drawable/car"/>
         </android.support.design.widget.TextInputLayout>

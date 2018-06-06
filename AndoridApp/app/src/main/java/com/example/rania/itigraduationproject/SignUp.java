@@ -40,7 +40,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SignUp extends AppCompatActivity {
-    EditText date;
+    TextView date;
     DatePickerDialog datePickerDialog;
     private RadioGroup radio_user_DriverGroup;
     private RadioButton radio_user_DriverGroupButton;
@@ -99,7 +99,7 @@ public class SignUp extends AppCompatActivity {
         mobile=(TextView)findViewById(R.id.phone);
         national_id=(TextView)findViewById(R.id.naional_id);
         name=(TextView) findViewById(R.id.input_name);
-        date = (EditText) findViewById(R.id.date);
+        date = (TextView) findViewById(R.id.date);
         confirmPass=findViewById(R.id.input_password_confirm);
         personalImage=(ImageView)findViewById(R.id.personalimage);
 
@@ -229,7 +229,7 @@ public class SignUp extends AppCompatActivity {
                     } else if (radio_user_DriverGroupButton.getText().toString().equals("Driver")) {
 
 
-                        Toast.makeText(SignUp.this, "SignUp Sucessfully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignUp.this, "Complete SignUp", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(), DriverRegister.class);
 
                         intent.putExtra("userObj", (Serializable) user);
@@ -340,7 +340,7 @@ public class SignUp extends AppCompatActivity {
 
         pattern = Pattern.compile(new String ("(0?[1-9]|1[012]) [/.-] (0?[1-9]|[12][0-9]|3[01]) [/.-] ((19|20)\\\\d\\\\d)"));
         matcher = pattern.matcher(userSelectDate);
-        if (userSelectDate.isEmpty()||matcher.matches()) {
+        if (userSelectDate.isEmpty()||!matcher.matches()) {
             date.setError("Enter Date Please");
             date.requestFocus();
             valid = false;

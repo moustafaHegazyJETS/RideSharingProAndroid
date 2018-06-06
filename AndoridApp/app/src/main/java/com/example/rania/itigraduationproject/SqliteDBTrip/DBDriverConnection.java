@@ -67,20 +67,6 @@ public class DBDriverConnection extends SQLiteOpenHelper {
             System.out.println("***"+i+"****IN****"+tripS.get(i).getTripName());
             i++;
         }
-
-
-
-
-        System.out.println("*******IN****"+tripS.get(0).getTripName());
-        System.out.println("*******IN****"+tripS.get(1).getTripName());
-
-
-
-
-        for (int is = 0 ; is<tripS.size();is++)
-        {
-            System.out.println("*******OUT**********"+tripS.get(is).getTripName());
-        }
         return  tripS;
     }
     public ArrayList<Trip> readFromTripPast(){

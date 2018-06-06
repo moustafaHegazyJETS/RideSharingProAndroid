@@ -54,7 +54,7 @@ public class TripShowActivity extends AppCompatActivity {
         // resources
        // tripList =findViewById(R.id.ListOfTrips);
         searchBtn = findViewById(R.id.Search);
-        tripList = findViewById(R.id.tripList);
+       // tripList = findViewById(R.id.tripList);
 
       //Actions
 

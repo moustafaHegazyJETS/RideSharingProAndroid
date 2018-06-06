@@ -47,10 +47,6 @@ public class TripSearch extends AppCompatActivity {
     public static final int PLACE_PICKER_REQUEST2 = 2;
 
 
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -187,6 +187,8 @@ public class CreateTrip extends AppCompatActivity {
             public void onClick(View view) {
                 //ws Work For Adding Trip
                 //*******************Here The Check Conditions For Null Objects *********************
+                 if(validate())
+                 {
                 final Trip trip = new Trip();
                 trip.setTripName(tripNameTxt.getText().toString());//tripNameTxt.getText().toString()
                 trip.setDetails(tripDetailsTxt.getText().toString());//tripDetailsTxt.getText().toString()
@@ -226,24 +228,21 @@ public class CreateTrip extends AppCompatActivity {
                 if(myCalendar.compareTo(onTimeCalender)<=0) {
                     Toast.makeText(CreateTrip.this, "Check For Upcomming Time", Toast.LENGTH_SHORT).show();
 
-                } else
-                {
+                } else {
 
                     service.addTrip(vals).enqueue(new Callback<Trip>() {
                         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                         @Override
                         public void onResponse(Call<Trip> call, Response<Trip> response) {
-                            if(response.body()!=null)
-                            {
-                                if(response.body().getTo().equals("Done"))
-                                {
+                            if (response.body() != null) {
+                                if (response.body().getTo().equals("Done")) {
                                     Toast.makeText(CreateTrip.this, "Done Adding Trip", Toast.LENGTH_SHORT).show();
                                     //Here to add local work.
 
                                     final int id = response.body().getIdTrip();
 
                                     //add to local Sqlite
-                                    dbDriverConnection.insertIntoTrip(id,trip.getTripName());
+                                    dbDriverConnection.insertIntoTrip(id, trip.getTripName());
 
                                     Intent intent = new Intent(CreateTrip.this, SplashScreen.class);
                                     //this id is uniqe for each trip so it uses for define pending alarm
@@ -252,7 +251,7 @@ public class CreateTrip extends AppCompatActivity {
 
                                     alarm_intent.putExtra("Ex", "on");
                                     alarm_intent.putExtra("id", String.valueOf(id));
-                                    alarm_intent.putExtra("who","driver");
+                                    alarm_intent.putExtra("who", "driver");
 
                                     pending_intent = pending_intent.getBroadcast(CreateTrip.this, id
                                             , alarm_intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -260,40 +259,33 @@ public class CreateTrip extends AppCompatActivity {
 
                                     alarmManage.setExact(AlarmManager.RTC_WAKEUP, myCalendar.getTimeInMillis(), pending_intent);
 
-                                    Toast toastk = Toast.makeText(CreateTrip.this, "done"+myCalendar.getTimeInMillis(),Toast.LENGTH_LONG);
+                                    Toast toastk = Toast.makeText(CreateTrip.this, "done" + myCalendar.getTimeInMillis(), Toast.LENGTH_LONG);
                                     toastk.show();
 
                                     startActivity(intent);
                                     finish();
 
 
+                                } else {
+                                    Toast.makeText(CreateTrip.this, "Error in Creating Trip", Toast.LENGTH_SHORT).show();
+                                }
 
-
-
-
-
-                            }else{
-                                Toast.makeText(CreateTrip.this, "Error in Creating Trip", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(CreateTrip.this, "Request Null", Toast.LENGTH_SHORT).show();
                             }
-                            
-                        }else
-                        {
-                            Toast.makeText(CreateTrip.this, "Request Null", Toast.LENGTH_SHORT).show();
+
+
                         }
-                        
-                        
-                        
-                    }
 
-                    @Override
-                    public void onFailure(Call<Trip> call, Throwable t) {
-                        Toast.makeText(CreateTrip.this, "Error On Failure", Toast.LENGTH_SHORT).show();
-                        System.out.println(t);
+                        @Override
+                        public void onFailure(Call<Trip> call, Throwable t) {
+                            Toast.makeText(CreateTrip.this, "Error On Failure", Toast.LENGTH_SHORT).show();
+                            System.out.println(t);
 
-                    }
-                });
-                
-                }
+                        }
+                    });
+
+                }}
 
 
 
@@ -392,18 +384,7 @@ public class CreateTrip extends AppCompatActivity {
     public void action_From_To()
     {
 
-        if (ActivityCompat.checkSelfPermission(CreateTrip.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-            Toast.makeText(CreateTrip.this, "You need to enable location first", Toast.LENGTH_SHORT).show();
-            showSettingsAlerts();
-            return;
-        }
-        if (ActivityCompat.checkSelfPermission(CreateTrip.this, Manifest.permission.ACCESS_NETWORK_STATE) != PackageManager.PERMISSION_GRANTED) {
-
-            Toast.makeText(CreateTrip.this, "You need to enable Network first", Toast.LENGTH_SHORT).show();
-            showSettingsAlertsForNetwork();
-            return;
-        }
 
 
         try {
@@ -455,9 +436,8 @@ public class CreateTrip extends AppCompatActivity {
             tripTimeTxt.setError(null);
             tripTimeTxt.requestFocus();
         }
-        pattern = Pattern.compile(new String("^(?=.*\\d)(?=.*[a-zA-Z])(?!\\w*$).{8,}"));
-        matcher = pattern.matcher(details);
-        if (!matcher.matches()) {
+
+        if (details.isEmpty()||!matcher.matches()) {
             tripDetailsTxt.setError("Please Enter Details");
             tripDetailsTxt.requestFocus();
             valid = false;
@@ -465,8 +445,8 @@ public class CreateTrip extends AppCompatActivity {
             tripDetailsTxt.setError(null);
             tripDetailsTxt.requestFocus();
         }
-         pattern = Pattern.compile(new String ("^[0-9]"));
-         matcher = pattern.matcher(tripName);
+         pattern = Pattern.compile(new String ("[+-]?([0-9]*[.])?[0-9]+"));
+         matcher = pattern.matcher(tripCost);
 
         if (tripCost.isEmpty() || !matcher.matches()) {
             tripCostTxt.setError("Enter Cost Number only");
@@ -477,7 +457,7 @@ public class CreateTrip extends AppCompatActivity {
             tripCostTxt.requestFocus();
         }
 
-        if (tripDay.isEmpty()||!tripDay.equals("day")) {
+        if (tripDay.isEmpty()||tripDay.equals("day")) {
             tripDayTxt.setError("Enter Correct Day please");
             tripDayTxt.requestFocus();
             valid = false;
@@ -485,13 +465,37 @@ public class CreateTrip extends AppCompatActivity {
             tripDayTxt.setError(null);
             tripDayTxt.requestFocus();
         }
-        if (tripTime.isEmpty()||!tripTime.equals("time")) {
+        if (tripTime.isEmpty()||tripTime.equals("time")) {
             tripTimeTxt.setError("Enter Correct Time please");
             tripTimeTxt.requestFocus();
             valid = false;
         } else {
             tripTimeTxt.setError(null);
             tripTimeTxt.requestFocus();
+        }
+        if (tripNumOfSeats.isEmpty()) {
+            tripNumberOfSeatsTxt.setError("Enter Number only");
+            tripNumberOfSeatsTxt.requestFocus();
+            valid = false;
+        } else {
+            tripNumberOfSeatsTxt.setError(null);
+            tripNumberOfSeatsTxt.requestFocus();
+        }
+        if (tripTo.isEmpty()) {
+            tripToEditTxt.setError("Enter Number only");
+            tripToEditTxt.requestFocus();
+            valid = false;
+        } else {
+            tripToEditTxt.setError(null);
+            tripToEditTxt.requestFocus();
+        }
+        if (tripFrom.isEmpty()) {
+            tripFromEditTxt.setError("Enter Number only");
+            tripFromEditTxt.requestFocus();
+            valid = false;
+        } else {
+            tripFromEditTxt.setError(null);
+            tripFromEditTxt.requestFocus();
         }
 
         return valid;
