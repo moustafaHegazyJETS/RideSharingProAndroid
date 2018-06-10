@@ -41,7 +41,6 @@ public class DBDriverConnection extends SQLiteOpenHelper {
         values.put("idTrip",tripId);
         values.put("tripPast","f");
         values.put("tripName",tripName);
-
         query.insert("driverTrip",null,values);
         Log.i("test","row inserted");
 

@@ -14,7 +14,6 @@ import android.widget.RemoteViews;
 
 import com.example.rania.itigraduationproject.DetailsOfEvent;
 import com.example.rania.itigraduationproject.DetailsOfEventForUser;
-import com.example.rania.itigraduationproject.HomeActivity;
 import com.example.rania.itigraduationproject.R;
 
 public  class RingtonePlayingService extends Service {
@@ -152,18 +151,6 @@ public  class RingtonePlayingService extends Service {
 //            ;
 //
 //            notificationManager.notify(Integer.parseInt(id),builder.build());
-
-
-
-
-
-
-//////////////////////////////////////////////////////////////////
-
-
-
-
-
 
 
         }

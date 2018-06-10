@@ -18,6 +18,8 @@ import com.example.rania.itigraduationproject.alarmPk.Alarm_receiver;
 import com.example.rania.itigraduationproject.model.DriverCarInfo;
 import com.example.rania.itigraduationproject.model.Trip;
 import com.example.rania.itigraduationproject.model.User;
+import com.example.rania.itigraduationproject.remote.CheckInternetConnection;
+
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -39,6 +41,7 @@ public class TripDetailsActivity extends AppCompatActivity {
     EditText tripTo;
     EditText numOfSeatsTrip;
     EditText cost;
+    EditText day;
     Button joinTripBtn;
     Button driverDteailsBtn;
     private static Retrofit retrofit = null;
@@ -50,6 +53,14 @@ public class TripDetailsActivity extends AppCompatActivity {
     Calendar onTimeCalender= (Calendar) myCalendar.clone();
     AlarmManager alarmManage;
     PendingIntent pending_intent;
+
+    protected void onStart() {
+        super.onStart();
+        if(!CheckInternetConnection.isNetworkAvailable(this))
+        {
+            CheckInternetConnection.bulidDuligo(this);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +93,8 @@ public class TripDetailsActivity extends AppCompatActivity {
         numOfSeatsTrip.setText(t.getNumberOfSeats().toString());
         cost=(EditText)findViewById(R.id.costEDT);
         cost.setText(""+t.getCost());
+        day=(EditText)findViewById(R.id.dayEdt);
+        day.setText(t.getDay());
         joinTripBtn=(Button)findViewById(R.id.JoinTrip);
         driverDteailsBtn=(Button)findViewById(R.id.driverDetails);
 
@@ -96,7 +109,7 @@ public class TripDetailsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(driverUser.getDriverCarInfo()!=null)
                 {
-                    Intent intent_home = new Intent(getApplicationContext(), DriverInfoShow.class);
+                    Intent intent_home = new Intent(getApplicationContext(),DriverInfoShow.class);
                     System.out.println(driverUser.getMobile());
                     System.out.println(driverUser.getDriverCarInfo().getCarYear());
                     intent_home.putExtra("driverInfo", (Serializable)driverUser);
@@ -183,6 +196,7 @@ public class TripDetailsActivity extends AppCompatActivity {
                                                 driverUser.getDriverCarInfo().getCarModel(),driverUser.getIdUser(),t.getIdTrip());
 
                                         Intent intent = new Intent(TripDetailsActivity.this, SplashScreen.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         //this id is uniqe for each trip so it uses for define pending alarm
                                         int id = t.getIdTrip();
 

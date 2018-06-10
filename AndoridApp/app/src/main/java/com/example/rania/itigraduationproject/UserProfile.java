@@ -7,8 +7,9 @@ import android.os.Bundle;
 import android.widget.EditText;
 
 import com.example.rania.itigraduationproject.model.User;
+import com.example.rania.itigraduationproject.remote.CheckInternetConnection;
 
-public class Profile extends AppCompatActivity {
+public class UserProfile extends AppCompatActivity {
     EditText userName;
     EditText phone;
     EditText email;
@@ -16,6 +17,14 @@ public class Profile extends AppCompatActivity {
     EditText birthdate ;
     EditText gender;
     private ProgressDialog loading;
+
+    protected void onStart() {
+        super.onStart();
+        if(!CheckInternetConnection.isNetworkAvailable(this))
+        {
+            CheckInternetConnection.bulidDuligo(this);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)

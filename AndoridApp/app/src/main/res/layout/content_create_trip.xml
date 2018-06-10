@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,154 +7,129 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".CreateTrip"
     tools:showIn="@layout/activity_create_trip">
-
+<GridLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentTop="true"
+    android:columnCount="2"
+    android:rowCount="2"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentEnd="true">
 
     <TextView
-        android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="23dp"
         android:layout_marginTop="30dp"
         android:text="Trip Name"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="23dp" />
+        android:layout_marginLeft="20dp" />
+
 
     <EditText
         android:id="@+id/TripName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView6"
         android:layout_centerHorizontal="true"
-        android:text="" />
+        android:layout_marginTop="30dp" />
 
     <TextView
-        android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/textView6"
-        android:layout_marginTop="77dp"
         android:text="Trip Details"
-        android:layout_alignLeft="@+id/textView6" />
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp" />
 
     <EditText
         android:id="@+id/TripDetails"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView8"
-        android:layout_centerHorizontal="true"
-        android:text="" />
+        android:layout_marginTop="30dp" />
+
 
     <TextView
-        android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/textView6"
-        android:layout_marginTop="124dp"
-        android:text="Trip Time"
-        android:layout_alignLeft="@+id/textView6" />
-
-    <TextView
-        android:id="@+id/TripTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView10"
-        android:layout_centerHorizontal="true"
-        android:text="Time" />
-
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/textView6"
-        android:layout_marginTop="177dp"
-        android:text="Trip Day"
-        android:layout_alignLeft="@+id/textView6" />
-
-    <TextView
-        android:id="@+id/TripDay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView12"
-        android:layout_centerHorizontal="true"
-        android:text="Day" />
-
-    <TextView
-        android:id="@+id/textView14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/textView6"
-        android:layout_marginTop="228dp"
-        android:text="Trip From"
-        android:layout_alignLeft="@+id/textView6" />
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:text="Trip From" />
 
     <EditText
         android:id="@+id/TripFrom"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView14"
-        android:layout_centerHorizontal="true"
-        android:text="" />
+        android:layout_marginTop="30dp" />
 
     <TextView
-        android:id="@+id/textView16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/textView6"
-        android:layout_marginBottom="217dp"
         android:text="Trip To"
-        android:layout_alignLeft="@+id/textView6" />
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        />
 
     <EditText
         android:id="@+id/TripTo"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="196dp"
-        android:text="" />
+        android:layout_marginTop="30dp" />
 
     <TextView
-        android:id="@+id/textView18"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/textView6"
-        android:layout_marginBottom="158dp"
-        android:text="number Of Seats"
-        android:layout_alignLeft="@+id/textView6" />
+        android:text="Seats number"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"/>
 
     <EditText
         android:id="@+id/numberOfSeats"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView18"
-        android:layout_centerHorizontal="true"
         android:inputType="number"
-        android:text="" />
+        android:layout_marginTop="30dp"/>
 
     <TextView
-        android:id="@+id/textView20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/textView6"
-        android:layout_marginBottom="110dp"
         android:text="cost"
-        android:layout_alignLeft="@+id/textView6" />
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"/>
 
     <EditText
         android:id="@+id/TripCost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number|numberDecimal"
+        android:layout_marginTop="30dp"
+        />
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView20"
-        android:layout_centerHorizontal="true"
-        android:text=""
-        />
-</RelativeLayout>
+        android:text="Trip Time"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"/>
+
+    <TextView
+        android:id="@+id/TripTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Time" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Trip Day"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"/>
+
+    <TextView
+        android:id="@+id/TripDay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Day"
+        android:layout_marginTop="30dp"/>
+
+
+
+</GridLayout>
+
+</ScrollView>

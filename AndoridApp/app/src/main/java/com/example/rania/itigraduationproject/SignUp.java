@@ -5,34 +5,27 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.rania.itigraduationproject.Interfaces.Service;
 import com.example.rania.itigraduationproject.model.User;
 import com.example.rania.itigraduationproject.remote.CheckInternetConnection;
-import com.google.gson.Gson;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -57,6 +50,8 @@ public class SignUp extends AppCompatActivity {
     Button signBtn;
     ImageView personalImage;
     File image;
+    boolean valid;
+    Service service;
     @Override
     protected void onStart() {
         super.onStart();
@@ -108,7 +103,7 @@ public class SignUp extends AppCompatActivity {
                 .baseUrl(Service.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        final Service service = retrofit.create(Service.class);
+       service = retrofit.create(Service.class);
 
         // Radio User or Driver
         radio_user_DriverGroup = (RadioGroup) findViewById(R.id.radioUserType);
@@ -265,16 +260,47 @@ public class SignUp extends AppCompatActivity {
     }
     //----------------------------SignUp Validation
     public boolean validate() {
-        boolean valid = true;
+         valid = true;
         String username=name.getText().toString();
         String pass=password.getText().toString();
-        String useremail=email.getText().toString();
+        final String useremail=email.getText().toString();
         String genderbtn=radioGenderButton.getText().toString();
         String phone=mobile.getText().toString();
         String userNamtionlId=national_id.getText().toString();
         String usertype=radio_user_DriverGroupButton.getText().toString();
         String confirmPassword=confirmPass.getText().toString();
         String userSelectDate=date.getText().toString();
+        service.getAllUsers().enqueue(new Callback<List<User>>() {
+            @Override
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                if(response.body()!=null)
+                {
+                    if(response.body().size()>0)
+                    {
+                        for(int i=0;i<response.body().size();i++)
+                        {
+                            if(response.body().get(i).getEmail().equals(useremail))
+                            {
+                                email.setError("Deplucated Email");
+                                email.requestFocus();
+                                valid = false;
+
+                            }
+
+                        }
+                }   }else
+                {
+                    Toast.makeText(SignUp.this, "Check Internet Connection", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
+                Toast.makeText(SignUp.this, "Check Internet Connection", Toast.LENGTH_SHORT).show();
+
+            }
+        });
 
         //national Id Regax
         Pattern pattern = Pattern.compile(new String ("(2)[0-9][1-9][0-1][1-9][0-3][1-9](01|02|03|04|11|12|13|14|15|16|17|18|19|21|22|23|24|25|26|27|28|29|31|32|33|34|35|88)\\d\\d\\d\\d\\d"));

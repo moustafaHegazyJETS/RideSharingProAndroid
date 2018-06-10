@@ -16,6 +16,7 @@ import retrofit2.http.POST;
  */
 
 public interface Service {
+
     public static final String BASE_URL = "http://10.0.2.2:8084/RideSharingProWS/rest/";
 
     @GET("getUser.json")
@@ -60,5 +61,33 @@ public interface Service {
 
     @POST("setTripToBePast.json")
     Call<Void> setTripToBePast(@Body Integer id);
+
+    @POST("getTrip.json")
+    Call<Trip> getTrip(@Body Trip trip);
+
+    @POST("getReservedUsers.json")
+    Call<List<User>> getReservedUsers(@Body Trip trip);
+
+    @POST("deleteReservation.json")
+    Call<Trip> deleteReservation(@Body List<Integer> tripAndUserID);
+
+    @POST("getReserveredTrip.json")
+    Call<List<Trip>> getAllUserReserverdTrips(@Body User user );
+
+    @POST("getAllPastTripToDerviver.json")
+    Call<List<Trip>> getAllpastTripstoDeriver(@Body User user );
+
+    @POST("getAllPastTriptoUser.json.json")
+    Call<List<Trip>> getAllpastTripstoUser(@Body User user );
+
+    @GET("getAllUser.json")
+    Call<List<User>> getAllUsers();
+
+    @POST("getTripById.json")
+    Call<Trip> getTripById(@Body Integer id);
+
+
+
+
 
 }

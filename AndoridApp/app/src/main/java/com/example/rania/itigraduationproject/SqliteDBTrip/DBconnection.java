@@ -11,6 +11,7 @@ import com.example.rania.itigraduationproject.model.Trip;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class DBconnection  extends SQLiteOpenHelper{
@@ -38,7 +39,6 @@ public class DBconnection  extends SQLiteOpenHelper{
 
     }
 
-
     public void insertIntoTrip(String name , String start, String end,
                                String tripdate,String time,String start_lat,
                                String start_alt,String end_lat,String end_alt,
@@ -46,11 +46,8 @@ public class DBconnection  extends SQLiteOpenHelper{
                                String driverName,Float tripCost,String CarID,
                                String carColor,String carBrand, String carModel,
                                Integer userID,Integer tripId){
-
         SQLiteDatabase query=this.getWritableDatabase();
-
         ContentValues  values=new ContentValues();
-
         values.put("trip_name",name);
         values.put("trip_time",time);
         values.put("trip_start_place",start);
@@ -71,31 +68,55 @@ public class DBconnection  extends SQLiteOpenHelper{
         values.put("carBrand",carBrand);
         values.put("carModel",carModel);
         values.put("tripId",tripId);
-
         query.insert("trip",null,values);
         Log.i("test","row inserted");
-
     }
 
-    public ArrayList<String> readFromTripRecent(){
-        //trips=new TripInfo();
-        ArrayList<String> tripsNames=new ArrayList();
+    public List<Trip> readFromTripRecent(){
+
+        ArrayList<Trip> tripsList=new ArrayList();
         SQLiteDatabase db=this.getReadableDatabase();
         String query ="select * from trip where past=?";
         String past="f";
         Cursor result=db.rawQuery(query,new String[]{past});
-
         result.moveToFirst();
         int i =0;
-        String tripName ;
         while (result.isAfterLast()==false){
-            tripName =result.getString(result.getColumnIndex("trip_name"));
-            tripsNames.add(i,tripName);
+            Trip trip  =new Trip();
+            trip.setTripName(result.getString(result.getColumnIndex("trip_name")));
+            trip.setCost((float) result.getDouble(result.getColumnIndex("trip_cost")));
+            trip.setDay(result.getString(result.getColumnIndex("day")));
+            trip.setDetails(result.getString(result.getColumnIndex("details")));
+            trip.setFrom(result.getString(result.getColumnIndex("trip_start_place")));
+            trip.setTime(result.getString(result.getColumnIndex("trip_time")));
+            trip.setTo(result.getString(result.getColumnIndex("trip_end_place")));
+            tripsList.add(i,trip);
             result.moveToNext();
             i++;
-        };
-        return  tripsNames;
+        }
+        System.out.print(tripsList.size());
+        return  tripsList;
     }
+
+//    public ArrayList<String> readFromTripRecent(){
+//        //trips=new TripInfo();
+//        ArrayList<String> tripsNames=new ArrayList();
+//        SQLiteDatabase db=this.getReadableDatabase();
+//        String query ="select * from trip where past=?";
+//        String past="f";
+//        Cursor result=db.rawQuery(query,new String[]{past});
+//
+//        result.moveToFirst();
+//        int i =0;
+//        String tripName ;
+//        while (result.isAfterLast()==false){
+//            tripName =result.getString(result.getColumnIndex("trip_name"));
+//            tripsNames.add(i,tripName);
+//            result.moveToNext();
+//            i++;
+//        };
+//        return  tripsNames;
+//    }
     public ArrayList<String> readFromTripPast(){
         //trips=new TripInfo();
         ArrayList<String> tripsNames=new ArrayList();
@@ -123,7 +144,6 @@ public class DBconnection  extends SQLiteOpenHelper{
         Cursor result=db.rawQuery(query,new String[]{String.valueOf(userId)});
         result.moveToFirst();
         Trip t = new Trip();
-
         t.setFrom(result.getString(result.getColumnIndex("trip_start_place")));
         t.setCost(result.getFloat(result.getColumnIndex("tripCost")));
         t.setDetails(result.getString(result.getColumnIndex("details")));

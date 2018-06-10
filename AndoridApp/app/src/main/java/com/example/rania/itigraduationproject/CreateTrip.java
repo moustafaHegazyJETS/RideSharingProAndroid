@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -27,12 +28,14 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.rania.itigraduationproject.Controllers.FabDesignFun;
 import com.example.rania.itigraduationproject.Interfaces.Service;
 import com.example.rania.itigraduationproject.SqliteDBTrip.DBDriverConnection;
 import com.example.rania.itigraduationproject.alarmPk.Alarm_receiver;
 import com.example.rania.itigraduationproject.model.DriverCarInfo;
 import com.example.rania.itigraduationproject.model.Trip;
 import com.example.rania.itigraduationproject.model.User;
+import com.example.rania.itigraduationproject.remote.CheckInternetConnection;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -55,8 +58,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CreateTrip extends AppCompatActivity {
-
-
     TextView tripNameTxt;
     TextView tripDetailsTxt;
     TextView tripTimeTxt;
@@ -82,6 +83,15 @@ public class CreateTrip extends AppCompatActivity {
     double fromLongtiude;
     String startPoint = "";
     String destination = "";
+
+
+    protected void onStart() {
+        super.onStart();
+        if(!CheckInternetConnection.isNetworkAvailable(this))
+        {
+            CheckInternetConnection.bulidDuligo(this);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,8 +125,6 @@ public class CreateTrip extends AppCompatActivity {
         tripDayTxt=findViewById(R.id.TripDay);
         tripNumberOfSeatsTxt=findViewById(R.id.numberOfSeats);
         tripCostTxt=findViewById(R.id.TripCost);
-
-
 
         //actions
         //set time ll event
@@ -181,7 +189,7 @@ public class CreateTrip extends AppCompatActivity {
             }
         });
 
-
+        FabDesignFun.textAsBitmap("Save",40, Color.WHITE);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -199,9 +207,12 @@ public class CreateTrip extends AppCompatActivity {
                 trip.setNumberOfSeats(Integer.valueOf(tripNumberOfSeatsTxt.getText().toString()));
                 trip.setTo(tripToEditTxt.getText().toString());//tripToTxt.getText().toString()
                 trip.setFrom(tripFromEditTxt.getText().toString());//tripFromTxt.getText().toString()
+                     trip.setStartlatitude(toLatitude);
+                     trip.setStartlongtiude(toLongtiude);
+                     trip.setEndlatitude(fromLatitude);
+                     trip.setEndlongtiude(fromLongtiude);
                 System.out.println("s,slslslsls,cfsalfmkmfeokwr"+user.getDriverCarInfo().getDriveCarID());
                 DriverCarInfo d = user.getDriverCarInfo();
-
                 d.setUser(new User());
                 d.user().setBirthDate(user.getBirthDate());
                 d.user().setEmail(user.getEmail());
@@ -215,20 +226,16 @@ public class CreateTrip extends AppCompatActivity {
                 d.user().setUserphoto(user.getUserphoto());
                 trip.setDriverId(d);
 
-
-
-
                 List<Trip> vals = new ArrayList<>(2);
                 Trip t2 = new Trip();
                 t2.setIdTrip(user.getIdUser());
-
                 vals.add(0,t2);
                 vals.add(1,trip);
 
-                if(myCalendar.compareTo(onTimeCalender)<=0) {
-                    Toast.makeText(CreateTrip.this, "Check For Upcomming Time", Toast.LENGTH_SHORT).show();
+                //if(myCalendar.compareTo(onTimeCalender)<=0) {
+                  //  Toast.makeText(CreateTrip.this, "Check For Upcomming Time", Toast.LENGTH_SHORT).show();
 
-                } else {
+                //} else {
 
                     service.addTrip(vals).enqueue(new Callback<Trip>() {
                         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -285,7 +292,8 @@ public class CreateTrip extends AppCompatActivity {
                         }
                     });
 
-                }}
+               // }
+                     }
 
 
 
@@ -351,8 +359,8 @@ public class CreateTrip extends AppCompatActivity {
                     Toast.makeText(this, "place is null", Toast.LENGTH_LONG).show();
                 }
 
-                String toastMsg = String.format("Place that you need is : ", place.getAddress().toString());
-                Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
+               // String toastMsg = String.format("Place that you need is : ", place.getAddress().toString());
+                //Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
                 tripFromEditTxt.setText(place.getAddress().toString());
                 startPoint = place.getAddress().toString();
                 fromLatitude = place.getLatLng().latitude;
@@ -368,8 +376,8 @@ public class CreateTrip extends AppCompatActivity {
                     Toast.makeText(this, "place is null", Toast.LENGTH_LONG).show();
                 }
 
-                String toastMsg = String.format("Place that you need is : ", place.getAddress().toString());
-                Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
+               // String toastMsg = String.format("Place that you need is : ", place.getAddress().toString());
+               // Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
                 destination = place.getAddress().toString();
                 tripToEditTxt.setText(destination);
                 toLatitude = place.getLatLng().latitude;
@@ -383,14 +391,21 @@ public class CreateTrip extends AppCompatActivity {
     //Function to Action when click  to ediText
     public void action_From_To()
     {
+        if (ActivityCompat.checkSelfPermission(CreateTrip.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
+            Toast.makeText(CreateTrip.this, "You need to enable location first", Toast.LENGTH_SHORT).show();
+            showSettingsAlerts();
+            return;
+        }
+        if (ActivityCompat.checkSelfPermission(CreateTrip.this, Manifest.permission.ACCESS_NETWORK_STATE) != PackageManager.PERMISSION_GRANTED) {
 
-
+            Toast.makeText(CreateTrip.this, "You need to enable Network first", Toast.LENGTH_SHORT).show();
+            showSettingsAlertsForNetwork();
+            return;
+        }
 
         try {
             PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
-
-
             startActivityForResult(builder.build(CreateTrip.this), PLACE_PICKER_REQUEST1);
         } catch (GooglePlayServicesRepairableException e) {
             GoogleApiAvailability.getInstance().getErrorDialog(this, e.getConnectionStatusCode(),

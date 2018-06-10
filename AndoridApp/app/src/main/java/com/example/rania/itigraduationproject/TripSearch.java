@@ -13,9 +13,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import com.example.rania.itigraduationproject.Controllers.SessionManager;
 import com.example.rania.itigraduationproject.Interfaces.Service;
 import com.example.rania.itigraduationproject.model.Trip;
+import com.example.rania.itigraduationproject.remote.CheckInternetConnection;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -36,7 +36,6 @@ public class TripSearch extends AppCompatActivity {
     Button searchBtn;
     String startPoint = "";
     String destination = "";
-    SessionManager session_mangement;
     Service service;
     double toLongtiude;
     double fromLatitude;
@@ -45,6 +44,14 @@ public class TripSearch extends AppCompatActivity {
     private static Retrofit retrofit = null;
     public static final int PLACE_PICKER_REQUEST1 = 1;
     public static final int PLACE_PICKER_REQUEST2 = 2;
+
+    protected void onStart() {
+        super.onStart();
+        if(!CheckInternetConnection.isNetworkAvailable(this))
+        {
+            CheckInternetConnection.bulidDuligo(this);
+        }
+    }
 
 
     @Override
@@ -73,7 +80,8 @@ public class TripSearch extends AppCompatActivity {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (fromEdit.getText().equals("") || toEdit.getText().equals("")) {
+
+                if (fromEdit.getText().toString().equals("") || toEdit.getText().toString().equals("")) {
                     Toast.makeText(TripSearch.this, "Check Fields", Toast.LENGTH_SHORT).show();
                 } else {
                     Trip t = new Trip();

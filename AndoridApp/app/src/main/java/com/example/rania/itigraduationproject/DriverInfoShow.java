@@ -7,6 +7,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.rania.itigraduationproject.model.User;
+import com.example.rania.itigraduationproject.remote.CheckInternetConnection;
 
 public class DriverInfoShow extends AppCompatActivity {
 
@@ -15,6 +16,15 @@ public class DriverInfoShow extends AppCompatActivity {
     TextView nationIDTxt;
     TextView genderTxt;
     TextView numberTxt;
+
+
+    protected void onStart() {
+        super.onStart();
+        if(!CheckInternetConnection.isNetworkAvailable(this))
+        {
+            CheckInternetConnection.bulidDuligo(this);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

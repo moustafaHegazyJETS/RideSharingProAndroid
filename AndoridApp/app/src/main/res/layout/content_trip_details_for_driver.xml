@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,15 +7,59 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".TripDetailsForDriver"
     tools:showIn="@layout/activity_trip_details_for_driver">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tripId"
+        android:id="@+id/tripNamet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="146dp"
         android:text="TextView"
-        tools:layout_editor_absoluteX="163dp"
-        tools:layout_editor_absoluteY="139dp" />
-</RelativeLayout>
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="150dp"/>
+
+    <TextView
+        android:id="@+id/tripFromt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="150dp"/>
+
+    <TextView
+        android:id="@+id/tripTot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="150dp"/>
+
+    <TextView
+        android:id="@+id/tripdatet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="150dp"/>
+
+    <TextView
+        android:id="@+id/tripTimet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="150dp"/>
+
+    <Button
+        android:id="@+id/viewAllReserved"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="view Reserved Users"
+        android:background="@drawable/buttondesign"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="110dp"/>
+    </LinearLayout>
+
+</ScrollView>
