@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.rania.itigraduationproject.model.Trip;
 import com.example.rania.itigraduationproject.model.User;
+import com.example.rania.itigraduationproject.remote.CheckInternetConnection;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -27,6 +28,14 @@ public class ViewReservedUsers extends AppCompatActivity {
     ListView usersListView ;
     Trip trip;
     User driverUser;
+
+    protected void onStart() {
+        super.onStart();
+        if(!CheckInternetConnection.isNetworkAvailable(this))
+        {
+            CheckInternetConnection.bulidDuligo(this);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

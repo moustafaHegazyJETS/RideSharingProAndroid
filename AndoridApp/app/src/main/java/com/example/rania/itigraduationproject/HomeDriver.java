@@ -1,10 +1,13 @@
 package com.example.rania.itigraduationproject;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -18,16 +21,19 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.rania.itigraduationproject.Controllers.FabDesignFun;
 import com.example.rania.itigraduationproject.Controllers.SessionManager;
 import com.example.rania.itigraduationproject.SqliteDBTrip.DBDriverConnection;
+import com.example.rania.itigraduationproject.firebeasePushNotifications.FirebeaseIncstanceIdDevice;
 import com.example.rania.itigraduationproject.model.Trip;
 import com.example.rania.itigraduationproject.model.User;
+import com.example.rania.itigraduationproject.remote.CheckInternetConnection;
 
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,14 +42,54 @@ public class HomeDriver extends AppCompatActivity
 
     TextView helloTxt;
     ListView listViewDriver;
-
     SessionManager session;
-
     User user;
     User driverUser;
     DBDriverConnection dbDriverConnection;
 
 
+    protected void onStart() {
+        super.onStart();
+        if(!CheckInternetConnection.isNetworkAvailable(this))
+        {
+            CheckInternetConnection.bulidDuligo(this);
+        }
+        else
+        {
+            final ArrayList<Trip> tripArray = dbDriverConnection.readFromTripDriverRecent();
+
+            List<String> tripNames = new ArrayList<>();
+            for (int ii =0 ; ii<tripArray.size() ; ii++)
+            {
+
+                tripNames.add(tripArray.get(ii).getTripName().toString());
+                Toast.makeText(this, ""+tripArray.get(ii).getTripName().toString(), Toast.LENGTH_SHORT).show();
+
+            }
+
+            listViewDriver.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, tripNames));
+
+            listViewDriver.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Toast.makeText(HomeDriver.this, "Hi", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+            });
+            listViewDriver.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                    Intent in =new Intent(HomeDriver.this,TripDetailsForDriver.class);
+                    in.putExtra("tripVal",(Serializable) tripArray.get(i) );
+                    in.putExtra("driverUser",(Serializable) driverUser );
+                    startActivity(in);
+
+                }
+            });
+
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,10 +101,7 @@ public class HomeDriver extends AppCompatActivity
         Intent i = getIntent();
         user = (User) i.getExtras().get("user");
         driverUser = user;
-        System.out.println(user.getUserName());
         dbDriverConnection = new DBDriverConnection(this);
-
-
 
         //resources
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -69,48 +112,17 @@ public class HomeDriver extends AppCompatActivity
         helloTxt = findViewById(R.id.HelloTxt);
         helloTxt.setText("Hello Driver : "+user.getUserName());
         listViewDriver = findViewById(R.id.ListViewDriver);
-        final ArrayList<Trip> tripArray = dbDriverConnection.readFromTripDriverRecent();
-
-        List<String> tripNames = new ArrayList<>();
-        for (int ii =0 ; ii<tripArray.size() ; ii++)
-        {
-            tripNames.add(tripArray.get(ii).getTripName().toString());
-            Toast.makeText(this, ""+tripArray.get(ii).getTripName().toString(), Toast.LENGTH_SHORT).show();
-
-        }
-
-        listViewDriver.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, tripNames));
-
-        listViewDriver.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(HomeDriver.this, "Hi", Toast.LENGTH_SHORT).show();
-                return true;
-            }
-        });
-        listViewDriver.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                Intent in =new Intent(HomeDriver.this,TripDetailsForDriver.class);
-                in.putExtra("tripVal",(Serializable) tripArray.get(i) );
-                in.putExtra("driverUser",(Serializable) driverUser );
-                startActivity(in);
-
-            }
-        });
 
         //actions
-
+        FabDesignFun.textAsBitmap("Trip",40, Color.WHITE);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Intent driver_i = new Intent(HomeDriver.this, CreateTrip.class);
                 driver_i.putExtra("user", user);
+                driver_i.putExtra("driverUser",(Serializable) driverUser );
                 startActivity(driver_i);
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
             }
         });
 
@@ -149,6 +161,7 @@ public class HomeDriver extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+
             return true;
         }
 
@@ -161,13 +174,22 @@ public class HomeDriver extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.driverincomingTrip) {
 
-        } else if (id == R.id.nav_slideshow) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.deriverPastTrip) {
+            Intent intent=new Intent(HomeDriver.this,DriverpastTrip.class);
+            intent.putExtra("user", user);
+            intent.putExtra("driverUser",(Serializable) driverUser );
+            startActivity(intent);
+
+        } else if (id == R.id.deriverprofile) {
+            Intent intent=new Intent(HomeDriver.this,DriverProfile.class);
+            intent.putExtra("user", user);
+            intent.putExtra("driverUser",(Serializable) driverUser );
+            startActivity(intent);
+
+        } else if (id == R.id.deriverlogout) {
             logoutUser();
 
         } else if (id == R.id.nav_share) {
@@ -189,8 +211,6 @@ public class HomeDriver extends AppCompatActivity
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int whichButton) {
-
-
                         session.logoutUser();
                         finish();
 

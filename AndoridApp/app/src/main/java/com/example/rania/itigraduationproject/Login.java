@@ -1,10 +1,8 @@
 package com.example.rania.itigraduationproject;
 
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -16,7 +14,6 @@ import com.example.rania.itigraduationproject.model.User;
 import com.example.rania.itigraduationproject.remote.CheckInternetConnection;
 
 import java.io.Serializable;
-import java.util.HashMap;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,7 +27,6 @@ public class Login extends AppCompatActivity {
     TextView email_text;
     TextView password_text;
     Button login_btn;
-    boolean flag_valid;
     String email;
     String password;
     private static Retrofit retrofit = null;
@@ -45,6 +41,7 @@ public class Login extends AppCompatActivity {
         super.onStart();
 
         if (!CheckInternetConnection.isNetworkAvailable(this)) {
+
             CheckInternetConnection.bulidDuligo(this);
         }
     }
@@ -160,7 +157,7 @@ public class Login extends AppCompatActivity {
 
                     }else
                     {
-                        Intent intent_home = new Intent(getApplicationContext(), HomeActivity.class);
+                        Intent intent_home = new Intent(getApplicationContext(), HomeUser.class);
                         System.out.println(response.body().getMobile());
                         System.out.println(response.body().getBirthDate());
                         System.out.println(response.body().getEmail());

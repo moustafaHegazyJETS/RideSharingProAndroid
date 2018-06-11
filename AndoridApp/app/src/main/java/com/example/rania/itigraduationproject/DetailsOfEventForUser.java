@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.rania.itigraduationproject.Interfaces.Service;
 import com.example.rania.itigraduationproject.SqliteDBTrip.DBDriverConnection;
 import com.example.rania.itigraduationproject.alarmPk.Alarm_receiver;
+import com.example.rania.itigraduationproject.remote.CheckInternetConnection;
 
 import java.util.Calendar;
 
@@ -28,9 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DetailsOfEventForUser extends AppCompatActivity {
 
     int pending_id;
-
     Context context;
-
     AlarmManager alarmManage;
     PendingIntent pending_intent;
     PendingIntent pending_intent_send_Again;
@@ -38,6 +37,16 @@ public class DetailsOfEventForUser extends AppCompatActivity {
     private static Retrofit retrofit = null;
     Service service;
     Intent alarm_intent;
+
+
+
+    protected void onStart() {
+        super.onStart();
+        if(!CheckInternetConnection.isNetworkAvailable(this))
+        {
+            CheckInternetConnection.bulidDuligo(this);
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +79,7 @@ public class DetailsOfEventForUser extends AppCompatActivity {
         //resources
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        //FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        TextView userID = findViewById(R.id.userID);
 //        userID.setText(pending_id);
         Toast.makeText(context, ""+pending_id, Toast.LENGTH_SHORT).show();
@@ -79,13 +88,13 @@ public class DetailsOfEventForUser extends AppCompatActivity {
 
         //actions
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
     }
 
 

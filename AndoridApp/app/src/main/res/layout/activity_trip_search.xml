@@ -46,15 +46,22 @@
         android:ems="10"
         android:focusableInTouchMode="true"
         android:paddingLeft="20dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="20dp" />
+
         <Button
             android:id="@+id/search_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="20dp"
             android:layout_marginLeft="50dp"
             android:background="@drawable/buttondesign"
             android:text="@string/Search"
-            android:textSize="50dp"
+            android:textSize="20dp"
             android:textColor="@android:color/black"/>
     </GridLayout>
 

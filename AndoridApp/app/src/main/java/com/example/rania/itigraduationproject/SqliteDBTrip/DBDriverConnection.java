@@ -41,7 +41,6 @@ public class DBDriverConnection extends SQLiteOpenHelper {
         values.put("idTrip",tripId);
         values.put("tripPast","f");
         values.put("tripName",tripName);
-
         query.insert("driverTrip",null,values);
         Log.i("test","row inserted");
 
@@ -66,20 +65,6 @@ public class DBDriverConnection extends SQLiteOpenHelper {
             result.moveToNext();
             System.out.println("***"+i+"****IN****"+tripS.get(i).getTripName());
             i++;
-        }
-
-
-
-
-        System.out.println("*******IN****"+tripS.get(0).getTripName());
-        System.out.println("*******IN****"+tripS.get(1).getTripName());
-
-
-
-
-        for (int is = 0 ; is<tripS.size();is++)
-        {
-            System.out.println("*******OUT**********"+tripS.get(is).getTripName());
         }
         return  tripS;
     }

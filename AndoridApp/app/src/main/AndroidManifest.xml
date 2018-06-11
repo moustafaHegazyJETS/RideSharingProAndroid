@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
@@ -19,6 +20,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCr_IUDTIZRMaFGKXq-bjwIKq9nUZOChgE" />
+
         <activity
             android:name=".SplashScreen"
             android:screenOrientation="portrait">
@@ -33,7 +38,7 @@
             android:label="@string/login"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Profile"
+            android:name=".UserProfile"
             android:label="@string/user_profile"
             android:screenOrientation="portrait" />
         <activity
@@ -45,7 +50,7 @@
             android:label="@string/driveRegister"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".HomeUser"
             android:label="@string/title_activity_home"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -74,10 +79,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".DriverHomeActivity"
-            android:label="@string/title_activity_driver_home"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".HomeDriver"
             android:label="@string/title_activity_home_driver"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -100,7 +101,23 @@
         <activity
             android:name=".ViewReservedUserDetails"
             android:label="@string/title_activity_view_reserved_user_details"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".DriverpastTrip" />
+        <activity android:name=".UserPastTrip" />
+        <activity android:name=".DriverProfile" />
+        <activity android:name=".UserShowReservedTripDetails" />
+
+        <service android:name=".firebeasePushNotifications.FirebeaseIncstanceIdDevice">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+        <service android:name=".firebeasePushNotifications.FirebaseMessage">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>

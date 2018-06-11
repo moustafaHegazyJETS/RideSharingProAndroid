@@ -1,7 +1,5 @@
 package com.example.rania.itigraduationproject;
-
 import android.app.AlarmManager;
-import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -12,18 +10,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.rania.itigraduationproject.Controllers.SessionManager;
 import com.example.rania.itigraduationproject.Interfaces.Service;
 import com.example.rania.itigraduationproject.SqliteDBTrip.DBconnection;
 import com.example.rania.itigraduationproject.alarmPk.Alarm_receiver;
 import com.example.rania.itigraduationproject.model.DriverCarInfo;
 import com.example.rania.itigraduationproject.model.Trip;
 import com.example.rania.itigraduationproject.model.User;
+import com.example.rania.itigraduationproject.remote.CheckInternetConnection;
 
 import java.io.Serializable;
 import java.text.ParseException;
@@ -32,8 +27,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -48,19 +41,26 @@ public class TripDetailsActivity extends AppCompatActivity {
     EditText tripTo;
     EditText numOfSeatsTrip;
     EditText cost;
-
+    EditText day;
     Button joinTripBtn;
     Button driverDteailsBtn;
     private static Retrofit retrofit = null;
     Service service;
     DBconnection dBconnection;
     User driverUser;
-
     Context context;
     Calendar myCalendar = Calendar.getInstance();
     Calendar onTimeCalender= (Calendar) myCalendar.clone();
     AlarmManager alarmManage;
     PendingIntent pending_intent;
+
+    protected void onStart() {
+        super.onStart();
+        if(!CheckInternetConnection.isNetworkAvailable(this))
+        {
+            CheckInternetConnection.bulidDuligo(this);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +80,6 @@ public class TripDetailsActivity extends AppCompatActivity {
         final Intent alarm_intent = new Intent(this,Alarm_receiver.class);
         this.context=this;
 
-
-
         //Resourses
         tripName=(EditText)findViewById(R.id.TripNameEdt);
         tripName.setText(t.getTripName());
@@ -95,6 +93,8 @@ public class TripDetailsActivity extends AppCompatActivity {
         numOfSeatsTrip.setText(t.getNumberOfSeats().toString());
         cost=(EditText)findViewById(R.id.costEDT);
         cost.setText(""+t.getCost());
+        day=(EditText)findViewById(R.id.dayEdt);
+        day.setText(t.getDay());
         joinTripBtn=(Button)findViewById(R.id.JoinTrip);
         driverDteailsBtn=(Button)findViewById(R.id.driverDetails);
 
@@ -109,7 +109,7 @@ public class TripDetailsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(driverUser.getDriverCarInfo()!=null)
                 {
-                    Intent intent_home = new Intent(getApplicationContext(), DriverInfoShow.class);
+                    Intent intent_home = new Intent(getApplicationContext(),DriverInfoShow.class);
                     System.out.println(driverUser.getMobile());
                     System.out.println(driverUser.getDriverCarInfo().getCarYear());
                     intent_home.putExtra("driverInfo", (Serializable)driverUser);

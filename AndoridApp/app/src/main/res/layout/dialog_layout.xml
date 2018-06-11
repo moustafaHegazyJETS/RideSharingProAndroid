@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_alignParentTop="true"
+        android:columnCount="2"
+        android:rowCount="2"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp">
+
+        <TextView
+        android:id="@+id/textView199"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/yourTripMeesage"
+            android:fontFamily="serif"
+            android:layout_marginTop="20dp"/>
+        <TextView
+            android:id="@+id/dialogTripName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="trip name"
+            android:layout_marginTop="20dp"/>
+
+
+
+
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="serif"
+
+            android:text="@string/from" />
+        <TextView
+            android:id="@+id/dialogFrom"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:layout_marginTop="20dp"/>
+
+
+
+        <TextView
+            android:id="@+id/textView177"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="serif"
+            android:text="@string/to" />
+        <TextView
+            android:id="@+id/dialogTo"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:layout_marginTop="20dp"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/startDialogtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/startBtn"
+            android:background="@drawable/buttondesign"
+            android:textColor="#FFFFFF"/>
+
+        <Button
+            android:id="@+id/canceleDialogBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/buttondesign"
+            android:textColor="#FFFFFF"
+            android:text="@string/canceleDialogeBtn" />
+    </LinearLayout>
+    </GridLayout>
+</RelativeLayout>

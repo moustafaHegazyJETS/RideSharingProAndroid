@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import com.example.rania.itigraduationproject.Interfaces.Service;
 import com.example.rania.itigraduationproject.SqliteDBTrip.DBDriverConnection;
 import com.example.rania.itigraduationproject.model.Trip;
 import com.example.rania.itigraduationproject.model.User;
+import com.example.rania.itigraduationproject.remote.CheckInternetConnection;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -37,15 +39,18 @@ public class TripDetailsForDriver extends AppCompatActivity {
     TextView dateTxt;
     Button viewReserved;
     User driverUser;
-
     DBDriverConnection dbDriverConnection;
-
     Trip newTrip ;
     private static Retrofit retrofit = null;
-    SessionManager session_mangement;
     Service service;
 
-
+    protected void onStart() {
+        super.onStart();
+        if(!CheckInternetConnection.isNetworkAvailable(this))
+        {
+            CheckInternetConnection.bulidDuligo(this);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,13 +60,13 @@ public class TripDetailsForDriver extends AppCompatActivity {
         //objects
         openIntent = getIntent();
         trip = (Trip) openIntent.getExtras().get("tripVal");
-        driverUser = (User) openIntent.getExtras().get("driverUser");
+       driverUser = (User) openIntent.getExtras().get("driverUser");
+        Log.i("userid",driverUser.getUserName()) ;
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(Service.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
         service = retrofit.create(Service.class);
 
 
@@ -76,10 +81,6 @@ public class TripDetailsForDriver extends AppCompatActivity {
         dateTxt=findViewById(R.id.tripdatet);
         timeTxt = findViewById(R.id.tripTimet);
         viewReserved = findViewById(R.id.viewAllReserved);
-
-
-
-
 
 
         //actions

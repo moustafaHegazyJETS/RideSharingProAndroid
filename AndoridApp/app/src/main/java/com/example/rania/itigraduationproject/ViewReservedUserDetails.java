@@ -15,6 +15,7 @@ import com.example.rania.itigraduationproject.Controllers.SessionManager;
 import com.example.rania.itigraduationproject.Interfaces.Service;
 import com.example.rania.itigraduationproject.model.Trip;
 import com.example.rania.itigraduationproject.model.User;
+import com.example.rania.itigraduationproject.remote.CheckInternetConnection;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -31,15 +32,21 @@ public class ViewReservedUserDetails extends AppCompatActivity {
     TextView userName;
     TextView email;
     TextView phone ;
-
     Button delete;
-
     Intent openIntent;
     User user ;
     private static Retrofit retrofit = null;
     Service service;
     Trip trip;
     User driverUser;
+
+    protected void onStart() {
+        super.onStart();
+        if(!CheckInternetConnection.isNetworkAvailable(this))
+        {
+            CheckInternetConnection.bulidDuligo(this);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

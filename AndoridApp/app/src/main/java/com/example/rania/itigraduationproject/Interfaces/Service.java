@@ -16,11 +16,11 @@ import retrofit2.http.POST;
  */
 
 public interface Service {
+
     public static final String BASE_URL = "http://10.0.2.2:8084/RideSharingProWS/rest/";
 
     @GET("getUser.json")
     Call<User> getUser();
-
 
     //Call<User>sendUser(@Body User user );
 //    Call<User>sendUser(@Multipart Multipart image,@Multipart String user );
@@ -35,19 +35,14 @@ public interface Service {
     @POST("driverSignUpWs")
     Call<DriverCarInfo>saveDriverObject(@Body User driverCarInfo);
 
-
-
     @GET("getTrip/4.json")
     Call<Trip> getHello();
-
-
 
     @POST("getSearchTrips.json")
     Call<List<Trip>> getTripsFromSearch(@Body Trip obj );
 
     @GET("h")
     Call<String> getHello2();
-
 
     @POST("getDriverInfo.json")
     Call<User> getDriverInfo(@Body Trip t);
@@ -75,6 +70,23 @@ public interface Service {
 
     @POST("deleteReservation.json")
     Call<Trip> deleteReservation(@Body List<Integer> tripAndUserID);
+
+    @POST("getReserveredTrip.json")
+    Call<List<Trip>> getAllUserReserverdTrips(@Body User user );
+
+    @POST("getAllPastTripToDerviver.json")
+    Call<List<Trip>> getAllpastTripstoDeriver(@Body User user );
+
+    @POST("getAllPastTriptoUser.json.json")
+    Call<List<Trip>> getAllpastTripstoUser(@Body User user );
+
+    @GET("getAllUser.json")
+    Call<List<User>> getAllUsers();
+
+    @POST("getTripById.json")
+    Call<Trip> getTripById(@Body Integer id);
+
+
 
 
 

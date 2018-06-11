@@ -9,7 +9,6 @@ import android.widget.Toast;
 import com.example.rania.itigraduationproject.Controllers.SessionManager;
 import com.example.rania.itigraduationproject.Interfaces.Service;
 import com.example.rania.itigraduationproject.model.User;
-import com.example.rania.itigraduationproject.remote.CheckInternetConnection;
 
 import java.util.HashMap;
 
@@ -90,7 +89,7 @@ public class SplashScreen extends AppCompatActivity {
 
                                     }else
                                     {
-                                        Intent i = new Intent(SplashScreen.this, HomeActivity.class);
+                                        Intent i = new Intent(SplashScreen.this, HomeUser.class);
 //                                        System.out.println(response.body().getDriverCarInfo().getCarModel());
                                         i.putExtra("user", response.body());
                                         startActivity(i);
@@ -111,7 +110,7 @@ public class SplashScreen extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<User> call, Throwable t) {
-                    Toast.makeText(SplashScreen.this, "on Failere", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(SplashScreen.this, "on Failere", Toast.LENGTH_SHORT).show();
                     Thread th = new Thread() {
                         @Override
                         public void run() {
