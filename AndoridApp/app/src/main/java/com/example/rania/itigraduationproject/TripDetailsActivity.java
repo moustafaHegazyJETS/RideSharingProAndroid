@@ -53,7 +53,11 @@ public class TripDetailsActivity extends AppCompatActivity {
     Calendar onTimeCalender= (Calendar) myCalendar.clone();
     AlarmManager alarmManage;
     PendingIntent pending_intent;
+    Trip trip=new Trip();
 
+    TripDetailsForDriver driverDetails=new TripDetailsForDriver();
+    int numberOfSeats=driverDetails.getAllReservedUsers(trip);
+    String num=numOfSeatsTrip.getText().toString();
     protected void onStart() {
         super.onStart();
         if(!CheckInternetConnection.isNetworkAvailable(this))
@@ -158,80 +162,86 @@ public class TripDetailsActivity extends AppCompatActivity {
                         public void onResponse(Call<User> call, Response<User> response) {
 
                             if(response.body()!=null) {
-                                if(response.body().getEmail().equals("t"))
-                                {
-                                    Toast.makeText(context, "Done Reservation", Toast.LENGTH_SHORT).show();
-                                    SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
-                                    SimpleDateFormat formatter2 = new SimpleDateFormat("dd/MM/yyyy");//yyyy-MM-dd
-                                    Date timeZ;
-                                    Date dayZ;
-                                    try {
-                                        //2-done all local work
-                                        //here to add calender and alarm
-                                        timeZ = formatter.parse(t.getTime());
-                                        Log.i("time", "Day "+t.getDay());
-                                        dayZ = formatter2.parse(t.getDay());
-                                        Log.i("time", "DayAfter "+dayZ);
-                                        Log.i("time", "H "+timeZ.getHours());
-                                        Log.i("time", "M "+timeZ.getMinutes());
-                                        Log.i("time", "D "+dayZ.getDate());
-                                        Log.i("time", "M "+(dayZ.getMonth()));
-                                        Log.i("time", "Y "+((dayZ.getYear()-100)+2000));
+                                if(numberOfSeats <= Integer.parseInt(num)){
+                                    if(response.body().getEmail().equals("t"))
+                                    {
+                                        Toast.makeText(context, "Done Reservation", Toast.LENGTH_SHORT).show();
+                                        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+                                        SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd");//yyyy-MM-dd
+                                        Date timeZ;
+                                        Date dayZ;
+                                        try {
+                                            //2-done all local work
+                                            //here to add calender and alarm
+                                            timeZ = formatter.parse(t.getTime());
+                                            Log.i("time", "Day "+t.getDay());
+                                            dayZ = formatter2.parse(t.getDay());
+                                            Log.i("time", "DayAfter "+dayZ);
+                                            Log.i("time", "H "+timeZ.getHours());
+                                            Log.i("time", "M "+timeZ.getMinutes());
+                                            Log.i("time", "D "+dayZ.getDate());
+                                            Log.i("time", "M "+(dayZ.getMonth()));
+                                            Log.i("time", "Y "+((dayZ.getYear()-100)+2000));
 
-                                        myCalendar.set(Calendar.YEAR,((dayZ.getYear()-100)+2000));
-                                        myCalendar.set(Calendar.MONTH, dayZ.getMonth());
-                                        myCalendar.set(Calendar.DAY_OF_MONTH, dayZ.getDate());
-                                        myCalendar.set(Calendar.HOUR_OF_DAY,timeZ.getHours());
-                                        myCalendar.set(Calendar.MINUTE,timeZ.getMinutes());
-                                        myCalendar.set(Calendar.SECOND,0);
+                                            myCalendar.set(Calendar.YEAR,((dayZ.getYear()-100)+2000));
+                                            myCalendar.set(Calendar.MONTH, dayZ.getMonth());
+                                            myCalendar.set(Calendar.DAY_OF_MONTH, dayZ.getDate());
+                                            myCalendar.set(Calendar.HOUR_OF_DAY,timeZ.getHours());
+                                            myCalendar.set(Calendar.MINUTE,timeZ.getMinutes());
+                                            myCalendar.set(Calendar.SECOND,0);
 
-                                        //here to set callender
+                                            //here to set callender
 
 //                                      //adding values inside Sqlite DB
-                                        dBconnection.insertIntoTrip(t.getTripName(),t.getFrom(),t.getTo(),t.getDay()/*day*/,t.getTime()/*time*/,
-                                                null,null,null,null,"f",t.getDetails()
-                                                ,driverUser.getDriverCarInfo().getDriveCarID(),
-                                                driverUser.getUserName(),t.getCost(),driverUser.getDriverCarInfo().getDriverLicenseNum(),
-                                                driverUser.getDriverCarInfo().getCarColor(),driverUser.getDriverCarInfo().getCarBrand(),
-                                                driverUser.getDriverCarInfo().getCarModel(),driverUser.getIdUser(),t.getIdTrip());
+                                            dBconnection.insertIntoTrip(t.getTripName(),t.getFrom(),t.getTo(),t.getDay()/*day*/,t.getTime()/*time*/,
+                                                    null,null,null,null,"f",t.getDetails()
+                                                    ,driverUser.getDriverCarInfo().getDriveCarID(),
+                                                    driverUser.getUserName(),t.getCost(),driverUser.getDriverCarInfo().getDriverLicenseNum(),
+                                                    driverUser.getDriverCarInfo().getCarColor(),driverUser.getDriverCarInfo().getCarBrand(),
+                                                    driverUser.getDriverCarInfo().getCarModel(),driverUser.getIdUser(),t.getIdTrip());
 
-                                        Intent intent = new Intent(TripDetailsActivity.this, SplashScreen.class);
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                        //this id is uniqe for each trip so it uses for define pending alarm
-                                        int id = t.getIdTrip();
+                                            Intent intent = new Intent(TripDetailsActivity.this, SplashScreen.class);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                            //this id is uniqe for each trip so it uses for define pending alarm
+                                            int id = t.getIdTrip();
 
-                                        alarm_intent.putExtra("Ex", "on");
-                                        alarm_intent.putExtra("id", String.valueOf(id));
-                                        alarm_intent.putExtra("who","user");
+                                            alarm_intent.putExtra("Ex", "on");
+                                            alarm_intent.putExtra("id", String.valueOf(id));
+                                            alarm_intent.putExtra("who","user");
 
-                                        pending_intent = pending_intent.getBroadcast(TripDetailsActivity.this, id
-                                                , alarm_intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                                            pending_intent = pending_intent.getBroadcast(TripDetailsActivity.this, id
+                                                    , alarm_intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
-                                        alarmManage.setExact(AlarmManager.RTC_WAKEUP, myCalendar.getTimeInMillis(), pending_intent);
+                                            alarmManage.setExact(AlarmManager.RTC_WAKEUP, myCalendar.getTimeInMillis(), pending_intent);
 
-                                        Toast toastk = Toast.makeText(TripDetailsActivity.this, "done"+myCalendar.getTimeInMillis(),Toast.LENGTH_LONG);
-                                        toastk.show();
+                                            Toast toastk = Toast.makeText(TripDetailsActivity.this, "done"+myCalendar.getTimeInMillis(),Toast.LENGTH_LONG);
+                                            toastk.show();
 
-                                        startActivity(intent);
-                                        finish();
-                                    } catch (ParseException e) {
-                                        e.printStackTrace();
+                                            startActivity(intent);
+                                            finish();
+                                        } catch (ParseException e) {
+                                            e.printStackTrace();
+                                        }
+
+
+
+                                    }else if(response.body().getEmail().equals("f"))
+                                    {
+                                        Toast.makeText(context, "Error in Reservation", Toast.LENGTH_SHORT).show();
+                                    }else
+                                    {
+                                        Toast.makeText(context, response.body().getEmail(), Toast.LENGTH_SHORT).show();
+
                                     }
-
-
-
-                                }else if(response.body().getEmail().equals("f"))
-                                {
-                                    Toast.makeText(context, "Error in Reservation", Toast.LENGTH_SHORT).show();
                                 }else
                                 {
-                                    Toast.makeText(context, response.body().getEmail(), Toast.LENGTH_SHORT).show();
-
+                                    Toast.makeText(context, "Response is NULL", Toast.LENGTH_SHORT).show();
                                 }
-                            }else
-                            {
-                                Toast.makeText(context, "Response is NULL", Toast.LENGTH_SHORT).show();
+                                }
+                           else{
+                                Toast.makeText(context, "This Trip has been completed", Toast.LENGTH_SHORT).show();
+
                             }
                         }
 
