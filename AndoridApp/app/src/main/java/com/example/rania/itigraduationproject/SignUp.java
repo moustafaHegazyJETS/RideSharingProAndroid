@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.autofill.AutofillValue;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
@@ -112,6 +113,14 @@ public class SignUp extends AppCompatActivity {
         confirmPass=findViewById(R.id.input_password_confirm);
         personalImage=(ImageView)findViewById(R.id.personalimage);
 
+        //input for testing
+        name.setText("hossam");
+        password.setText("123456");
+        confirmPass.setText("123456");
+        email.setText("hossam@gmail.com");
+        mobile.setText("01112565425");
+        national_id.setText("29403020103899");
+        
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(Service.BASE_URL)
