@@ -137,41 +137,46 @@ public class DetailsOfEvent extends AppCompatActivity {
         toTxtV = (TextView) dialog.findViewById(R.id.dialogTo);
 
 
-        //Request to  get Trip Object----------
-        service.getTripById(pending_id).enqueue(new Callback<Trip>() {
-            @Override
-            public void onResponse(Call<Trip> call, Response<Trip> response) {
-                if(response.body()!=null)
-                {
-                    fromTxtV.setText(response.body().getFrom());
-                    tripNameTxtV.setText(response.body().getTripName());
-                    toTxtV.setText(response.body().getTo());
-                    trip=new Trip();
-                    trip.setStartlongtiude(response.body().getStartlongtiude());
-                    trip.setStartlatitude(response.body().getStartlatitude());
-                    trip.setEndlongtiude(response.body().getEndlongtiude());
-                    trip.setEndlatitude(response.body().getEndlatitude());
-                    trip.setTripName(response.body().getTripName());
-
-
-                }
-                else
-                {
-                    Toast.makeText(context, "response body  is null ", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Trip> call, Throwable t) {
-                Toast.makeText(context, "PleaseCheck  Internet connection", Toast.LENGTH_SHORT).show();
-
-            }
-        });
+//        //Request to  get Trip Object----------
+//        service.getTripById(pending_id).enqueue(new Callback<Trip>() {
+//            @Override
+//            public void onResponse(Call<Trip> call, Response<Trip> response) {
+//                if(response.body()!=null)
+//                {
+//                    fromTxtV.setText(response.body().getFrom());
+//                    tripNameTxtV.setText(response.body().getTripName());
+//                    toTxtV.setText(response.body().getTo());
+//                    trip=new Trip();
+//                    trip.setStartlongtiude(response.body().getStartlongtiude());
+//                    trip.setStartlatitude(response.body().getStartlatitude());
+//                    trip.setEndlongtiude(response.body().getEndlongtiude());
+//                    trip.setEndlatitude(response.body().getEndlatitude());
+//                    trip.setTripName(response.body().getTripName());
+//
+//
+//                }
+//                else
+//                {
+//                    Toast.makeText(context, "response body  is null ", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Trip> call, Throwable t) {
+//                Toast.makeText(context, "PleaseCheck  Internet connection", Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
 
         notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        trip.setEndlatitude(34.9147921);
+        trip.setEndlongtiude(-97.7786493);
+        trip.setStartlatitude(30.044281);
+        trip.setStartlongtiude(	31.340002);
+
 
         Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                Uri.parse("http://maps.google.com/maps?saddr=" + trip.getStartlongtiude() + "," + trip.getStartlongtiude() + "&daddr=" +trip.getEndlongtiude() + "," + trip.getEndlatitude()));
+                Uri.parse("http://maps.google.com/maps?saddr=" + trip.getStartlongtiude() + "," + trip.getStartlatitude()+ "&daddr=" +trip.getEndlongtiude() + "," + trip.getEndlatitude()));
 
 
         remoteViews = new RemoteViews(getPackageName(), R.layout.notification_layout);

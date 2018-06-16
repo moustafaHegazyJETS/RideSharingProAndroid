@@ -232,10 +232,10 @@ public class CreateTrip extends AppCompatActivity {
                 vals.add(0,t2);
                 vals.add(1,trip);
 
-                //if(myCalendar.compareTo(onTimeCalender)<=0) {
-                  //  Toast.makeText(CreateTrip.this, "Check For Upcomming Time", Toast.LENGTH_SHORT).show();
-
-                //} else {
+//                if(myCalendar.compareTo(onTimeCalender)<=0) {
+//                    Toast.makeText(CreateTrip.this, "Check For Upcomming Time", Toast.LENGTH_SHORT).show();
+//
+//                } else {
 
                     service.addTrip(vals).enqueue(new Callback<Trip>() {
                         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
