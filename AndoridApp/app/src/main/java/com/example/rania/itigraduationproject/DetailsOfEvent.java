@@ -176,7 +176,7 @@ public class DetailsOfEvent extends AppCompatActivity {
 
 
         Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                Uri.parse("http://maps.google.com/maps?saddr=" + trip.getStartlongtiude() + "," + trip.getStartlatitude()+ "&daddr=" +trip.getEndlongtiude() + "," + trip.getEndlatitude()));
+                Uri.parse("http://maps.google.com/maps?saddr=" + trip.getStartlatitude() + "," + trip.getStartlongtiude()+ "&daddr=" +trip.getEndlatitude() + "," + trip.getEndlongtiude()));
 
 
         remoteViews = new RemoteViews(getPackageName(), R.layout.notification_layout);

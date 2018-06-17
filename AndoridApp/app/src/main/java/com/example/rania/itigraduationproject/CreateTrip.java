@@ -207,10 +207,10 @@ public class CreateTrip extends AppCompatActivity {
                 trip.setNumberOfSeats(Integer.valueOf(tripNumberOfSeatsTxt.getText().toString()));
                 trip.setTo(tripToEditTxt.getText().toString());//tripToTxt.getText().toString()
                 trip.setFrom(tripFromEditTxt.getText().toString());//tripFromTxt.getText().toString()
-                     trip.setStartlatitude(toLatitude);
-                     trip.setStartlongtiude(toLongtiude);
-                     trip.setEndlatitude(fromLatitude);
-                     trip.setEndlongtiude(fromLongtiude);
+//                     trip.setStartlatitude(toLatitude);
+//                     trip.setStartlongtiude(toLongtiude);
+//                     trip.setEndlatitude(fromLatitude);
+//                     trip.setEndlongtiude(fromLongtiude);
                 System.out.println("s,slslslsls,cfsalfmkmfeokwr"+user.getDriverCarInfo().getDriveCarID());
                 DriverCarInfo d = user.getDriverCarInfo();
                 d.setUser(new User());

@@ -2,8 +2,6 @@ package com.example.rania.itigraduationproject;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -12,7 +10,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.rania.itigraduationproject.Controllers.SessionManager;
 import com.example.rania.itigraduationproject.Interfaces.Service;
 import com.example.rania.itigraduationproject.SqliteDBTrip.DBDriverConnection;
 import com.example.rania.itigraduationproject.model.Trip;
@@ -20,7 +17,6 @@ import com.example.rania.itigraduationproject.model.User;
 import com.example.rania.itigraduationproject.remote.CheckInternetConnection;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -132,11 +128,13 @@ public class TripDetailsForDriver extends AppCompatActivity {
         });
     }
 
-    private void getAllReservedUsers(Trip trip)
+     int getAllReservedUsers(Trip trip)
     {
+        final int[] numberOfReserves = new int[5];
         service.getReservedUsers(trip).enqueue(new Callback<List<User>>() {
             @Override
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                numberOfReserves[0] =response.body().size();
                 if(response.body()!=null)
                 {
                     if(response.body().size()> 0)
@@ -165,6 +163,7 @@ public class TripDetailsForDriver extends AppCompatActivity {
                 System.out.println(t);
             }
         });
+return numberOfReserves[0];
     }
 
 

@@ -3,6 +3,7 @@ package com.example.rania.itigraduationproject;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -136,38 +137,37 @@ public class Login extends AppCompatActivity {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
 
-                if(response.body()==null )
-                {
-                    Toast.makeText(Login.this,"Login Failed Due to response "+response.body(),Toast.LENGTH_SHORT).show();
-
-                }
-
-                if (response.body()!=null)
-                {
+                if(response.body()!=null ){
 
 
-                    session_mangement.createLoginSession(response.body().getEmail(),response.body().getPassword());
-                    if(response.body().getDriverCarInfo()!=null){
-                        System.out.println("_____________________________________");
-                        System.out.println(response.body().getDriverCarInfo().getCarModel());
-                        Intent driver_i = new Intent(Login.this, HomeDriver.class);
-                        driver_i.putExtra("user", response.body());
-                        startActivity(driver_i);
-                        finish();
+                    if(response.body().getPending().equals("-1")){
+                        Toast.makeText(Login.this,"Account has been blocked",Toast.LENGTH_LONG).show();
 
-                    }else
-                    {
-                        Intent intent_home = new Intent(getApplicationContext(), HomeUser.class);
-                        System.out.println(response.body().getMobile());
-                        System.out.println(response.body().getBirthDate());
-                        System.out.println(response.body().getEmail());
-                        System.out.println(response.body().getUserName());
+                    }else{
+                        session_mangement.createLoginSession(response.body().getEmail(),response.body().getPassword());
+                        if(response.body().getDriverCarInfo()!=null){
+                            System.out.println("_____________________________________");
+                            System.out.println(response.body().getDriverCarInfo().getCarModel());
+                            Intent driver_i = new Intent(Login.this, HomeDriver.class);
+                            driver_i.putExtra("user", response.body());
+                            startActivity(driver_i);
+                            finish();
 
-                        intent_home.putExtra("user", (Serializable) response.body());
+                        }else
+                        {
+                            Intent intent_home = new Intent(getApplicationContext(), HomeUser.class);
+                            System.out.println(response.body().getMobile());
+                            System.out.println(response.body().getBirthDate());
+                            System.out.println(response.body().getEmail());
+                            System.out.println(response.body().getUserName());
 
-                        startActivity(intent_home);
-                        finish();
+                            intent_home.putExtra("user", (Serializable) response.body());
+
+                            startActivity(intent_home);
+                            finish();
+                        }
                     }
+
 
 
 
@@ -177,8 +177,7 @@ public class Login extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                Toast.makeText(Login.this,"on Failere"+t,Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(Login.this,"invalid user or password",Toast.LENGTH_SHORT).show();
             }
         });
     }

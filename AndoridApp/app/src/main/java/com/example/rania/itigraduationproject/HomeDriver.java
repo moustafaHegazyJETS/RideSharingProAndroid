@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.example.rania.itigraduationproject.Controllers.FabDesignFun;
 import com.example.rania.itigraduationproject.Controllers.SessionManager;
+import com.example.rania.itigraduationproject.Interfaces.Service;
 import com.example.rania.itigraduationproject.SqliteDBTrip.DBDriverConnection;
 import com.example.rania.itigraduationproject.firebeasePushNotifications.FirebeaseIncstanceIdDevice;
 import com.example.rania.itigraduationproject.model.Trip;
@@ -37,6 +38,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class HomeDriver extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -46,6 +53,8 @@ public class HomeDriver extends AppCompatActivity
     User user;
     User driverUser;
     DBDriverConnection dbDriverConnection;
+    private static Retrofit retrofit = null;
+    Service service;
 
 
     protected void onStart() {
@@ -102,6 +111,12 @@ public class HomeDriver extends AppCompatActivity
         user = (User) i.getExtras().get("user");
         driverUser = user;
         dbDriverConnection = new DBDriverConnection(this);
+        //Retrofit -----------------------------------------------
+        retrofit = new Retrofit.Builder()
+                .baseUrl(Service.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        service = retrofit.create(Service.class);
 
         //resources
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -110,9 +125,47 @@ public class HomeDriver extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         helloTxt = findViewById(R.id.HelloTxt);
-        helloTxt.setText("Hello Driver : "+user.getUserName());
+       // helloTxt.setText("Hello Driver : "+user.getUserName());
         listViewDriver = findViewById(R.id.ListViewDriver);
+        if(user.getPending().equals("0")) {
+            helloTxt .setText("Hello, "+user.getUserName()+" wait until Admin Accept");
+            helloTxt .setTextColor(Color.parseColor("#00ff00"));
+            fab.setImageBitmap(FabDesignFun.textAsBitmap("Logout", 40, Color.WHITE));
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    logoutUser();
+                }
+            });
 
+
+        }
+        else if(user.getPending().equals("-1"))
+        {
+            service.getHello().enqueue(new Callback<Trip>() {
+                @Override
+                public void onResponse(Call<Trip> call, Response<Trip> response) {
+                    Toast.makeText(HomeDriver.this, ""+response.body().getTripName(), Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onFailure(Call<Trip> call, Throwable t) {
+
+                }
+            });
+
+            helloTxt .setText("Sorry you are Reject  you can Register  Again");
+            helloTxt .setTextColor(Color.parseColor("#ff0000"));
+            fab.setImageBitmap(FabDesignFun.textAsBitmap("Logout", 40, Color.WHITE));
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    logoutUser();
+                }
+            });
+        }
+        else {
+            helloTxt .setText("hello "+user.getUserName());
         //actions
         FabDesignFun.textAsBitmap("Trip",40, Color.WHITE);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -124,7 +177,7 @@ public class HomeDriver extends AppCompatActivity
                 driver_i.putExtra("driverUser",(Serializable) driverUser );
                 startActivity(driver_i);
             }
-        });
+        });}
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
