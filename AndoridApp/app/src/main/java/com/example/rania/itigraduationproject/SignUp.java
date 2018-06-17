@@ -2,9 +2,12 @@ package com.example.rania.itigraduationproject;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +27,7 @@ import com.example.rania.itigraduationproject.model.User;
 import com.example.rania.itigraduationproject.remote.CheckInternetConnection;
 import com.google.gson.Gson;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -79,6 +83,9 @@ public class SignUp extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if(Build.VERSION.SDK_INT>22) {
+            requestPermissions(new String[]{"android.permission.READ_EXTERNAL_STORAGE", "android.permission.READ_INTERNAL_STORAGE"}, 1);
+        }
         Log.i("size","act result");
         if(resultCode == RESULT_OK){
             targetUri = data.getData();
@@ -120,7 +127,7 @@ public class SignUp extends AppCompatActivity {
         email.setText("hossam@gmail.com");
         mobile.setText("01112565425");
         national_id.setText("29403020103899");
-        
+
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(Service.BASE_URL)
@@ -205,7 +212,10 @@ public class SignUp extends AppCompatActivity {
                 if(validate()==true) {
 
                     if (radio_user_DriverGroupButton.getText().toString().equals("User")) {
-                        sigup(targetUri,image,user);
+                        if(image!=null){
+
+                        }
+                        sigup(image,targetUri,user);
 
                     } else if (radio_user_DriverGroupButton.getText().toString().equals("Driver")) {
 
@@ -230,6 +240,12 @@ public class SignUp extends AppCompatActivity {
             public void onClick(View v) {
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(galleryIntent,0);
+                if(Build.VERSION.SDK_INT>22){
+//                    requestPermissions(new String[] {"android.permission.READ_EXTERNAL_STORAGE","android.permission.READ_INTERNAL_STORAGE"}, 1);
+
+                }
+
+
             }
 
         });
@@ -243,6 +259,19 @@ public class SignUp extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                if (!(grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED)) {
+                    Toast.makeText(this, "file location.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
     }
     //----------------------------SignUp Validation
     public boolean validate() {
@@ -363,13 +392,18 @@ public class SignUp extends AppCompatActivity {
         return valid;
     }
 
-    private void sigup(Uri uri,File file, User user){
+    private void sigup(File file,Uri uri,User user){
 
         Gson gson = new Gson();
         String userString = gson.toJson(user);
-
+        if(file != null){
+            Log.e("image not null","ya Hossam");
+        }
+        if(uri != null){
+            Log.e("uri not null","ya Hossam");
+        }
         // create part for file (photo, video, ...)
-        MultipartBody.Part body = prepareFilePart("photo", uri,file);
+        MultipartBody.Part body = prepareFilePart("photo",uri,file);
 
 
         RequestBody userBody = createPartFromString(userString);
@@ -385,7 +419,7 @@ public class SignUp extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.e("Upload error:", t.getMessage());
+                Log.e("Upload error:", t.getMessage()+" "+t.getCause()+" "+t.getStackTrace().toString());
             }
         });
     }
@@ -397,18 +431,12 @@ public class SignUp extends AppCompatActivity {
     }
 
     @NonNull
-    private MultipartBody.Part prepareFilePart(String partName, Uri fileUri , File file) {
+    private MultipartBody.Part prepareFilePart(String partName,Uri uri,File file) {
         // create RequestBody instance from file
-        Log.e("fileuri in send",fileUri.getLastPathSegment()+" "+fileUri.getPath()+" "+fileUri.getEncodedPath());
-        Log.e("filepath in send",file.getAbsolutePath());
-        RequestBody requestFile = RequestBody.create(MediaType.parse(getContentResolver().getType(fileUri)),file);
+        RequestBody requestFile = RequestBody.create(MediaType.parse(getContentResolver().getType(uri)),file);
 
         // MultipartBody.Part is used to send also the actual file name
         return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
     }
 
-    private void setImage(){
-//        FileInputStream fis = new FileInputStream();
-
-    }
 }

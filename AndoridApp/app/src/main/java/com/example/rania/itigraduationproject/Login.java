@@ -137,7 +137,7 @@ public class Login extends AppCompatActivity {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
 
-                if(response.body()!=null ){
+                if(response.body().getEmail() !=null ){
 
 
                     if(response.body().getPending().equals("-1")){
@@ -171,13 +171,15 @@ public class Login extends AppCompatActivity {
 
 
 
+                }else{
+                    Toast.makeText(Login.this,"invalid email or password",Toast.LENGTH_SHORT).show();
                 }
 
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                Toast.makeText(Login.this,"invalid user or password",Toast.LENGTH_SHORT).show();
+                Toast.makeText(Login.this,"failed to connect",Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -4,6 +4,9 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
+import android.os.Build;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
@@ -13,17 +16,26 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
+
 import com.example.rania.itigraduationproject.Interfaces.Service;
 import com.example.rania.itigraduationproject.model.Trip;
 import com.example.rania.itigraduationproject.remote.CheckInternetConnection;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.google.android.gms.tasks.Task;
+
 import java.io.Serializable;
 import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,9 +43,10 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TripSearch extends AppCompatActivity {
-
-    EditText fromEdit;
-    EditText toEdit;
+    PlaceAutocompleteFragment locationcompleteFragment;
+    PlaceAutocompleteFragment destinationcompleteFragment;
+    ImageView destination_map;
+    ImageView location_map;
     Button searchBtn;
     String startPoint = "";
     String destination = "";
@@ -43,13 +56,11 @@ public class TripSearch extends AppCompatActivity {
     double toLatitude;
     double fromLongtiude;
     private static Retrofit retrofit = null;
-    public static final int PLACE_PICKER_REQUEST1 = 1;
-    public static final int PLACE_PICKER_REQUEST2 = 2;
+
 
     protected void onStart() {
         super.onStart();
-        if(!CheckInternetConnection.isNetworkAvailable(this))
-        {
+        if (!CheckInternetConnection.isNetworkAvailable(this)) {
             CheckInternetConnection.bulidDuligo(this);
         }
     }
@@ -71,8 +82,7 @@ public class TripSearch extends AppCompatActivity {
 
         //resources
 
-        fromEdit = (EditText) findViewById(R.id.fromTxt);
-        toEdit =(EditText) findViewById(R.id.toTxt);
+
         searchBtn = findViewById(R.id.search_button);
 
 
@@ -82,82 +92,78 @@ public class TripSearch extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (fromEdit.getText().toString().equals("") || toEdit.getText().toString().equals("")) {
+                if (startPoint.equals("") || destination.equals("")) {
                     Toast.makeText(TripSearch.this, "Check Fields", Toast.LENGTH_SHORT).show();
                 } else {
                     Trip t = new Trip();
-                    t.setFrom(fromEdit.getText().toString());
-                    t.setTo(toEdit.getText().toString());
+                    t.setFrom(startPoint);
+                    t.setTo(destination);
                     requestTrip(t);
-//                         Toast.makeText(TripSearch.this, "Please Fill all", Toast.LENGTH_SHORT).show();
-
-
                 }
             }
         });
 
         //------------------Action to To Edit Text---------
-        fromEdit.setOnClickListener(new View.OnClickListener() {
+        String locale = getResources().getConfiguration().locale.getCountry();
+        locationcompleteFragment = (PlaceAutocompleteFragment)
+                getFragmentManager().findFragmentById(R.id.location_autocomplete_fragment);
+        destinationcompleteFragment = (PlaceAutocompleteFragment)
+                getFragmentManager().findFragmentById(R.id.destination_autocomplete_fragment);
+
+        AutocompleteFilter autocompleteFilter = new AutocompleteFilter.Builder()
+                .setTypeFilter(Place.TYPE_COUNTRY)
+                .setCountry(locale)
+                .build();
+        destinationcompleteFragment.setFilter(autocompleteFilter);
+        locationcompleteFragment.setFilter(autocompleteFilter);
+        locationcompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
-            public void onClick(View view) {
-                Toast.makeText(TripSearch.this, "from edit text Action", Toast.LENGTH_SHORT).show();
-                action_From_To();
+            public void onPlaceSelected(Place place) {
+                // TODO: Get info about the selected place.
+
+                startPoint = place.getName().toString();
+                fromLatitude = place.getLatLng().latitude;
+                fromLongtiude = place.getLatLng().longitude;
+            }
+
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+                Log.i("place", status.getStatusMessage());
             }
         });
 
-        //----------------------Action To FromEdit
-        toEdit.setOnClickListener(new View.OnClickListener() {
+        destinationcompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
-            public void onClick(View view) {
-                Toast.makeText(TripSearch.this, "to edit text Action", Toast.LENGTH_SHORT).show();
+            public void onPlaceSelected(Place place) {
+                // TODO: Get info about the selected place.
+                destination = place.getName().toString();
+                toLongtiude = place.getLatLng().longitude;
+                toLatitude = place.getLatLng().latitude;
+            }
 
-                action_From_To();
-
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+                Log.i("place", status.getStatusMessage());
             }
         });
-         }
+        location_map = findViewById(R.id.location_map);
+        destination_map = findViewById(R.id.destination_map);
 
-        @Override
-        protected void onActivityResult ( int requestCode, int resultCode, Intent data){
-            super.onActivityResult(requestCode, resultCode, data);
-            if (requestCode == PLACE_PICKER_REQUEST1) {
-                if (resultCode == RESULT_OK) {
-                    Place place = PlacePicker.getPlace(this, data);
-
-                    if (place.equals(null)) {
-
-                        Toast.makeText(this, "place is null", Toast.LENGTH_LONG).show();
-                    }
-
-                    String toastMsg = String.format("Place that you need is : ", place.getAddress().toString());
-                    Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
-                    fromEdit.setText(place.getAddress().toString());
-                    startPoint = place.getAddress().toString();
-                    fromLatitude = place.getLatLng().latitude;
-                    fromLongtiude = place.getLatLng().longitude;
-                }
+        location_map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getLocationFromMap(1);
             }
-            if (requestCode == PLACE_PICKER_REQUEST2) {
-                if (resultCode == RESULT_OK) {
-                    Place place = PlacePicker.getPlace(this, data);
-
-                    if (place.equals(null)) {
-
-                        Toast.makeText(this, "place is null", Toast.LENGTH_LONG).show();
-                    }
-
-                    String toastMsg = String.format("Place that you need is : ", place.getAddress().toString());
-                    Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
-                    destination = place.getAddress().toString();
-                    toEdit.setText(destination);
-                    toLatitude = place.getLatLng().latitude;
-                    toLongtiude = place.getLatLng().longitude;
-                }
+        });
+        destination_map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getLocationFromMap(2);
             }
-
-        }
-
-
+        });
+    }
 
     public void requestTrip(Trip t)
     {
@@ -171,11 +177,7 @@ public class TripSearch extends AppCompatActivity {
                 }
 
                 if (response.body()!=null)
-                {//Here To Write Operation Code
-
-//                    Toast.makeText(TripSearch.this, ""+response.body().get(0).getTripName(), Toast.LENGTH_SHORT).show();
-
-//                    Toast.makeText(TripSearch.this, ""+response.body().get(0).getTripName(), Toast.LENGTH_SHORT).show();
+                {
                     Intent intent_home = new Intent(getApplicationContext(), TripShowActivity.class);
                     intent_home.putExtra("tripList", (Serializable) response.body() );
                     startActivity(intent_home);
@@ -190,78 +192,43 @@ public class TripSearch extends AppCompatActivity {
             }
         });
     }
-    //Alert Function
-    public void showSettingsAlerts()
-    {
 
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setTitle("GPS is settings");
-        alertDialog.setMessage("GPS is not enabled . Do you want to go to settings menu?");
-        alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivity(i);
-
-            }
-        });
-    }
-
-    //Network Alert Setting
-    public void showSettingsAlertsForNetwork() {
-
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setTitle("Network is settings");
-        alertDialog.setMessage("Network is not enabled . Do you want to go to settings menu?");
-        alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent i = new Intent(Settings.ACTION_NETWORK_OPERATOR_SETTINGS);
-                startActivity(i);
-
-            }
-        });
-
-        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                dialog.cancel();
-
-            }
-        });
-        alertDialog.show();
-    }
-
-    //Function to Action when click  to ediText
-    public void action_From_To()
-    {
-
-        if (ActivityCompat.checkSelfPermission(TripSearch.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-            Toast.makeText(TripSearch.this, "You need to enable location first", Toast.LENGTH_SHORT).show();
-            showSettingsAlerts();
-            return;
-        }
-        if (ActivityCompat.checkSelfPermission(TripSearch.this, Manifest.permission.ACCESS_NETWORK_STATE) != PackageManager.PERMISSION_GRANTED) {
-
-            Toast.makeText(TripSearch.this, "You need to enable Network first", Toast.LENGTH_SHORT).show();
-            showSettingsAlertsForNetwork();
-            return;
-        }
-
-
+    void getLocationFromMap(int request_case){
         try {
             PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
-
-
-            startActivityForResult(builder.build(TripSearch.this), PLACE_PICKER_REQUEST1);
+            startActivityForResult(builder.build(this), request_case);
         } catch (GooglePlayServicesRepairableException e) {
             GoogleApiAvailability.getInstance().getErrorDialog(this, e.getConnectionStatusCode(),
                     0 /* requestCode */).show();
             e.printStackTrace();
         } catch (GooglePlayServicesNotAvailableException e) {
             e.printStackTrace();
+        }
+
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case 1:{
+                if(resultCode == RESULT_OK){
+                    Place place = PlacePicker.getPlace(this,data);
+                    startPoint = place.getName().toString();
+                    fromLatitude = place.getLatLng().latitude;
+                    fromLongtiude = place.getLatLng().longitude;
+                    locationcompleteFragment.setText(startPoint);
+                }
+
+            }
+            case 2:{
+                if(resultCode == RESULT_OK){
+                    Place place = PlacePicker.getPlace(this,data);
+                    destination = place.getName().toString();
+                    toLongtiude = place.getLatLng().longitude;
+                    toLatitude = place.getLatLng().latitude;
+                    destinationcompleteFragment.setText(destination);
+                }
+
+            }
         }
     }
 }

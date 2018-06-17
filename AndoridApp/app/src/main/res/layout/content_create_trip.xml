@@ -52,11 +52,13 @@
         android:layout_marginLeft="20dp"
         android:text="Trip From" />
 
-    <EditText
-        android:id="@+id/TripFrom"
-        android:layout_width="250dp"
+    <fragment
+        android:id="@+id/location_autocomplete_fragment"
+        android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+        android:layout_width="249dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp" />
+        android:layout_x="49dp"
+        android:layout_y="9dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -66,11 +68,13 @@
         android:layout_marginTop="30dp"
         />
 
-    <EditText
-        android:id="@+id/TripTo"
-        android:layout_width="251dp"
+    <fragment
+        android:id="@+id/destination_autocomplete_fragment"
+        android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+        android:layout_width="248dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp" />
+        android:layout_x="49dp"
+        android:layout_y="9dp" />
 
     <TextView
         android:layout_width="wrap_content"
