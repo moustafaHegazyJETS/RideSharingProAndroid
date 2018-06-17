@@ -199,7 +199,8 @@ public class CreateTrip extends AppCompatActivity {
                 System.out.println("******************************"+tripCostTxt.toString()+"   "+tripNumberOfSeatsTxt.toString());
                 trip.setCost(Float.valueOf(tripCostTxt.getText().toString()));
                 trip.setNumberOfSeats(Integer.valueOf(tripNumberOfSeatsTxt.getText().toString()));
-
+                trip.setFrom(startPoint);
+                trip.setTo(destination);
                 System.out.println("s,slslslsls,cfsalfmkmfeokwr"+user.getDriverCarInfo().getDriveCarID());
                 DriverCarInfo d = user.getDriverCarInfo();
                 d.setUser(new User());
@@ -230,7 +231,7 @@ public class CreateTrip extends AppCompatActivity {
                         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                         @Override
                         public void onResponse(Call<Trip> call, Response<Trip> response) {
-                            if (response.body() != null) {
+                            if (response.body().getIdTrip() != null) {
                                 if (response.body().getTo().equals("Done")) {
                                     Toast.makeText(CreateTrip.this, "Done Adding Trip", Toast.LENGTH_SHORT).show();
                                     //Here to add local work.
@@ -266,8 +267,6 @@ public class CreateTrip extends AppCompatActivity {
                                     Toast.makeText(CreateTrip.this, "Error in Creating Trip", Toast.LENGTH_SHORT).show();
                                 }
 
-                            } else {
-                                Toast.makeText(CreateTrip.this, "Request Null", Toast.LENGTH_SHORT).show();
                             }
 
 

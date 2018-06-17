@@ -52,13 +52,27 @@
         android:layout_marginLeft="20dp"
         android:text="Trip From" />
 
-    <fragment
-        android:id="@+id/location_autocomplete_fragment"
-        android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
-        android:layout_width="249dp"
-        android:layout_height="wrap_content"
-        android:layout_x="49dp"
-        android:layout_y="9dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <fragment
+            android:id="@+id/location_autocomplete_fragment"
+            android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_x="49dp"
+            android:layout_y="9dp" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/address" />
+    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
@@ -68,13 +82,27 @@
         android:layout_marginTop="30dp"
         />
 
-    <fragment
-        android:id="@+id/destination_autocomplete_fragment"
-        android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
-        android:layout_width="248dp"
-        android:layout_height="wrap_content"
-        android:layout_x="49dp"
-        android:layout_y="9dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <fragment
+            android:id="@+id/destination_autocomplete_fragment"
+            android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+            android:layout_width="248dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_x="49dp"
+            android:layout_y="9dp" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/address" />
+    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
