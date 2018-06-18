@@ -182,7 +182,7 @@ public class CreateTrip extends AppCompatActivity {
             }
         });
 
-        FabDesignFun.textAsBitmap("Save",40, Color.WHITE);
+        fab.setImageBitmap(FabDesignFun.textAsBitmap("Save", 40, Color.WHITE));
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -190,51 +190,53 @@ public class CreateTrip extends AppCompatActivity {
                 //*******************Here The Check Conditions For Null Objects *********************
                  if(validate())
                  {
-                      final Trip  trip= new Trip();
-                      trip.setTripName(tripNameTxt.getText().toString());//tripNameTxt.getText().toString()
-                      trip.setDetails(tripDetailsTxt.getText().toString());//tripDetailsTxt.getText().toString()
-                      trip.setTime(tripTimeTxt.getText().toString());//tripTimeTxt.getText().toString()
-                      trip.setDay(tripDayTxt.getText().toString());//tripDayTxt.getText().toString()
-                      trip.setStartlongtiude(fromLongtiude);
-                      trip.setStartlatitude(fromLatitude);
-                      trip.setEndlongtiude(toLongtiude);
-                      trip.setEndlatitude(toLatitude);
 
-                      System.out.println("******************************"+tripCostTxt.toString()+"   "+tripNumberOfSeatsTxt.toString());
-                      trip.setCost(Float.valueOf(tripCostTxt.getText().toString()));
-                      trip.setNumberOfSeats(Integer.valueOf(tripNumberOfSeatsTxt.getText().toString()));
+                final Trip trip = new Trip();
+                trip.setTripName(tripNameTxt.getText().toString());//tripNameTxt.getText().toString()
+                trip.setDetails(tripDetailsTxt.getText().toString());//tripDetailsTxt.getText().toString()
+                trip.setTime(tripTimeTxt.getText().toString());//tripTimeTxt.getText().toString()
+                trip.setDay(tripDayTxt.getText().toString());//tripDayTxt.getText().toString()
+                System.out.println("******************************"+tripCostTxt.toString()+"   "+tripNumberOfSeatsTxt.toString());
+                trip.setCost(Float.valueOf(tripCostTxt.getText().toString()));
+                trip.setNumberOfSeats(Integer.valueOf(tripNumberOfSeatsTxt.getText().toString()));
+                trip.setFrom(startPoint);
+                trip.setTo(destination);
+                trip.setEndlatitude(toLatitude);
+                trip.setStartlatitude(fromLatitude);
+                trip.setStartlongtiude(fromLongtiude);
+                trip.setEndlongtiude(toLatitude);
+                System.out.println("s,slslslsls,cfsalfmkmfeokwr"+user.getDriverCarInfo().getDriveCarID());
+                DriverCarInfo d = user.getDriverCarInfo();
+                d.setUser(new User());
+                d.user().setBirthDate(user.getBirthDate());
+                d.user().setEmail(user.getEmail());
+                d.user().setGender(user.getGender());
+                d.user().setIdUser(user.getIdUser());
+                d.user().setMobile(user.getMobile());
+                d.user().setNationalid(user.getNationalid());
+                d.user().setPassword(user.getPassword());
+                d.user().setPending(user.getPending());
+                d.user().setUserName(user.getUserName());
+                d.user().setUserphoto(user.getUserphoto());
+                trip.setDriverId(d);
 
-                     System.out.println("s,slslslsls,cfsalfmkmfeokwr"+user.getDriverCarInfo().getDriveCarID());
-                     DriverCarInfo d = user.getDriverCarInfo();
-                     d.setUser(new User());
-                     d.user().setBirthDate(user.getBirthDate());
-                     d.user().setEmail(user.getEmail());
-                     d.user().setGender(user.getGender());
-                     d.user().setIdUser(user.getIdUser());
-                     d.user().setMobile(user.getMobile());
-                     d.user().setNationalid(user.getNationalid());
-                     d.user().setPassword(user.getPassword());
-                     d.user().setPending(user.getPending());
-                     d.user().setUserName(user.getUserName());
-                     d.user().setUserphoto(user.getUserphoto());
-                     trip.setDriverId(d);
+                List<Trip> vals = new ArrayList<>(2);
+                Trip t2 = new Trip();
+                t2.setIdTrip(user.getIdUser());
+                vals.add(0,t2);
+                vals.add(1,trip);
 
-                    List<Trip> vals = new ArrayList<>(2);
-                    Trip t2 = new Trip();
-                    t2.setIdTrip(user.getIdUser());
-                    vals.add(0,t2);
-                    vals.add(1,trip);
+                if(myCalendar.compareTo(onTimeCalender)<=0) {
+                   Toast.makeText(CreateTrip.this, "Check For Upcomming Time", Toast.LENGTH_SHORT).show();
 
-//               if(myCalendar.compareTo(onTimeCalender)<=0) {
-//                    Toast.makeText(CreateTrip.this, "Check For Upcomming Time", Toast.LENGTH_SHORT).show();
-//
-//               } else {
+                } else {
+
 
                     service.addTrip(vals).enqueue(new Callback<Trip>() {
                         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                         @Override
                         public void onResponse(Call<Trip> call, Response<Trip> response) {
-                            if (response.body() != null) {
+                            if (response.body().getIdTrip() != null) {
                                 if (response.body().getTo().equals("Done")) {
                                     Toast.makeText(CreateTrip.this, "Done Adding Trip", Toast.LENGTH_SHORT).show();
                                     //Here to add local work.
@@ -270,8 +272,6 @@ public class CreateTrip extends AppCompatActivity {
                                     Toast.makeText(CreateTrip.this, "Error in Creating Trip", Toast.LENGTH_SHORT).show();
                                 }
 
-                            } else {
-                                Toast.makeText(CreateTrip.this, "Request Null", Toast.LENGTH_SHORT).show();
                             }
 
 
@@ -285,7 +285,7 @@ public class CreateTrip extends AppCompatActivity {
                         }
                     });
 
-                //}
+                }
                      }
 
 

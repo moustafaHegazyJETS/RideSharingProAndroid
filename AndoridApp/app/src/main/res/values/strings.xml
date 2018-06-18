@@ -42,7 +42,7 @@
     <string name="login">Login</string>
     <string name="date">BirthDate</string>
     <string name="hint_data">No account yet? Create one</string>
-    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_home">Home</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
@@ -66,12 +66,12 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="title_activity_create_trip">CreateTrip</string>
-    <string name="title_activity_trip_details_for_driver">TripDetailsForDriver</string>
+    <string name="title_activity_trip_details_for_driver">Trip Details</string>
     <string name="title_activity_details_of_event_for_user">Trip Information</string>
     <string name="title_activity_view_reserved_users">Reserved Users</string>
     <string name="title_activity_view_reserved_user_details">User Information</string>
     <string name="title_activity_past_trip_for_driver">PastTrips</string>
-    <string name="driverInfo">Driver Information</string>tripInformation
+    <string name="driverInfo">Driver Information</string>
     <string name="tripInformation">Trip Information</string>
     <string name="showTrips">Trips</string>
     <string name="TripSearch">Find Trip </string>
@@ -95,6 +95,7 @@
     <color name="white">#ffff</color>
     <color name="blue">#333366</color>
     <color name="orange">#FF9933</color>
+    <color name="grey">#E8E8E8</color>
 
 
 </resources>

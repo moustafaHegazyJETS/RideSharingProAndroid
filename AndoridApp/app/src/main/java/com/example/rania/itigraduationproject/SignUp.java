@@ -120,14 +120,6 @@ public class SignUp extends AppCompatActivity {
         confirmPass=findViewById(R.id.input_password_confirm);
         personalImage=(ImageView)findViewById(R.id.personalimage);
 
-        //input for testing
-        name.setText("hossam");
-        password.setText("123456");
-        confirmPass.setText("123456");
-        email.setText("hossam@gmail.com");
-        mobile.setText("01112565425");
-        national_id.setText("29403020103899");
-
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(Service.BASE_URL)
@@ -185,8 +177,8 @@ public class SignUp extends AppCompatActivity {
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
                                 // set day of month , month and year value in the edit text
-                                date.setText(dayOfMonth + "/"
-                                        + (monthOfYear + 1) + "/" + year);
+                                date.setText(dayOfMonth + "-"
+                                        + (monthOfYear + 1) + "-" + year);
 
                             }
                         }, mYear, mMonth, mDay);

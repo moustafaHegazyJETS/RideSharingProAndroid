@@ -6,19 +6,24 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/userIncomingTrip"
-            android:title="@string/IncomingTrip" />
+            android:title="@string/IncomingTrip"
+            android:icon="@drawable/incomingtrip"/>
         <item
             android:id="@+id/userPastTrip"
-            android:title="@string/PastTrip" />
+            android:title="@string/PastTrip"
+            android:icon="@drawable/pasttrip"/>
         <item
             android:id="@+id/user_profile"
-            android:title="@string/user_profile" />
+            android:title="@string/user_profile"
+            android:icon="@drawable/profilepicture"/>
         <item
             android:id="@+id/user_searchTrip"
-            android:title="@string/SearchTrip" />
+            android:title="@string/SearchTrip"
+            android:icon="@drawable/search"/>
         <item
             android:id="@+id/userlogout"
-            android:title="@string/logout" />
+            android:title="@string/logout"
+            android:icon="@drawable/logout"/>
 
     </group>
 

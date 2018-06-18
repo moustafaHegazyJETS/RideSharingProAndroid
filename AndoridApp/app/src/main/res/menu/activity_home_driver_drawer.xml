@@ -7,19 +7,21 @@
         <item
             android:id="@+id/driverincomingTrip"
             android:title="@string/IncomingTrip"
-            android:iconTint="@color/blue"/>
+            android:icon="@drawable/incomingtrip"
+           />
         <item
             android:id="@+id/deriverPastTrip"
             android:title="@string/PastTrip"
-            android:iconTint="@color/blue"/>
+            android:icon="@drawable/pasttrip" />
 
         <item
             android:id="@+id/deriverprofile"
             android:title="@string/user_profile"
-            android:iconTint="@color/blue"/>
+            android:icon="@drawable/profilepicture"/>
         <item
             android:id="@+id/deriverlogout"
             android:title="@string/logout"
+            android:icon="@drawable/logout"
 
             />
     </group>

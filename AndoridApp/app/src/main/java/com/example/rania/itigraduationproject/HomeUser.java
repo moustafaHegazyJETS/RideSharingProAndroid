@@ -201,7 +201,6 @@ public class HomeUser extends AppCompatActivity
             userEmail.setText(user.getEmail());
             userEmail.setText(user.getUserName());
 
-
             fab.setImageBitmap(FabDesignFun.textAsBitmap("Search", 40, Color.WHITE));
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -85,7 +85,7 @@ public class DetailsOfEvent extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // setContentView(R.layout.activity_details_of_event);
+        setContentView(R.layout.activity_details_of_event);
        // Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
        // setSupportActionBar(toolbar);
 
@@ -147,6 +147,11 @@ public class DetailsOfEvent extends AppCompatActivity {
                    tripNameTxtV.setText(response.body().getTripName());
                    toTxtV.setText(response.body().getTo());
                    trip=new Trip();
+              Toast.makeText(context, "statrtLon"+response.body().getStartlongtiude(), Toast.LENGTH_SHORT).show();
+              Toast.makeText(context, "statrtLiti"+response.body().getStartlatitude(), Toast.LENGTH_SHORT).show();
+              Toast.makeText(context, "etLon"+response.body().getEndlongtiude(), Toast.LENGTH_SHORT).show();
+              Toast.makeText(context, "elatit"+response.body().getEndlatitude(), Toast.LENGTH_SHORT).show();
+
                    trip.setStartlongtiude(response.body().getStartlongtiude());
                    trip.setStartlatitude(response.body().getStartlatitude());
                    trip.setEndlongtiude(response.body().getEndlongtiude());
