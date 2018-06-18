@@ -50,7 +50,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DetailsOfEvent extends AppCompatActivity {
 
     //Event Screen
-    TextView idFromIntent;
+    TextView tripName;
+    TextView tripFrom;
+    TextView tripTo;
 
     Context context;
 
@@ -62,6 +64,8 @@ public class DetailsOfEvent extends AppCompatActivity {
     Service service;
     int pending_id;
     Intent alarm_intent;
+    Trip trip;
+    Button openMap;
 
 
     @Override
@@ -94,17 +98,34 @@ public class DetailsOfEvent extends AppCompatActivity {
         service = retrofit.create(Service.class);
         dbDriverConnection = new DBDriverConnection(this);
 
+        //this is trip object to get all values from it
+        trip = dbDriverConnection.getTrip(Integer.parseInt((String) my_intent.getExtras().get("id")));
 
 
 
         //resources
-        idFromIntent = findViewById(R.id.idFromIntent);
-        idFromIntent.setText(""+pending_id);
+        tripName = findViewById(R.id.tripName);
+        tripName.setText(""+trip.getTripName());
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-
+        openMap = findViewById(R.id.mapBtn);
+        tripFrom = findViewById(R.id.tripFrom);
+        tripFrom.setText(trip.getFrom());
+        tripTo = findViewById(R.id.Tripto);
+        tripTo.setText(trip.getTo());
 
 
         //actions
+        openMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                doTask(pending_id,alarm_intent);
+
+                Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr="+trip.getStartlatitude()+
+                        ","+trip.getStartlongtiude()+"&daddr="+trip.getEndlatitude()+", "+trip.getEndlongtiude()+""));
+                startActivity(intent);
+            }
+        });
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,10 +137,12 @@ public class DetailsOfEvent extends AppCompatActivity {
         });
     }
 
+
+
     @Override
     public void onBackPressed() {
         // hna han3ml alsho8l bta3 al cancel bardo
-        Toast.makeText(context, "Please Press Button", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "Please Press Cancel Button", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -130,6 +153,8 @@ public class DetailsOfEvent extends AppCompatActivity {
         doTask(pending_id,alarm_intent);
     }
 
+
+    //to stop and update trip to be past
     public void doTask(int pending_id , Intent alarm_intent)
     {
         //act as aware of event
