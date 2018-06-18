@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.rania.itigraduationproject.SplashScreen"
-    android:background="#1e1e82">
+    android:background="@color/white">
 
 
     <TextView
@@ -15,8 +15,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="93dp"
-        android:text="Ride Sharing"
-        android:textColor="@android:color/white"
+        android:text="@string/RideSharing"
+        android:textColor="@color/blue"
         android:textSize="50dp" />
 
     <ImageView
@@ -25,7 +25,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        app:srcCompat="@drawable/carlogo" />
+        app:srcCompat="@drawable/carlogo"
+        android:layout_alignParentLeft="true" />
 
 
 </RelativeLayout>

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -48,6 +49,7 @@ public class HomeDriver extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     TextView helloTxt;
+    TextView driverEmail;
     ListView listViewDriver;
     SessionManager session;
     User user;
@@ -122,8 +124,18 @@ public class HomeDriver extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        // Set Header values
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View hView =  navigationView.getHeaderView(0);
+        driverEmail=(TextView)hView.findViewById(R.id.driveremailtext);
+        TextView drivername=(TextView)findViewById(R.id.drivernametext);
+        Log.i("email",user.getEmail());
+        driverEmail.setText(user.getEmail());
+
+       // Log.i("usernamed",user.getUserName());
+       // drivername.setText(user.getUserName());
+
         helloTxt = findViewById(R.id.HelloTxt);
        // helloTxt.setText("Hello Driver : "+user.getUserName());
         listViewDriver = findViewById(R.id.ListViewDriver);
@@ -184,6 +196,7 @@ public class HomeDriver extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.getMenu().getItem(0).setChecked(true);
 
 
     }
@@ -250,7 +263,6 @@ public class HomeDriver extends AppCompatActivity
         } else if (id == R.id.nav_send) {
 
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

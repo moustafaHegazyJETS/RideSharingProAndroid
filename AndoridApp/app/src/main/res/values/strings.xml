@@ -60,18 +60,23 @@
     <string name="Search">Search</string>
     <string name="cost">trip coast</string>
     <string name="title_activity_details_of_event">DetailsOfEvent</string>
-    <string name="title_activity_driver_home">DriverHomeActivity</string>
-    <string name="title_activity_home_driver">HomeDriverActivity</string>
+    <string name="title_activity_driver_home">Home</string>
+    <string name="title_activity_home_driver">Home</string>
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="title_activity_create_trip">CreateTrip</string>
     <string name="title_activity_trip_details_for_driver">TripDetailsForDriver</string>
-    <string name="title_activity_details_of_event_for_user">DetailsOfEventForUser</string>
-    <string name="title_activity_view_reserved_users">ViewReservedUsers</string>
-    <string name="title_activity_view_reserved_user_details">ViewReservedUserDetails</string>
-    <string name="title_activity_past_trip_for_driver">PastTripForDriver</string>
+    <string name="title_activity_details_of_event_for_user">Trip Information</string>
+    <string name="title_activity_view_reserved_users">Reserved Users</string>
+    <string name="title_activity_view_reserved_user_details">User Information</string>
+    <string name="title_activity_past_trip_for_driver">PastTrips</string>
+    <string name="driverInfo">Driver Information</string>tripInformation
+    <string name="tripInformation">Trip Information</string>
+    <string name="showTrips">Trips</string>
+    <string name="TripSearch">Find Trip </string>
     <string name="IncomingTrip">Incoming Trips</string>
+    <string name="TripDetails">Trip Information</string>
     <string name="PastTrip">Past Trips</string>
     <string name="carcolorstr">Car Color</string>
     <string name="carmodelstr">Car Model</string>
@@ -85,7 +90,11 @@
     <string name="startBtn">Start</string>
     <string name="canceleDialogeBtn">Cancel</string>
     <string name="yourTripMeesage">Your Trip </string>
-
+    <string name="RideSharing"> Ride Sharing </string>
+    <color name="red">#ff0000</color>
+    <color name="white">#ffff</color>
+    <color name="blue">#333366</color>
+    <color name="orange">#FF9933</color>
 
 
 </resources>

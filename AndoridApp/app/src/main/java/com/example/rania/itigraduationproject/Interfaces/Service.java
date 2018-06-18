@@ -22,7 +22,7 @@ import retrofit2.http.Part;
 
 public interface Service {
 
-    public static final String BASE_URL = "http://10.0.1.52:8080/RideSharingProWS/rest/";
+    public static final String BASE_URL = "http://10.0.2.2:8084/RideSharingProWS/rest/";
 
     @GET("getUser.json")
     Call<User> getUser();

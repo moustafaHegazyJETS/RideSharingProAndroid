@@ -20,10 +20,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -39,8 +41,12 @@ import com.example.rania.itigraduationproject.remote.CheckInternetConnection;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -61,8 +67,10 @@ public class CreateTrip extends AppCompatActivity {
     TextView tripNameTxt;
     TextView tripDetailsTxt;
     TextView tripTimeTxt;
-    EditText tripFromEditTxt;
-    EditText tripToEditTxt;
+    ImageView destination_map;
+    ImageView location_map;
+    PlaceAutocompleteFragment locationcompleteFragment;
+    PlaceAutocompleteFragment destinationcompleteFragment;
     TextView tripDayTxt;
     TextView tripNumberOfSeatsTxt;
     TextView tripCostTxt;
@@ -120,8 +128,6 @@ public class CreateTrip extends AppCompatActivity {
         tripNameTxt=findViewById(R.id.TripName);
         tripDetailsTxt=findViewById(R.id.TripDetails);
         tripTimeTxt=findViewById(R.id.TripTime);
-        tripFromEditTxt=findViewById(R.id.TripFrom);
-        tripToEditTxt=findViewById(R.id.TripTo);
         tripDayTxt=findViewById(R.id.TripDay);
         tripNumberOfSeatsTxt=findViewById(R.id.numberOfSeats);
         tripCostTxt=findViewById(R.id.TripCost);
@@ -148,20 +154,7 @@ public class CreateTrip extends AppCompatActivity {
                 ).show();
             }
         });
-       tripToEditTxt.setOnTouchListener(new View.OnTouchListener() {
-           @Override
-           public boolean onTouch(View view, MotionEvent motionEvent) {
-               action_From_To();
-               return false;
-           }
-       });
-        tripFromEditTxt.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                action_From_To();
-                return false;
-            }
-        });
+
 
 
             //for date time in start time
@@ -197,45 +190,45 @@ public class CreateTrip extends AppCompatActivity {
                 //*******************Here The Check Conditions For Null Objects *********************
                  if(validate())
                  {
-                final Trip trip = new Trip();
-                trip.setTripName(tripNameTxt.getText().toString());//tripNameTxt.getText().toString()
-                trip.setDetails(tripDetailsTxt.getText().toString());//tripDetailsTxt.getText().toString()
-                trip.setTime(tripTimeTxt.getText().toString());//tripTimeTxt.getText().toString()
-                trip.setDay(tripDayTxt.getText().toString());//tripDayTxt.getText().toString()
-                System.out.println("******************************"+tripCostTxt.toString()+"   "+tripNumberOfSeatsTxt.toString());
-                trip.setCost(Float.valueOf(tripCostTxt.getText().toString()));
-                trip.setNumberOfSeats(Integer.valueOf(tripNumberOfSeatsTxt.getText().toString()));
-                trip.setTo(tripToEditTxt.getText().toString());//tripToTxt.getText().toString()
-                trip.setFrom(tripFromEditTxt.getText().toString());//tripFromTxt.getText().toString()
-//                     trip.setStartlatitude(toLatitude);
-//                     trip.setStartlongtiude(toLongtiude);
-//                     trip.setEndlatitude(fromLatitude);
-//                     trip.setEndlongtiude(fromLongtiude);
-                System.out.println("s,slslslsls,cfsalfmkmfeokwr"+user.getDriverCarInfo().getDriveCarID());
-                DriverCarInfo d = user.getDriverCarInfo();
-                d.setUser(new User());
-                d.user().setBirthDate(user.getBirthDate());
-                d.user().setEmail(user.getEmail());
-                d.user().setGender(user.getGender());
-                d.user().setIdUser(user.getIdUser());
-                d.user().setMobile(user.getMobile());
-                d.user().setNationalid(user.getNationalid());
-                d.user().setPassword(user.getPassword());
-                d.user().setPending(user.getPending());
-                d.user().setUserName(user.getUserName());
-                d.user().setUserphoto(user.getUserphoto());
-                trip.setDriverId(d);
+                      final Trip  trip= new Trip();
+                      trip.setTripName(tripNameTxt.getText().toString());//tripNameTxt.getText().toString()
+                      trip.setDetails(tripDetailsTxt.getText().toString());//tripDetailsTxt.getText().toString()
+                      trip.setTime(tripTimeTxt.getText().toString());//tripTimeTxt.getText().toString()
+                      trip.setDay(tripDayTxt.getText().toString());//tripDayTxt.getText().toString()
+                      trip.setStartlongtiude(fromLongtiude);
+                      trip.setStartlatitude(fromLatitude);
+                      trip.setEndlongtiude(toLongtiude);
+                      trip.setEndlatitude(toLatitude);
 
-                List<Trip> vals = new ArrayList<>(2);
-                Trip t2 = new Trip();
-                t2.setIdTrip(user.getIdUser());
-                vals.add(0,t2);
-                vals.add(1,trip);
+                      System.out.println("******************************"+tripCostTxt.toString()+"   "+tripNumberOfSeatsTxt.toString());
+                      trip.setCost(Float.valueOf(tripCostTxt.getText().toString()));
+                      trip.setNumberOfSeats(Integer.valueOf(tripNumberOfSeatsTxt.getText().toString()));
 
-//                if(myCalendar.compareTo(onTimeCalender)<=0) {
+                     System.out.println("s,slslslsls,cfsalfmkmfeokwr"+user.getDriverCarInfo().getDriveCarID());
+                     DriverCarInfo d = user.getDriverCarInfo();
+                     d.setUser(new User());
+                     d.user().setBirthDate(user.getBirthDate());
+                     d.user().setEmail(user.getEmail());
+                     d.user().setGender(user.getGender());
+                     d.user().setIdUser(user.getIdUser());
+                     d.user().setMobile(user.getMobile());
+                     d.user().setNationalid(user.getNationalid());
+                     d.user().setPassword(user.getPassword());
+                     d.user().setPending(user.getPending());
+                     d.user().setUserName(user.getUserName());
+                     d.user().setUserphoto(user.getUserphoto());
+                     trip.setDriverId(d);
+
+                    List<Trip> vals = new ArrayList<>(2);
+                    Trip t2 = new Trip();
+                    t2.setIdTrip(user.getIdUser());
+                    vals.add(0,t2);
+                    vals.add(1,trip);
+
+//               if(myCalendar.compareTo(onTimeCalender)<=0) {
 //                    Toast.makeText(CreateTrip.this, "Check For Upcomming Time", Toast.LENGTH_SHORT).show();
 //
-//                } else {
+//               } else {
 
                     service.addTrip(vals).enqueue(new Callback<Trip>() {
                         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -292,7 +285,7 @@ public class CreateTrip extends AppCompatActivity {
                         }
                     });
 
-               // }
+                //}
                      }
 
 
@@ -303,6 +296,68 @@ public class CreateTrip extends AppCompatActivity {
 
             }
         });
+        String locale = getResources().getConfiguration().locale.getCountry();
+        locationcompleteFragment = (PlaceAutocompleteFragment)
+                getFragmentManager().findFragmentById(R.id.location_autocomplete_fragment);
+        destinationcompleteFragment = (PlaceAutocompleteFragment)
+                getFragmentManager().findFragmentById(R.id.destination_autocomplete_fragment);
+
+        AutocompleteFilter autocompleteFilter = new AutocompleteFilter.Builder()
+                .setTypeFilter(Place.TYPE_COUNTRY)
+                .setCountry(locale)
+                .build();
+        destinationcompleteFragment.setFilter(autocompleteFilter);
+        locationcompleteFragment.setFilter(autocompleteFilter);
+        locationcompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                // TODO: Get info about the selected place.
+
+                startPoint = place.getName().toString();
+                fromLatitude = place.getLatLng().latitude;
+                fromLongtiude = place.getLatLng().longitude;
+
+            }
+
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+                Log.i("place", status.getStatusMessage());
+            }
+        });
+
+        destinationcompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                // TODO: Get info about the selected place.
+                destination = place.getName().toString();
+                toLongtiude = place.getLatLng().longitude;
+                toLatitude = place.getLatLng().latitude;
+
+
+            }
+
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+                Log.i("place", status.getStatusMessage());
+            }
+        });
+//        location_map = findViewById(R.id.location_map);
+//        destination_map = findViewById(R.id.destination_map);
+
+//        location_map.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                getLocationFromMap(1);
+//            }
+//        });
+//        destination_map.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                getLocationFromMap(2);
+//            }
+//        });
     }
     //Auto Complete Functions
     //Alert Function
@@ -322,102 +377,6 @@ public class CreateTrip extends AppCompatActivity {
         });
     }
 
-    //Network Alert Setting
-    public void showSettingsAlertsForNetwork() {
-
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setTitle("Network is settings");
-        alertDialog.setMessage("Network is not enabled . Do you want to go to settings menu?");
-        alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent i = new Intent(Settings.ACTION_NETWORK_OPERATOR_SETTINGS);
-                startActivity(i);
-
-            }
-        });
-
-        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                dialog.cancel();
-
-            }
-        });
-        alertDialog.show();
-    }
-    @Override
-    protected void onActivityResult ( int requestCode, int resultCode, Intent data){
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PLACE_PICKER_REQUEST1) {
-            if (resultCode == RESULT_OK) {
-                Place place = PlacePicker.getPlace(this, data);
-
-                if (place.equals(null)) {
-
-                    Toast.makeText(this, "place is null", Toast.LENGTH_LONG).show();
-                }
-
-               // String toastMsg = String.format("Place that you need is : ", place.getAddress().toString());
-                //Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
-                tripFromEditTxt.setText(place.getAddress().toString());
-                startPoint = place.getAddress().toString();
-                fromLatitude = place.getLatLng().latitude;
-                fromLongtiude = place.getLatLng().longitude;
-            }
-        }
-        if (requestCode == PLACE_PICKER_REQUEST2) {
-            if (resultCode == RESULT_OK) {
-                Place place = PlacePicker.getPlace(this, data);
-
-                if (place.equals(null)) {
-
-                    Toast.makeText(this, "place is null", Toast.LENGTH_LONG).show();
-                }
-
-               // String toastMsg = String.format("Place that you need is : ", place.getAddress().toString());
-               // Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
-                destination = place.getAddress().toString();
-                tripToEditTxt.setText(destination);
-                toLatitude = place.getLatLng().latitude;
-                toLongtiude = place.getLatLng().longitude;
-            }
-        }
-
-    }
-
-
-    //Function to Action when click  to ediText
-    public void action_From_To()
-    {
-        if (ActivityCompat.checkSelfPermission(CreateTrip.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-            Toast.makeText(CreateTrip.this, "You need to enable location first", Toast.LENGTH_SHORT).show();
-            showSettingsAlerts();
-            return;
-        }
-        if (ActivityCompat.checkSelfPermission(CreateTrip.this, Manifest.permission.ACCESS_NETWORK_STATE) != PackageManager.PERMISSION_GRANTED) {
-
-            Toast.makeText(CreateTrip.this, "You need to enable Network first", Toast.LENGTH_SHORT).show();
-            showSettingsAlertsForNetwork();
-            return;
-        }
-
-        try {
-            PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
-            startActivityForResult(builder.build(CreateTrip.this), PLACE_PICKER_REQUEST1);
-        } catch (GooglePlayServicesRepairableException e) {
-            GoogleApiAvailability.getInstance().getErrorDialog(this, e.getConnectionStatusCode(),
-                    0 /* requestCode */).show();
-            e.printStackTrace();
-        } catch (GooglePlayServicesNotAvailableException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
     private void updateTime() {
         tripTimeTxt.setText(myCalendar.get(Calendar.HOUR_OF_DAY)+":"+myCalendar.get(Calendar.MINUTE));
     }
@@ -434,8 +393,6 @@ public class CreateTrip extends AppCompatActivity {
     public boolean validate() {
         boolean valid = true;
         String tripName=tripNameTxt.getText().toString();
-        String tripFrom=tripFromEditTxt.getText().toString();
-        String tripTo= tripToEditTxt.getText().toString();
         String details=tripDetailsTxt.getText().toString();
         String tripNumOfSeats=tripNumberOfSeatsTxt.getText().toString();
         String tripDay=tripDayTxt.getText().toString();
@@ -496,24 +453,53 @@ public class CreateTrip extends AppCompatActivity {
             tripNumberOfSeatsTxt.setError(null);
             tripNumberOfSeatsTxt.requestFocus();
         }
-        if (tripTo.isEmpty()) {
-            tripToEditTxt.setError("Enter Number only");
-            tripToEditTxt.requestFocus();
+        if (startPoint.equals("")){
+            Toast.makeText(this,"please enter start point",Toast.LENGTH_SHORT);
             valid = false;
-        } else {
-            tripToEditTxt.setError(null);
-            tripToEditTxt.requestFocus();
-        }
-        if (tripFrom.isEmpty()) {
-            tripFromEditTxt.setError("Enter Number only");
-            tripFromEditTxt.requestFocus();
+        }else if(destination.equals("")){
+            Toast.makeText(this,"please enter destination",Toast.LENGTH_SHORT);
             valid = false;
-        } else {
-            tripFromEditTxt.setError(null);
-            tripFromEditTxt.requestFocus();
+
         }
 
-        return valid;
+            return valid;
     }
+    void getLocationFromMap(int request_case){
+        try {
+            PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+            startActivityForResult(builder.build(this), request_case);
+        } catch (GooglePlayServicesRepairableException e) {
+            GoogleApiAvailability.getInstance().getErrorDialog(this, e.getConnectionStatusCode(),
+                    0 /* requestCode */).show();
+            e.printStackTrace();
+        } catch (GooglePlayServicesNotAvailableException e) {
+            e.printStackTrace();
+        }
 
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case 1:{
+                if(resultCode == RESULT_OK){
+                    Place place = PlacePicker.getPlace(this,data);
+                    startPoint = place.getName().toString();
+                    fromLatitude = place.getLatLng().latitude;
+                    fromLongtiude = place.getLatLng().longitude;
+                    locationcompleteFragment.setText(startPoint);
+                }
+
+            }
+            case 2:{
+                if(resultCode == RESULT_OK){
+                    Place place = PlacePicker.getPlace(this,data);
+                    destination = place.getName().toString();
+                    toLongtiude = place.getLatLng().longitude;
+                    toLatitude = place.getLatLng().latitude;
+                    destinationcompleteFragment.setText(destination);
+                }
+
+            }
+        }
+    }
 }

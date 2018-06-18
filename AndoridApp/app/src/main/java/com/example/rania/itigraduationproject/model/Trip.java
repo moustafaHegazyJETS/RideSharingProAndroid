@@ -42,9 +42,6 @@ public class Trip implements Serializable{
     @SerializedName("tpast")
     @Expose
     private String  tpast;
-
-
-
     @SerializedName("startlongtiude")
     @Expose
     private Double startlongtiude;

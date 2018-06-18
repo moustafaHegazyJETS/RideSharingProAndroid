@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -89,7 +90,6 @@ public class HomeUser extends AppCompatActivity
         //------------------------------------------------
         Intent intent=getIntent();
         user=(User) intent.getSerializableExtra("user");
-
 
       //Resources
         tripList=(ListView)findViewById(R.id.listViewtrip);
@@ -192,6 +192,15 @@ public class HomeUser extends AppCompatActivity
 
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
             navigationView.setNavigationItemSelectedListener(this);
+            navigationView.getMenu().getItem(0).setChecked(true);
+            //Set Header Values
+            View hView =  navigationView.getHeaderView(0);
+            TextView userEmail=(TextView)hView.findViewById(R.id.usermail_header);
+            TextView username=(TextView)findViewById(R.id.usernameheader);
+            Log.i("email",user.getEmail());
+            userEmail.setText(user.getEmail());
+            userEmail.setText(user.getUserName());
+
 
             fab.setImageBitmap(FabDesignFun.textAsBitmap("Search", 40, Color.WHITE));
             fab.setOnClickListener(new View.OnClickListener() {
