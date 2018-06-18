@@ -343,21 +343,21 @@ public class CreateTrip extends AppCompatActivity {
                 Log.i("place", status.getStatusMessage());
             }
         });
-//        location_map = findViewById(R.id.location_map);
-//        destination_map = findViewById(R.id.destination_map);
+        location_map = findViewById(R.id.location_map);
+        destination_map = findViewById(R.id.destination_map);
 
-//        location_map.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                getLocationFromMap(1);
-//            }
-//        });
-//        destination_map.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                getLocationFromMap(2);
-//            }
-//        });
+        location_map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getLocationFromMap(1);
+            }
+        });
+        destination_map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getLocationFromMap(2);
+            }
+        });
     }
     //Auto Complete Functions
     //Alert Function
@@ -487,6 +487,8 @@ public class CreateTrip extends AppCompatActivity {
                     fromLatitude = place.getLatLng().latitude;
                     fromLongtiude = place.getLatLng().longitude;
                     locationcompleteFragment.setText(startPoint);
+                    Log.e("case 1","map ret");
+                    return;
                 }
 
             }
@@ -497,6 +499,8 @@ public class CreateTrip extends AppCompatActivity {
                     toLongtiude = place.getLatLng().longitude;
                     toLatitude = place.getLatLng().latitude;
                     destinationcompleteFragment.setText(destination);
+                    Log.e("case 2","map ret");
+                    return;
                 }
 
             }
