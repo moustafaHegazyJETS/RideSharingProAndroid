@@ -11,10 +11,20 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 
 import com.example.rania.itigraduationproject.DetailsOfEvent;
 import com.example.rania.itigraduationproject.DetailsOfEventForUser;
 import com.example.rania.itigraduationproject.R;
+import com.example.rania.itigraduationproject.model.Trip;
+
+import java.io.IOException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public  class RingtonePlayingService extends Service {
 
@@ -29,6 +39,9 @@ public  class RingtonePlayingService extends Service {
 
     Vibrator vibrator;
 
+    private static Retrofit retrofit = null;
+    com.example.rania.itigraduationproject.Interfaces.Service service;
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -42,6 +55,12 @@ public  class RingtonePlayingService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i("ssaassaxas", "onStartCommand: ");
 
+        //hna sho8l al service 3shan ageeb alvalues bta3et altrip kolha
+        retrofit = new Retrofit.Builder()
+                .baseUrl(com.example.rania.itigraduationproject.Interfaces.Service.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        service = retrofit.create(com.example.rania.itigraduationproject.Interfaces.Service.class);
 
 
         String state = intent.getExtras().getString("Ex");
@@ -90,6 +109,24 @@ public  class RingtonePlayingService extends Service {
             }
             intent_notify.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent_notify.putExtra("id",id);
+
+
+//            Trip trip = new Trip();
+//            trip.setIdTrip(Integer.valueOf(id));
+//
+//
+//
+//            Call<Trip> call = service.getTrip(trip);
+//            try {
+//                trip = call.execute().body();
+//                Toast.makeText(context, "done+"+trip.get, Toast.LENGTH_SHORT).show();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                Toast.makeText(context, "Error in Getting values of Trip", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            intent_notify.putExtra("trip",trip);
+//
 
             this.getApplicationContext().startActivity(intent_notify);
 

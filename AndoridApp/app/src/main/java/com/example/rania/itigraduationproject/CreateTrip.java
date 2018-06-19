@@ -47,6 +47,7 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -91,6 +92,8 @@ public class CreateTrip extends AppCompatActivity {
     double fromLongtiude;
     String startPoint = "";
     String destination = "";
+
+
 
 
     protected void onStart() {
@@ -244,7 +247,7 @@ public class CreateTrip extends AppCompatActivity {
                                     final int id = response.body().getIdTrip();
 
                                     //add to local Sqlite
-                                    dbDriverConnection.insertIntoTrip(id, trip.getTripName());
+                                    dbDriverConnection.insertIntoTrip(id, trip.getTripName(),trip.getFrom(),trip.getTo(),trip.getEndlongtiude(),trip.getEndlatitude(),trip.getStartlatitude(),trip.getStartlongtiude());
 
                                     Intent intent = new Intent(CreateTrip.this, SplashScreen.class);
                                     //this id is uniqe for each trip so it uses for define pending alarm

@@ -176,11 +176,6 @@
             </RadioGroup>
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/personalimage"
-            android:layout_width="149dp"
-            android:layout_height="134dp"
-            app:srcCompat="@drawable/ic_menu_gallery" />
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_signup"

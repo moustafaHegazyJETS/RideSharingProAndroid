@@ -2,19 +2,13 @@ package com.example.rania.itigraduationproject;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.autofill.AutofillValue;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
@@ -25,25 +19,13 @@ import android.widget.Toast;
 import com.example.rania.itigraduationproject.Interfaces.Service;
 import com.example.rania.itigraduationproject.model.User;
 import com.example.rania.itigraduationproject.remote.CheckInternetConnection;
-import com.google.gson.Gson;
-
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.Serializable;
-import java.net.URI;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -69,7 +51,6 @@ public class SignUp extends AppCompatActivity {
     ImageView personalImage;
     File image;
     boolean valid;
-    Uri targetUri;
     Service service;
     @Override
     protected void onStart() {
@@ -83,12 +64,9 @@ public class SignUp extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(Build.VERSION.SDK_INT>22) {
-            requestPermissions(new String[]{"android.permission.READ_EXTERNAL_STORAGE", "android.permission.READ_INTERNAL_STORAGE"}, 1);
-        }
         Log.i("size","act result");
         if(resultCode == RESULT_OK){
-            targetUri = data.getData();
+            Uri targetUri = data.getData();
             image = new File(targetUri.getPath());
             Log.i("size",String.valueOf(image.length()));
             Bitmap bitmap;
@@ -118,14 +96,14 @@ public class SignUp extends AppCompatActivity {
         name=(TextView) findViewById(R.id.input_name);
         date = (TextView) findViewById(R.id.date);
         confirmPass=findViewById(R.id.input_password_confirm);
-        personalImage=(ImageView)findViewById(R.id.personalimage);
+
 
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(Service.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-       service = retrofit.create(Service.class);
+        service = retrofit.create(Service.class);
 
         // Radio User or Driver
         radio_user_DriverGroup = (RadioGroup) findViewById(R.id.radioUserType);
@@ -177,8 +155,9 @@ public class SignUp extends AppCompatActivity {
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
                                 // set day of month , month and year value in the edit text
-                                date.setText(dayOfMonth + "-"
-                                        + (monthOfYear + 1) + "-" + year);
+                                date.setText( year+ "-"
+                                             + (monthOfYear + 1) + "-" + dayOfMonth);
+
 
                             }
                         }, mYear, mMonth, mDay);
@@ -191,7 +170,7 @@ public class SignUp extends AppCompatActivity {
         signBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                //  Gson g=new Gson();
                 User user = new User();
                 user.setUserName(name.getText().toString());
                 user.setPassword(password.getText().toString());
@@ -201,13 +180,48 @@ public class SignUp extends AppCompatActivity {
                 user.setNationalid(national_id.getText().toString());
                 user.setBirthDate(date.getText().toString());
 
+
+
+//                   RequestBody requestbody_image = RequestBody.create(MediaType.parse("multipart/form-data"),image);
+////                   MultipartBody.Part body = MultipartBody.Part.createFormData("file",image.getName());
+//
+//
+////                   MultipartBody.Part bodyUser = MultipartBody.Part.createFormData("user", String.valueOf(user));
+//
+//                   String userGson=g.toJson(user);
+//                   RequestBody requestbody_User = RequestBody.create(MediaType.parse("text/plain"),userGson);
+
+                //user.setBirthDate(date.getText().toString());
                 if(validate()==true) {
 
                     if (radio_user_DriverGroupButton.getText().toString().equals("User")) {
-                        if(image!=null){
+                        service.sendUser(user).enqueue(new Callback<User>() {
+                            @Override
+                            public void onResponse(Call<User> call, Response<User> response) {
 
-                        }
-                        sigup(image,targetUri,user);
+                                if(response.body()!=null) {
+                                    Toast.makeText(SignUp.this, "SignUp Sucessfully", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(getApplicationContext(), Login.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                                else
+                                {
+                                    Toast.makeText(SignUp.this, "Response Body  is null", Toast.LENGTH_SHORT).show();
+                                }
+
+
+
+                            }
+
+
+
+                            @Override
+                            public void onFailure(Call<User> call, Throwable t) {
+                                Toast.makeText(SignUp.this, "SignUp Faild", Toast.LENGTH_SHORT).show();
+//
+                            }
+                        });
 
                     } else if (radio_user_DriverGroupButton.getText().toString().equals("Driver")) {
 
@@ -220,6 +234,9 @@ public class SignUp extends AppCompatActivity {
                         finish();
 
                     }
+                }else
+                {
+                    Toast.makeText(SignUp.this, "date error validation", Toast.LENGTH_SHORT).show();
                 }
             }});
 
@@ -227,20 +244,14 @@ public class SignUp extends AppCompatActivity {
 //--------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------
-        personalImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(galleryIntent,0);
-                if(Build.VERSION.SDK_INT>22){
-//                    requestPermissions(new String[] {"android.permission.READ_EXTERNAL_STORAGE","android.permission.READ_INTERNAL_STORAGE"}, 1);
-
-                }
-
-
-            }
-
-        });
+//        personalImage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                startActivityForResult(galleryIntent,0);
+//            }
+//
+//        });
 
         login_link.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -252,22 +263,9 @@ public class SignUp extends AppCompatActivity {
 
 
     }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case 1: {
-                if (!(grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED)) {
-                    Toast.makeText(this, "file location.", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
-    }
     //----------------------------SignUp Validation
     public boolean validate() {
-         valid = true;
+        valid = true;
         String username=name.getText().toString();
         String pass=password.getText().toString();
         final String useremail=email.getText().toString();
@@ -278,6 +276,37 @@ public class SignUp extends AppCompatActivity {
         String confirmPassword=confirmPass.getText().toString();
         String userSelectDate=date.getText().toString();
 
+        service.getAllUsers().enqueue(new Callback<List<User>>() {
+            @Override
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                if(response.body()!=null)
+                {
+                    if(response.body().size()>0)
+                    {
+                        for(int i=0;i<response.body().size();i++)
+                        {
+                            if(response.body().get(i).getEmail().equals(useremail))
+                            {
+                                email.setError("Deplucated Email");
+                                email.requestFocus();
+                                valid = false;
+
+                            }
+
+                        }
+                    }   }else
+                {
+                    Toast.makeText(SignUp.this, "Check Internet Connection", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
+                Toast.makeText(SignUp.this, "Failure Check Internet Connection", Toast.LENGTH_SHORT).show();
+
+            }
+        });
 
         //national Id Regax
         Pattern pattern = Pattern.compile(new String ("(2)[0-9][1-9][0-1][1-9][0-3][1-9](01|02|03|04|11|12|13|14|15|16|17|18|19|21|22|23|24|25|26|27|28|29|31|32|33|34|35|88)\\d\\d\\d\\d\\d"));
@@ -341,8 +370,10 @@ public class SignUp extends AppCompatActivity {
             email.requestFocus();
         }
 
-        if (userSelectDate.isEmpty()||!matcher.matches()) {
-            date.setError("Enter Date Please");
+        //pattern = Pattern.compile(new String ("(0?[1-9]|1[012]) [/.-] (0?[1-9]|[12][0-9]|3[01]) [/.-] ((19|20)\\\\d\\\\d)"));
+        //matcher = pattern.matcher(userSelectDate);
+        if (userSelectDate.isEmpty()) {
+            date.setError("please  Select Date");
             date.requestFocus();
             valid = false;
         } else {
@@ -369,66 +400,10 @@ public class SignUp extends AppCompatActivity {
             confirmPass.requestFocus();
 
         }
-        if(image == null){
-            Toast.makeText(SignUp.this, "Please select personal image", Toast.LENGTH_SHORT).show();
-            personalImage.requestFocus();
-            valid = false;
-        }else{
-            try {
-                Log.e("photo string",image.getAbsolutePath()+" "+image.getCanonicalPath()+" "+targetUri.getPath());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+
 
         return valid;
     }
 
-    private void sigup(File file,Uri uri,User user){
-
-        Gson gson = new Gson();
-        String userString = gson.toJson(user);
-        if(file != null){
-            Log.e("image not null","ya Hossam");
-        }
-        if(uri != null){
-            Log.e("uri not null","ya Hossam");
-        }
-        // create part for file (photo, video, ...)
-        MultipartBody.Part body = prepareFilePart("photo",uri,file);
-
-
-        RequestBody userBody = createPartFromString(userString);
-
-        // finally, execute the request
-        Call<ResponseBody> call = service.sendUser(body,userBody);
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call,
-                                   Response<ResponseBody> response) {
-                Log.v("Upload", "success");
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.e("Upload error:", t.getMessage()+" "+t.getCause()+" "+t.getStackTrace().toString());
-            }
-        });
-    }
-
-    @NonNull
-    private RequestBody createPartFromString(String user) {
-        return RequestBody.create(
-                okhttp3.MultipartBody.FORM, user);
-    }
-
-    @NonNull
-    private MultipartBody.Part prepareFilePart(String partName,Uri uri,File file) {
-        // create RequestBody instance from file
-        RequestBody requestFile = RequestBody.create(MediaType.parse(getContentResolver().getType(uri)),file);
-
-        // MultipartBody.Part is used to send also the actual file name
-        return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
-    }
 
 }

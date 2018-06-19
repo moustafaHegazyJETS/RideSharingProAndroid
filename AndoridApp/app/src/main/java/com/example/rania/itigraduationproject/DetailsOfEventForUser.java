@@ -4,18 +4,21 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.rania.itigraduationproject.Interfaces.Service;
 import com.example.rania.itigraduationproject.SqliteDBTrip.DBDriverConnection;
 import com.example.rania.itigraduationproject.alarmPk.Alarm_receiver;
+import com.example.rania.itigraduationproject.model.Trip;
 import com.example.rania.itigraduationproject.remote.CheckInternetConnection;
 
 import java.util.Calendar;
@@ -37,6 +40,13 @@ public class DetailsOfEventForUser extends AppCompatActivity {
     private static Retrofit retrofit = null;
     Service service;
     Intent alarm_intent;
+
+    TextView tripName;
+    TextView tripFrom;
+    TextView tripTo;
+
+    Trip trip;
+    Button openMap;
 
 
 
@@ -74,28 +84,51 @@ public class DetailsOfEventForUser extends AppCompatActivity {
                 .build();
         service = retrofit.create(Service.class);
         dbDriverConnection = new DBDriverConnection(this);
+        trip = dbDriverConnection.getTrip(Integer.parseInt((String) my_intent.getExtras().get("id")));
+
 
 
         //resources
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        TextView userID = findViewById(R.id.userID);
 //        userID.setText(pending_id);
         Toast.makeText(context, ""+pending_id, Toast.LENGTH_SHORT).show();
+        tripName = findViewById(R.id.tripName);
+        tripName.setText(""+trip.getTripName());
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        openMap = findViewById(R.id.mapBtn);
+        tripFrom = findViewById(R.id.tripFrom);
+        tripFrom.setText(trip.getFrom());
+        tripTo = findViewById(R.id.Tripto);
+        tripTo.setText(trip.getTo());
+
 
 
 
         //actions
 
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                doTask(pending_id,alarm_intent);
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+        openMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                doTask(pending_id,alarm_intent);
+
+                Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr="+trip.getStartlatitude()+
+                        ","+trip.getStartlongtiude()+"&daddr="+trip.getEndlatitude()+", "+trip.getEndlongtiude()+""));
+                startActivity(intent);
+            }
+        });
     }
+
 
 
     //tb3n kol dh lazem yt8ayer ll dbconnection haaaaaaaaaaa

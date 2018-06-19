@@ -32,7 +32,7 @@ public interface Service {
 
     @Multipart
     @POST("user2.json")
-    Call<ResponseBody>sendUser(@Part MultipartBody.Part file, @Part("user") RequestBody user);;
+    Call<ResponseBody>sendUser2(@Part MultipartBody.Part file, @Part("user") RequestBody user);;
 
     @POST("getUserByEmailAndPassword.json")
     Call<User>getUserByEmailAndPassword(@Body User user);

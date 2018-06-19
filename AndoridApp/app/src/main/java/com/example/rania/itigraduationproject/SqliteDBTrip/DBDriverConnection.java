@@ -21,7 +21,7 @@ public class DBDriverConnection extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table IF NOT EXISTS driverTrip (id INTEGER primary key," +
-                " idTrip INTEGER,tripPast TEXT,tripName TEXT)");
+                " idTrip INTEGER,tripPast TEXT,tripName TEXT,tripFrom TEXT,tripTo TEXT,toLongtiude DOUBLE , toLatitude DOUBLE , fromLatitude DOUBLE , fromLongtiude DOUBLE)");
 
     }
 
@@ -33,7 +33,8 @@ public class DBDriverConnection extends SQLiteOpenHelper {
     }
 
 
-    public void insertIntoTrip(Integer tripId,String tripName){
+    public void insertIntoTrip(Integer tripId, String tripName , String tripFrom , String tripTo , Double toLongtiude,
+                               Double toLatitude , Double fromLatitude , Double fromLongtiude ){
 
         SQLiteDatabase query=this.getWritableDatabase();
 
@@ -41,6 +42,13 @@ public class DBDriverConnection extends SQLiteOpenHelper {
         values.put("idTrip",tripId);
         values.put("tripPast","f");
         values.put("tripName",tripName);
+        values.put("tripFrom",tripFrom);
+        values.put("tripTo",tripTo);
+        values.put("toLongtiude",toLongtiude);
+        values.put("toLatitude",toLatitude);
+        values.put("fromLatitude",fromLatitude);
+        values.put("fromLongtiude",fromLongtiude);
+        System.out.println("a*AAAAAAAAAAAAA*AAAAAAAAAAA*AAAAAAAAAA"+toLatitude);
         query.insert("driverTrip",null,values);
         Log.i("test","row inserted");
 
@@ -87,6 +95,28 @@ public class DBDriverConnection extends SQLiteOpenHelper {
             i++;
         };
         return  trips;
+    }
+
+    public Trip getTrip(int id)
+    {
+        SQLiteDatabase db=this.getReadableDatabase();
+        String query ="select * from driverTrip where idTrip=?";
+        Cursor result=db.rawQuery(query,new String[]{""+id});
+
+        result.moveToFirst();
+        Trip trip = new Trip();
+        trip.setTripName(result.getString(result.getColumnIndex("tripName")));
+        trip.setIdTrip(result.getInt(result.getColumnIndex("idTrip")));
+        trip.setFrom(result.getString(result.getColumnIndex("tripFrom")));
+        trip.setTo(result.getString(result.getColumnIndex("tripTo")));
+        trip.setEndlatitude(result.getDouble(result.getColumnIndex("toLatitude")));
+        trip.setEndlongtiude(result.getDouble(result.getColumnIndex("toLongtiude")));
+        trip.setStartlongtiude(result.getDouble(result.getColumnIndex("fromLongtiude")));
+        trip.setStartlatitude(result.getDouble(result.getColumnIndex("fromLatitude")));
+
+        System.out.println("AAAAAAAAAAAAAAAAAA*****************"+trip.getStartlatitude()+"kkkk"+id);
+
+       return trip;
     }
 
     public void setTripToBePast(int id) {
