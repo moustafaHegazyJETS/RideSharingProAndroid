@@ -38,6 +38,7 @@
             android:layout_height="wrap_content"
             android:text="@string/name"
             android:textColor="@color/cardview_dark_background"
+            android:textSize="20dp"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="20dp"/>
 
@@ -51,6 +52,7 @@
             android:clickable="false"
             android:focusableInTouchMode="false"
             android:enabled="false"
+            android:textSize="20dp"
             android:inputType="textPersonName"
             android:paddingLeft="20dp" />
         <TextView
@@ -60,6 +62,7 @@
             android:text="@string/prompt_email"
             android:textColor="@color/cardview_dark_background"
             android:layout_marginRight="10dp"
+            android:textSize="20dp"
             android:layout_marginLeft="20dp"/>
 
         <EditText
@@ -68,6 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:textSize="20dp"
             android:clickable="false"
             android:enabled="false"
             android:focusableInTouchMode="false"
@@ -78,6 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/phone"
+            android:textSize="20dp"
             android:textColor="@color/cardview_dark_background"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="20dp"/>
@@ -88,6 +93,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:textSize="20dp"
             android:inputType="none"
             android:editable="false"
             android:enabled="false"
@@ -101,6 +107,7 @@
             android:layout_weight="1"
             android:textColor="@color/cardview_dark_background"
             android:text="@string/national_id"
+            android:textSize="20dp"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="20dp"/>
 
@@ -116,6 +123,7 @@
             android:ems="10"
             android:inputType="none"
             android:paddingLeft="20dp"
+            android:textSize="20dp"
             />
         <TextView
             android:id="@+id/drivergender"
@@ -123,10 +131,12 @@
             android:layout_height="wrap_content"
             android:text="@string/gender"
             android:textColor="@color/cardview_dark_background"
+            android:textSize="20dp"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="20dp"/>
 
         <EditText
+            android:textSize="20dp"
             android:id="@+id/drivergenderEdt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -138,6 +148,7 @@
             android:focusableInTouchMode="false"
             android:paddingLeft="20dp"/>
         <TextView
+            android:textSize="20dp"
             android:id="@+id/driverdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -154,6 +165,7 @@
             android:inputType="textPersonName"
             android:editable="false"
             android:enabled="false"
+            android:textSize="20dp"
             android:clickable="false"
             android:focusableInTouchMode="false"
             android:paddingLeft="20dp"/>
@@ -162,6 +174,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/carOwnerName"
+            android:textSize="20dp"
             android:textColor="@color/cardview_dark_background"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="20dp"/>
@@ -174,6 +187,7 @@
             android:inputType="textPersonName"
             android:editable="false"
             android:enabled="false"
+            android:textSize="20dp"
             android:clickable="false"
             android:focusableInTouchMode="false"
             android:paddingLeft="20dp"/>
@@ -184,6 +198,7 @@
             android:text="@string/carOwnerAddress"
             android:textColor="@color/cardview_dark_background"
             android:layout_marginRight="10dp"
+            android:textSize="20dp"
             android:layout_marginLeft="20dp"/>
 
         <EditText
@@ -194,11 +209,13 @@
             android:inputType="textPersonName"
             android:editable="false"
             android:enabled="false"
+            android:textSize="20dp"
             android:clickable="false"
             android:focusableInTouchMode="false"
             android:paddingLeft="20dp"/>
         <TextView
             android:id="@+id/Carplate"
+            android:textSize="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/CarPlatestr"
@@ -211,6 +228,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:textSize="20dp"
             android:inputType="textPersonName"
             android:editable="false"
             android:enabled="false"
@@ -222,11 +240,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/carmodelstr"
+            android:textSize="20dp"
             android:textColor="@color/cardview_dark_background"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="20dp"/>
 
         <EditText
+            android:textSize="20dp"
             android:id="@+id/CarModlEdt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -242,6 +262,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/carcolorstr"
+            android:textSize="20dp"
             android:textColor="@color/cardview_dark_background"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="20dp"/>
@@ -251,6 +272,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:textSize="20dp"
             android:inputType="textPersonName"
             android:editable="false"
             android:enabled="false"
@@ -262,6 +284,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/carLincesDate"
+            android:textSize="20dp"
             android:textColor="@color/cardview_dark_background"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="20dp"/>
@@ -270,6 +293,7 @@
             android:id="@+id/CarendlinceDateEdt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="20dp"
             android:ems="10"
             android:inputType="textPersonName"
             android:editable="false"
@@ -284,6 +308,7 @@
             android:text="@string/carBrandStr"
             android:textColor="@color/cardview_dark_background"
             android:layout_marginRight="10dp"
+            android:textSize="20dp"
             android:layout_marginLeft="20dp"/>
 
         <EditText
@@ -295,12 +320,14 @@
             android:editable="false"
             android:enabled="false"
             android:clickable="false"
+            android:textSize="20dp"
             android:focusableInTouchMode="false"
             android:paddingLeft="20dp"/>
         <TextView
             android:id="@+id/CarCC"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="20dp"
             android:text="@string/Carccstr"
             android:textColor="@color/cardview_dark_background"
             android:layout_marginRight="10dp"
@@ -312,6 +339,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
+            android:textSize="20dp"
             android:editable="false"
             android:enabled="false"
             android:clickable="false"

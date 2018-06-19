@@ -92,14 +92,15 @@ public class TripSearch extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (startPoint.equals("") || destination.equals("")) {
-                    Toast.makeText(TripSearch.this, "Check Fields", Toast.LENGTH_SHORT).show();
-                } else {
-                    Trip t = new Trip();
-                    t.setFrom(startPoint);
-                    t.setTo(destination);
+//                if (startPoint.equals("") || destination.equals("")) {
+//                    Toast.makeText(TripSearch.this, "Check Fields", Toast.LENGTH_SHORT).show();
+//                } else {
+                  Trip t = new Trip();
+                    ;
+                    t.setFrom("a");
+                    t.setTo("a");
                     requestTrip(t);
-                }
+                //}
             }
         });
 
@@ -188,7 +189,6 @@ public class TripSearch extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<Trip>> call, Throwable t) {
                 Toast.makeText(TripSearch.this,"on Failere"+t,Toast.LENGTH_SHORT).show();
-                Log.e("error",t.getMessage());
             }
         });
     }

@@ -12,9 +12,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="31dp"
-        android:layout_marginLeft="148dp"
-        android:layout_marginTop="32dp"
-        android:text="Search"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="50dp"
+        android:text="@string/search"
+        android:textColor="@color/white"
         android:background="@drawable/buttondesign"
       />
 
@@ -24,6 +25,4 @@
         android:layout_height="match_parent"
         android:layout_marginRight="50dp"
         android:layout_marginTop="100dp"/>
-    <!-- tools:layout_editor_absoluteX="8dp"
-       tools:layout_editor_absoluteY="8dp"-->
 </RelativeLayout>

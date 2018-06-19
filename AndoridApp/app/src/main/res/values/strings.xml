@@ -90,12 +90,26 @@
     <string name="startBtn">Start</string>
     <string name="canceleDialogeBtn">Cancel</string>
     <string name="yourTripMeesage">Your Trip </string>
-    <string name="RideSharing"> Ride Sharing </string>
+    <string name="RideSharing"> Travel With Me </string>
+    <string name="date1">Date</string>
+    <string name="time">Time</string>
+    <string name="Seatsnumber">Seats number</string>
+    <string name="TripTime">Trip Time</string>
+    <string name="TripTo">Trip To</string>Trip To
+    <string name="TripFrom">Trip From</string>
+    <string name="TripDetail">Trip Details</string>
+    <string name="TripDay">Trip Day</string>
+    <string name="removeuser">Remove From Trip</string>
+    <string name="singup">Sing Up</string>
+    <string name="search">Search</string>
     <color name="red">#ff0000</color>
     <color name="white">#ffff</color>
     <color name="blue">#333366</color>
     <color name="orange">#FF9933</color>
     <color name="grey">#E8E8E8</color>
+    <color name="violet">#660066</color>
+    <color name="purple">#efbbff</color>#2e0029
+    <color name="mov">#8b0a50</color>
 
 
 </resources>

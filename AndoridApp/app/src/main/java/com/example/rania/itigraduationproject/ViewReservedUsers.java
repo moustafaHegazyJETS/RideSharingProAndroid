@@ -58,7 +58,7 @@ public class ViewReservedUsers extends AppCompatActivity {
         //resources
         usersListView = findViewById(R.id.listOfUsers);
 
-        usersListView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, userListNames));
+        usersListView.setAdapter(new ArrayAdapter<>(this,android.R.layout.simple_expandable_list_item_1 , userListNames));
 
 
 

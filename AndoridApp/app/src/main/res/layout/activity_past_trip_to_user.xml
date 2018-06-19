@@ -8,6 +8,9 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/pastTripToUser"/>
+        android:id="@+id/pastTripToUser"
+        android:fontFamily="cursive"
+        android:textSize="40dp"
+        android:textColor="@color/blue"/>
 
 </RelativeLayout>

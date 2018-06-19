@@ -22,6 +22,6 @@
         app:headerLayout="@layout/nav_header_home_driver"
         app:menu="@menu/activity_home_driver_drawer"
         app:itemTextColor="@color/blue"
-        app:itemIconTint="@color/orange"/>
+        app:itemIconTint="@color/violet"/>
 
 </android.support.v4.widget.DrawerLayout>

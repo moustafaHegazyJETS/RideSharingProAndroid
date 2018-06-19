@@ -21,8 +21,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="30dp"
-            android:text="Trip Name" />
+            android:layout_marginTop="50dp"
+            android:text="@string/TripName"
+            android:textSize="20dp"
+            android:textColor="@color/cardview_dark_background"/>
 
 
         <EditText
@@ -30,33 +32,25 @@
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp" />
+            android:layout_marginTop="50dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="30dp"
-            android:text="Trip Details" />
 
-        <EditText
-            android:id="@+id/TripDetails"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp" />
 
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="30dp"
-            android:text="Trip From" />
+            android:layout_marginTop="32dp"
+            android:text="@string/TripFrom"
+            android:textSize="20dp"
+            android:textColor="@color/cardview_dark_background"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="49dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="30dp">
 
             <fragment
                 android:id="@+id/location_autocomplete_fragment"
@@ -79,12 +73,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="30dp"
-            android:text="Trip To" />
+            android:layout_marginTop="32dp"
+            android:text="@string/TripTo"
+
+            android:textSize="20dp"
+            android:textColor="@color/cardview_dark_background"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp">
+            android:layout_height="48dp"
+            android:layout_marginTop="30dp">
 
             <fragment
                 android:id="@+id/destination_autocomplete_fragment"
@@ -110,7 +108,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="30dp"
-            android:text="Seats number" />
+            android:text="@string/Seatsnumber"
+            android:textSize="20dp"
+            android:textColor="@color/cardview_dark_background"/>
+
 
         <EditText
             android:id="@+id/numberOfSeats"
@@ -124,7 +125,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="30dp"
-            android:text="cost" />
+            android:text="@string/cost"
+            android:textSize="20dp"
+            android:textColor="@color/cardview_dark_background"/>
 
         <EditText
             android:id="@+id/TripCost"
@@ -138,7 +141,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="30dp"
-            android:text="Trip Time" />
+            android:text="@string/TripTime"
+            android:textSize="20dp"
+            android:textColor="@color/cardview_dark_background"/>
 
         <TextView
             android:id="@+id/TripTime"
@@ -152,7 +157,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="30dp"
-            android:text="Trip Day" />
+            android:text="@string/TripDay"
+            android:textSize="20dp"
+            android:textColor="@color/cardview_dark_background"/>
 
         <TextView
             android:id="@+id/TripDay"
@@ -162,6 +169,22 @@
             android:text="Day" />
 
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/TripDetail"
+        android:textSize="20dp"
+        android:textColor="@color/cardview_dark_background"/>
+
+    <EditText
+        android:id="@+id/TripDetails"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:inputType="text|textMultiLine" />
     </GridLayout>
 
 </ScrollView>

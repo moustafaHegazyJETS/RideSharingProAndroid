@@ -7,34 +7,63 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ViewReservedUserDetails"
     tools:showIn="@layout/activity_view_reserved_user_details">
-    <LinearLayout
+    <GridLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:columnCount="2"
+        android:rowCount="2"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="20dp"
+            android:text="@string/name" />
         <TextView
             android:id="@+id/UserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="150dp"
             android:layout_marginTop="30dp"
-            android:text="TextView" />
+            android:textSize="20dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="20dp"
+            android:text="@string/prompt_email" />
+
 
         <TextView
             android:id="@+id/Email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginLeft="150dp"
             android:layout_marginTop="30dp"
-            android:text="TextView" />
+            android:textSize="20dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="20dp"
+            android:text="@string/phone" />
 
         <TextView
             android:id="@+id/Phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
-            android:layout_marginLeft="150dp"
-            android:layout_marginTop="30dp"/>
+            android:layout_marginTop="30dp"
+            android:textSize="20dp"/>
 
         <Button
             android:id="@+id/DeleteUser"
@@ -42,10 +71,11 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="120dp"
             android:layout_marginTop="30dp"
-            android:text="Remove From Trip"
+            android:text="@string/removeuser"
+            android:textColor="@color/white"
             android:background="@drawable/buttondesign"/>
 
-    </LinearLayout>
+    </GridLayout>
 
 
 </ScrollView>

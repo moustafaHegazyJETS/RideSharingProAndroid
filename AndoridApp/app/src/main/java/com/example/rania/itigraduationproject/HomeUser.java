@@ -138,7 +138,7 @@ public class HomeUser extends AppCompatActivity
             });
         }
         else {
-            username.setText("hello "+user.getUserName());
+            username.setText("Hello "+user.getUserName());
 
             ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                     this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -159,7 +159,7 @@ public class HomeUser extends AppCompatActivity
                                  }
 
 
-                            ArrayAdapter<String> adapter =new ArrayAdapter<>(HomeUser.this, android.R.layout.simple_list_item_1,listNames);
+                            ArrayAdapter<String> adapter =new ArrayAdapter<>(HomeUser.this, android.R.layout.simple_expandable_list_item_1,listNames);
                             tripList.setAdapter(adapter);
 
                              tripList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
@@ -199,7 +199,6 @@ public class HomeUser extends AppCompatActivity
             TextView username=(TextView)findViewById(R.id.usernameheader);
             Log.i("email",user.getEmail());
             userEmail.setText(user.getEmail());
-            userEmail.setText(user.getUserName());
 
             fab.setImageBitmap(FabDesignFun.textAsBitmap("Search", 40, Color.WHITE));
             fab.setOnClickListener(new View.OnClickListener() {

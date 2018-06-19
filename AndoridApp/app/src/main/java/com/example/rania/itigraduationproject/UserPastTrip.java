@@ -61,7 +61,7 @@ public class UserPastTrip extends AppCompatActivity {
         service.getAllUserReserverdTrips(userobject).enqueue(new Callback<List<Trip>>() {
             @Override
             public void onResponse(Call<List<Trip>> call, Response<List<Trip>> response) {
-                Toast.makeText(UserPastTrip.this, "Enter in method get all  trips", Toast.LENGTH_SHORT).show();
+
 
                 if (response.body()!=null)
                 {
@@ -75,7 +75,7 @@ public class UserPastTrip extends AppCompatActivity {
                         }
 
 
-                        ArrayAdapter<String> adapter =new ArrayAdapter<>(UserPastTrip.this, android.R.layout.simple_list_item_1,listNames);
+                        ArrayAdapter<String> adapter =new ArrayAdapter<>(UserPastTrip.this, android.R.layout.simple_expandable_list_item_1,listNames);
                         pastTripList.setAdapter(adapter);
 
                         pastTripList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
@@ -90,7 +90,7 @@ public class UserPastTrip extends AppCompatActivity {
                     }
                 } else{
 
-                    Toast.makeText(UserPastTrip.this, "Response body  null", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UserPastTrip.this, "No Past Trip up Till Now", Toast.LENGTH_SHORT).show();
                 }
 
             }

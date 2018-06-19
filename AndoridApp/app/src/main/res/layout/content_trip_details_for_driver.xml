@@ -14,19 +14,23 @@
         android:columnCount="2"
         android:rowCount="2"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true">
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="30dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/name"
             android:layout_marginTop="30dp"
+
+            android:textSize="20dp"
             android:textColor="@color/cardview_dark_background"
-            android:layout_marginLeft="30dp"/>
+            android:layout_marginLeft="50dp"/>
     <TextView
         android:id="@+id/tripNamet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="20dp"
         android:layout_marginTop="30dp" />
 
         <TextView
@@ -35,39 +39,45 @@
             android:text="@string/from"
             android:textColor="@color/cardview_dark_background"
             android:layout_marginTop="30dp"
-            android:layout_marginLeft="30dp"/>
+            android:textSize="20dp"
+            android:layout_marginLeft="50dp"/>
 
         <TextView
         android:id="@+id/tripFromt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="30dp"
+            android:textSize="20dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/to"
             android:textColor="@color/cardview_dark_background"
             android:layout_marginTop="30dp"
-            android:layout_marginLeft="30dp"/>
+            android:textSize="20dp"
+            android:layout_marginLeft="50dp"/>
 
     <TextView
         android:id="@+id/tripTot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="30dp"
+        android:textSize="20dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/date"
+            android:text="@string/TripDay"
             android:textColor="@color/cardview_dark_background"
             android:layout_marginTop="30dp"
-            android:layout_marginLeft="30dp"/>
+            android:textSize="20dp"
+            android:layout_marginLeft="50dp"/>
 
     <TextView
         android:id="@+id/tripdatet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
+        android:textSize="20dp"
        />
 
         <TextView
@@ -75,14 +85,16 @@
             android:layout_height="wrap_content"
             android:text="@string/TimeTrip"
             android:textColor="@color/cardview_dark_background"
+            android:textSize="20dp"
             android:layout_marginTop="30dp"
-            android:layout_marginLeft="30dp"/>
+            android:layout_marginLeft="50dp"/>
 
     <TextView
         android:id="@+id/tripTimet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
+        android:textSize="20dp"
        />
 
     <Button

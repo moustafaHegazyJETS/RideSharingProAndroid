@@ -137,7 +137,7 @@ public class Login extends AppCompatActivity {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
 
-                if(response.body().getEmail() !=null ){
+                if(response.body().getEmail()!=null ){
 
 
                     if(response.body().getPending().equals("-1")){
@@ -146,8 +146,6 @@ public class Login extends AppCompatActivity {
                     }else{
                         session_mangement.createLoginSession(response.body().getEmail(),response.body().getPassword());
                         if(response.body().getDriverCarInfo()!=null){
-                            System.out.println("_____________________________________");
-                            System.out.println(response.body().getDriverCarInfo().getCarModel());
                             Intent driver_i = new Intent(Login.this, HomeDriver.class);
                             driver_i.putExtra("user", response.body());
                             startActivity(driver_i);
@@ -156,13 +154,7 @@ public class Login extends AppCompatActivity {
                         }else
                         {
                             Intent intent_home = new Intent(getApplicationContext(), HomeUser.class);
-                            System.out.println(response.body().getMobile());
-                            System.out.println(response.body().getBirthDate());
-                            System.out.println(response.body().getEmail());
-                            System.out.println(response.body().getUserName());
-
                             intent_home.putExtra("user", (Serializable) response.body());
-
                             startActivity(intent_home);
                             finish();
                         }

@@ -25,7 +25,6 @@ import android.widget.ListView;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.rania.itigraduationproject.Controllers.FabDesignFun;
 import com.example.rania.itigraduationproject.Controllers.SessionManager;
 import com.example.rania.itigraduationproject.Interfaces.Service;
@@ -34,11 +33,9 @@ import com.example.rania.itigraduationproject.firebeasePushNotifications.Firebea
 import com.example.rania.itigraduationproject.model.Trip;
 import com.example.rania.itigraduationproject.model.User;
 import com.example.rania.itigraduationproject.remote.CheckInternetConnection;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -74,16 +71,14 @@ public class HomeDriver extends AppCompatActivity
             {
 
                 tripNames.add(tripArray.get(ii).getTripName().toString());
-                Toast.makeText(this, ""+tripArray.get(ii).getTripName().toString(), Toast.LENGTH_SHORT).show();
 
             }
 
-            listViewDriver.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, tripNames));
-
+            listViewDriver.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1,tripNames));
             listViewDriver.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    Toast.makeText(HomeDriver.this, "Hi", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeDriver.this, "", Toast.LENGTH_SHORT).show();
                     return true;
                 }
             });
@@ -177,7 +172,7 @@ public class HomeDriver extends AppCompatActivity
             });
         }
         else {
-            helloTxt .setText("hello "+user.getUserName());
+            helloTxt .setText("Hello "+user.getUserName());
         //actions
         FabDesignFun.textAsBitmap("Trip",40, Color.WHITE);
         fab.setOnClickListener(new View.OnClickListener() {

@@ -65,7 +65,6 @@ public class DriverpastTrip extends AppCompatActivity {
         service.getAllpastTripstoDeriver(userobject).enqueue(new Callback<List<Trip>>() {
             @Override
             public void onResponse(Call<List<Trip>> call, Response<List<Trip>> response) {
-                Toast.makeText(DriverpastTrip.this, "Enter in method get all  trips", Toast.LENGTH_SHORT).show();
 
                 if (response.body()!=null)
                 {
@@ -79,7 +78,7 @@ public class DriverpastTrip extends AppCompatActivity {
                         }
 
 
-                        ArrayAdapter<String> adapter =new ArrayAdapter<>(DriverpastTrip.this, android.R.layout.simple_list_item_1,listNames);
+                        ArrayAdapter<String> adapter =new ArrayAdapter<>(DriverpastTrip.this, android.R.layout.simple_expandable_list_item_1,listNames);
                         pastTripList.setAdapter(adapter);
 
                         pastTripList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
