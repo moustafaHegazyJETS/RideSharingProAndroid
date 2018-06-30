@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.rania.itigraduationproject.Controllers.RecycleViewAdapter;
 import com.example.rania.itigraduationproject.Controllers.RecyclerItemClickListener;
@@ -46,9 +47,11 @@ public class TripShowActivity extends AppCompatActivity {
         if(intent.getSerializableExtra("tripList")!= null)
         {
             tripArray = (List<Trip>) intent.getSerializableExtra("tripList");
+            Toast.makeText(this, ""+tripArray.size(), Toast.LENGTH_SHORT).show();
         }else
         {
             //here to add no trip found code before searching
+            Toast.makeText(this, "no trip", Toast.LENGTH_SHORT).show();
         }
 
 
@@ -85,12 +88,16 @@ public class TripShowActivity extends AppCompatActivity {
                            // do whatever
                              Intent in =new Intent(TripShowActivity.this,TripDetailsActivity.class);
                              in.putExtra("trip",(Serializable) tripArray.get(position));
-                             startActivity(in);
+                             in.putExtra("tripVal",(Serializable) tripArray.get(position));
+
+                           startActivity(in);
                        }
 
                        @Override public void onLongItemClick(View view, int position) {
                            Intent in =new Intent(TripShowActivity.this,TripDetailsActivity.class);
                            in.putExtra("trip",(Serializable) tripArray.get(position) );
+                           in.putExtra("tripVal",(Serializable) tripArray.get(position));
+
                            startActivity(in);
                        }
                    })

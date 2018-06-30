@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.rania.itigraduationproject.Interfaces.Service;
 import com.example.rania.itigraduationproject.SqliteDBTrip.DBDriverConnection;
+import com.example.rania.itigraduationproject.SqliteDBTrip.DBconnection;
 import com.example.rania.itigraduationproject.alarmPk.Alarm_receiver;
 import com.example.rania.itigraduationproject.model.Trip;
 import com.example.rania.itigraduationproject.remote.CheckInternetConnection;
@@ -47,6 +48,7 @@ public class DetailsOfEventForUser extends AppCompatActivity {
 
     Trip trip;
     Button openMap;
+    DBconnection db;
 
 
 
@@ -84,7 +86,7 @@ public class DetailsOfEventForUser extends AppCompatActivity {
                 .build();
         service = retrofit.create(Service.class);
         dbDriverConnection = new DBDriverConnection(this);
-        trip = dbDriverConnection.getTrip(Integer.parseInt((String) my_intent.getExtras().get("id")));
+//        trip = db.returnTrip(Integer.parseInt((String) my_intent.getExtras().get("id")));
 
 
 
@@ -96,13 +98,13 @@ public class DetailsOfEventForUser extends AppCompatActivity {
 //        userID.setText(pending_id);
         Toast.makeText(context, ""+pending_id, Toast.LENGTH_SHORT).show();
         tripName = findViewById(R.id.tripName);
-        tripName.setText(""+trip.getTripName());
+        tripName.setText("you have a trip ");
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         openMap = findViewById(R.id.mapBtn);
         tripFrom = findViewById(R.id.tripFrom);
-        tripFrom.setText(trip.getFrom());
+//        tripFrom.setText(trip.getFrom());
         tripTo = findViewById(R.id.Tripto);
-        tripTo.setText(trip.getTo());
+//        tripTo.setText(trip.getTo());
 
 
 
@@ -122,9 +124,9 @@ public class DetailsOfEventForUser extends AppCompatActivity {
             public void onClick(View view) {
                 doTask(pending_id,alarm_intent);
 
-                Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr="+trip.getStartlatitude()+
-                        ","+trip.getStartlongtiude()+"&daddr="+trip.getEndlatitude()+", "+trip.getEndlongtiude()+""));
-                startActivity(intent);
+//                Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr="+trip.getStartlatitude()+
+//                        ","+trip.getStartlongtiude()+"&daddr="+trip.getEndlatitude()+", "+trip.getEndlongtiude()+""));
+//                startActivity(intent);
             }
         });
     }

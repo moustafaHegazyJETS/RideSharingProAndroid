@@ -7,6 +7,14 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".DetailsOfEventForUser"
     tools:showIn="@layout/activity_details_of_event_for_user">
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:columnCount="2"
+        android:rowCount="2"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
 
     <TextView
         android:id="@+id/userID"
@@ -28,7 +36,6 @@
         android:id="@+id/tripName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="61dp"
         android:text="TextView"
@@ -40,7 +47,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
         android:layout_marginBottom="146dp"
         android:text="open map" />
 
@@ -48,7 +54,6 @@
         android:id="@+id/tripFrom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="109dp"
         android:text="TextView" />
@@ -57,7 +62,6 @@
         android:id="@+id/Tripto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="158dp"
         android:text="TextView" />
@@ -66,16 +70,14 @@
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_alignTop="@+id/tripName"
-        android:layout_marginStart="119dp"
         android:text="name" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/textView7"
+
         android:layout_alignTop="@+id/tripFrom"
         android:text="from" />
 
@@ -84,6 +86,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/Tripto"
-        android:layout_alignStart="@+id/textView7"
+
         android:text="to" />
+    </GridLayout>
 </RelativeLayout>

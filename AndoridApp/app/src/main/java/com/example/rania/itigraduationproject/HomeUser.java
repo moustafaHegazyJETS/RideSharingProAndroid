@@ -55,7 +55,7 @@ public class HomeUser extends AppCompatActivity
     TripService tripService;
     ListView tripList;
     ArrayList<String>listNames;
-    TextView notripText;
+
 
 
     @Override
@@ -93,7 +93,7 @@ public class HomeUser extends AppCompatActivity
 
       //Resources
         tripList=(ListView)findViewById(R.id.listViewtrip);
-        notripText=(TextView)findViewById(R.id.notrip);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         username=(TextView)findViewById(R.id.username_home);
@@ -170,10 +170,10 @@ public class HomeUser extends AppCompatActivity
                              startActivity(in);
                          }});
                        }else {
-                             notripText.setText("no  trip  reserved up  till  now");
+                             Toast.makeText(HomeUser.this, "no  trip  reserved up  till  now", Toast.LENGTH_SHORT).show();
                          }
                     } else{
-                        Toast.makeText(HomeUser.this, "Response body  null", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(HomeUser.this, "Check Connection ", Toast.LENGTH_SHORT).show();
                           }
 
 
@@ -181,7 +181,7 @@ public class HomeUser extends AppCompatActivity
 
                 @Override
                 public void onFailure(Call<List<Trip>> call, Throwable t) {
-                    Toast.makeText(HomeUser.this, "Failure", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeUser.this, "Failure Internet connection", Toast.LENGTH_SHORT).show();
 
                 }
             });
@@ -196,6 +196,7 @@ public class HomeUser extends AppCompatActivity
             //Set Header Values
             View hView =  navigationView.getHeaderView(0);
             TextView userEmail=(TextView)hView.findViewById(R.id.usermail_header);
+
             TextView username=(TextView)findViewById(R.id.usernameheader);
             Log.i("email",user.getEmail());
             userEmail.setText(user.getEmail());

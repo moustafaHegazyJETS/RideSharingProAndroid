@@ -92,15 +92,18 @@ public class TripSearch extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-//                if (startPoint.equals("") || destination.equals("")) {
-//                    Toast.makeText(TripSearch.this, "Check Fields", Toast.LENGTH_SHORT).show();
-//                } else {
+                if (startPoint.equals("") || destination.equals("")) {
+                    Toast.makeText(TripSearch.this, "Check Fields", Toast.LENGTH_SHORT).show();
+                } else {
                   Trip t = new Trip();
-                    ;
-                    t.setFrom("a");
-                    t.setTo("a");
+
+                    t.setFrom(destination);
+                    t.setTo(startPoint);
+
+                    Toast.makeText(TripSearch.this, ""+startPoint+""+destination, Toast.LENGTH_SHORT).show();
+
                     requestTrip(t);
-                //}
+                }
             }
         });
 
@@ -180,7 +183,7 @@ public class TripSearch extends AppCompatActivity {
                 if (response.body()!=null)
                 {
                     Intent intent_home = new Intent(getApplicationContext(), TripShowActivity.class);
-                    intent_home.putExtra("tripList", (Serializable) response.body() );
+                    intent_home.putExtra("tripList", (Serializable) response.body());
                     startActivity(intent_home);
                     finish();
                 }

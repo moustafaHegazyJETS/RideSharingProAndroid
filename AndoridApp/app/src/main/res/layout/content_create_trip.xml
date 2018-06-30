@@ -21,6 +21,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/twm"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="50dp"
             android:text="@string/TripName"
             android:textSize="20dp"
@@ -66,7 +78,8 @@
                 android:id="@+id/location_map"
                 android:layout_width="wrap_content"
                 android:layout_height="70dp"
-                app:srcCompat="@drawable/address" />
+                app:srcCompat="@drawable/address"
+                android:layout_marginRight="50dp"/>
         </LinearLayout>
 
         <TextView
@@ -100,7 +113,8 @@
 
                 android:layout_width="wrap_content"
                 android:layout_height="69dp"
-                app:srcCompat="@drawable/address" />
+                app:srcCompat="@drawable/address"
+                android:layout_marginRight="50dp"/>
         </LinearLayout>
 
         <TextView

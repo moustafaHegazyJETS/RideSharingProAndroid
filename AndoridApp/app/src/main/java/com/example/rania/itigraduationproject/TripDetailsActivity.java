@@ -55,9 +55,9 @@ public class TripDetailsActivity extends AppCompatActivity {
     PendingIntent pending_intent;
     Trip trip=new Trip();
 
-    TripDetailsForDriver driverDetails=new TripDetailsForDriver();
-    int numberOfSeats=driverDetails.getAllReservedUsers(trip);
-    String num=numOfSeatsTrip.getText().toString();
+//    TripDetailsForDriver driverDetails=new TripDetailsForDriver();
+//    int numberOfSeats=driverDetails.getAllReservedUsers(trip);
+//    String num=numOfSeatsTrip.getText().toString();
     protected void onStart() {
         super.onStart();
         if(!CheckInternetConnection.isNetworkAvailable(this))
@@ -162,12 +162,12 @@ public class TripDetailsActivity extends AppCompatActivity {
                         public void onResponse(Call<User> call, Response<User> response) {
 
                             if(response.body()!=null) {
-                                if(numberOfSeats <= Integer.parseInt(num)){
+//                                if(numberOfSeats <= Integer.parseInt(num)){
                                     if(response.body().getEmail().equals("t"))
                                     {
-                                        Toast.makeText(context, "Done Reservation", Toast.LENGTH_SHORT).show();
+
                                         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
-                                        SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd");//yyyy-MM-dd
+                                        SimpleDateFormat formatter2 = new SimpleDateFormat("dd/MM/yyyy");//yyyy-MM-dd
                                         Date timeZ;
                                         Date dayZ;
                                         try {
@@ -217,6 +217,7 @@ public class TripDetailsActivity extends AppCompatActivity {
 
                                             Toast toastk = Toast.makeText(TripDetailsActivity.this, "done"+myCalendar.getTimeInMillis(),Toast.LENGTH_LONG);
                                             toastk.show();
+                                            Toast.makeText(context, "Done Reservation", Toast.LENGTH_SHORT).show();
 
                                             startActivity(intent);
                                             finish();
@@ -234,10 +235,10 @@ public class TripDetailsActivity extends AppCompatActivity {
                                         Toast.makeText(context, response.body().getEmail(), Toast.LENGTH_SHORT).show();
 
                                     }
-                                }else
-                                {
-                                    Toast.makeText(context, "Response is NULL", Toast.LENGTH_SHORT).show();
-                                }
+//                                }else
+//                                {
+//                                    Toast.makeText(context, "Response is NULL", Toast.LENGTH_SHORT).show();
+//                                }
                                 }
                            else{
                                 Toast.makeText(context, "This Trip has been completed", Toast.LENGTH_SHORT).show();
